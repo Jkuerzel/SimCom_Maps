@@ -1,0 +1,146 @@
+id,name,transport_amount
+100,Aerospace research,0
+18,Aluminium,1
+125,Apple cider,1
+123,Apple pie,2
+3,Apples,1
+82,Attitude control,1
+58,Automotive research,0
+94,BFR,2000
+50,Basic interior,2
+22,Batteries,1
+15,Bauxite,1
+121,Bread,1
+33,Breeding research,0
+102,Bricks,1
+112,Bulldozer,5
+134,Butter,1
+51,Car body,2
+76,Carbon composite,1
+75,Carbon fibers,0.1
+103,Cement,1
+122,Cheese,1
+17,Chemicals,1
+34,Chemistry research,0
+140,Chocolate,1
+104,Clay,1
+81,Cockpit,1
+132,Cocktails,2
+136,Cocoa,0.1
+118,Coffee beans,0.1
+119,Coffee powder,1
+52,Combustion engine,2
+111,Construction units,0
+40,Cotton,0.5
+115,Cows,1
+10,Crude oil,1
+12,Diesel,1
+23,Displays,1
+137,Dough,1
+62,Dress,1
+55,Economy car,5
+53,Economy e-car,5
+9,Eggs,0.1
+48,Electric motor,2
+21,Electronic components,1
+32,Electronics research,0
+30,Energy research,0
+73,Ethanol,1
+41,Fabric,0.5
+59,Fashion research,0
+80,Flight computer,1
+133,Flour,0.1
+139,Fodder,1
+127,Frozen pizza,1
+77,Fuselage,2
+126,Ginger beer,1
+45,Glass,1
+61,Gloves,1
+68,Gold ore,10
+69,Golden bars,1000
+6,Grain,0.1
+5,Grapes,1
+129,Hamburger,2
+64,Handbags,1
+87,Heat shield,1
+79,High grade e-comps,1
+88,Ion drive,1
+42,Iron ore,1
+147,Jack o'lantern,1
+89,Jet engine,1
+95,Jumbo jet,2000
+26,Laptops,2
+130,Lasagna,2
+46,Leather,1
+105,Limestone,1
+56,Luxury car,5
+49,Luxury car interior,2
+54,Luxury e-car,5
+96,Luxury jet,1000
+70,Luxury watch,1
+113,Materials research,0
+131,Meat balls,2
+74,Methane,1
+117,Milk,1
+14,Minerals,1
+31,Mining research,0
+27,Monitors,2
+71,Necklace,1
+47,On-board computer,1
+124,Orange juice,1
+4,Oranges,1
+92,Orbital booster,100
+128,Pasta,1
+11,Petrol,1
+116,Pigs,1
+108,Planks,1
+29,Plant research,0
+19,Plastic,1
+1,Power,0
+20,Processors,1
+84,Propellant tank,1
+146,Pumpkin,1
+149,Pumpkin soup,2
+98,Quadcopter,2
+145,Recipes,0
+101,Reinforced concrete,10
+114,Robots,2
+86,Rocket engine,1
+83,Rocket fuel,1
+142,Salad,2
+143,Samosa,2
+44,Sand,1
+99,Satellite,10
+138,Sauce,2
+8,Sausages,0.1
+66,Seeds,0.1
+16,Silicon,1
+97,Single engine plane,100
+24,Smart phones,2
+65,Sneakers,1
+35,Software,0
+85,Solid fuel booster,1
+93,Starship,100
+7,Steak,1
+43,Steel,1
+107,Steel beams,5
+63,Stiletto Heel,1
+90,Sub-orbital 2nd stage,20
+91,Sub-orbital rocket,20
+135,Sugar,1
+72,Sugarcane,0.1
+25,Tablets,2
+28,Televisions,2
+110,Tools,1
+13,Transport,0
+57,Truck,5
+60,Underwear,1
+141,Vegetable oil,1
+120,Vegetables,0.2
+2,Water,0
+109,Windows,1
+78,Wing,2
+148,Witch costume,1
+106,Wood,1
+67,Xmas crackers,0.5
+144,Xmas ornament,0.5

@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Map #<%= @the_map.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/maps">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_map/<%= @the_map.id %>">
+          Delete map
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Owner
+      </dt>
+      <dd>
+        <%= @the_map.owner_id %>
+      </dd>
+
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_map.name %>
+      </dd>
+
+      <dt>
+        Map buildings count
+      </dt>
+      <dd>
+        <%= @the_map.map_buildings_count %>
+      </dd>
+
+      <dt>
+        Executives count
+      </dt>
+      <dd>
+        <%= @the_map.executives_count %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_map.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_map.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit map
+    </h2>
+
+    <form action="/modify_map/<%= @the_map.id %>"  method="post" >
+      <div>
+        <label for="owner_id_box">
+          Owner
+        </label>
+
+        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_map.owner_id %>">
+      </div>
+
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_map.name %>">
+      </div>
+
+      <div>
+        <label for="map_buildings_count_box">
+          Map buildings count
+        </label>
+
+        <input type="text" id="map_buildings_count_box" name="query_map_buildings_count" value="<%= @the_map.map_buildings_count %>">
+      </div>
+
+      <div>
+        <label for="executives_count_box">
+          Executives count
+        </label>
+
+        <input type="text" id="executives_count_box" name="query_executives_count" value="<%= @the_map.executives_count %>">
+      </div>
+
+      <button>
+        Update map
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

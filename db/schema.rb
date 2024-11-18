@@ -10,9 +10,99 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_17_234101) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_17_235048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "buildings", force: :cascade do |t|
+    t.string "name"
+    t.float "wage_cost_per_hour"
+    t.float "construction_price"
+    t.string "description"
+    t.integer "map_buildings_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "comment_text"
+    t.integer "map_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "executives", force: :cascade do |t|
+    t.integer "name"
+    t.integer "map_id"
+    t.integer "position"
+    t.integer "operations_level"
+    t.integer "finance_level"
+    t.integer "marketing_level"
+    t.integer "research_level"
+    t.float "salary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "map_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "map_buildings", force: :cascade do |t|
+    t.integer "map_id"
+    t.integer "building_id"
+    t.integer "position_id"
+    t.integer "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "maps", force: :cascade do |t|
+    t.integer "owner_id"
+    t.string "name"
+    t.integer "map_buildings_count"
+    t.integer "executives_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.integer "resource_id"
+    t.string "quality_level"
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "productionruns", force: :cascade do |t|
+    t.integer "product_id"
+    t.string "quality_level"
+    t.time "production_time"
+    t.integer "map_building_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "resourcedependencies", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "input_id"
+    t.float "quantity_required"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.string "name"
+    t.float "transport_amount"
+    t.integer "building_id"
+    t.time "production_time_per_unit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

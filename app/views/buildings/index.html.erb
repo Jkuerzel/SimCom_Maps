@@ -1,0 +1,150 @@
+<div>
+  <div>
+    <h1>
+      List of all buildings
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new building
+    </h2>
+
+    <form action="/insert_building" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="wage_cost_per_hour_box">
+          Wage cost per hour
+        </label>
+
+        <input type="text" id="wage_cost_per_hour_box" name="query_wage_cost_per_hour">
+      </div>
+
+      <div>
+        <label for="construction_price_box">
+          Construction price
+        </label>
+
+        <input type="text" id="construction_price_box" name="query_construction_price">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <input type="text" id="description_box" name="query_description">
+      </div>
+
+      <div>
+        <label for="map_buildings_count_box">
+          Map buildings count
+        </label>
+
+        <input type="text" id="map_buildings_count_box" name="query_map_buildings_count">
+      </div>
+
+      <button>
+        Create building
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Wage cost per hour
+        </th>
+
+        <th>
+          Construction price
+        </th>
+
+        <th>
+          Description
+        </th>
+
+        <th>
+          Map buildings count
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_buildings.each do |a_building| %>
+      <tr>
+        <td>
+          <%= a_building.id %>
+        </td>
+
+        <td>
+          <%= a_building.name %>
+        </td>
+
+        <td>
+          <%= a_building.wage_cost_per_hour %>
+        </td>
+
+        <td>
+          <%= a_building.construction_price %>
+        </td>
+
+        <td>
+          <%= a_building.description %>
+        </td>
+
+        <td>
+          <%= a_building.map_buildings_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_building.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_building.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/buildings/<%= a_building.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

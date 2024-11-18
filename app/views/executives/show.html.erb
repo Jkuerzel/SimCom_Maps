@@ -1,0 +1,176 @@
+<div>
+  <div>
+    <h1>
+      Executive #<%= @the_executive.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/executives">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_executive/<%= @the_executive.id %>">
+          Delete executive
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_executive.name %>
+      </dd>
+
+      <dt>
+        Map
+      </dt>
+      <dd>
+        <%= @the_executive.map_id %>
+      </dd>
+
+      <dt>
+        Position
+      </dt>
+      <dd>
+        <%= @the_executive.position %>
+      </dd>
+
+      <dt>
+        Operations level
+      </dt>
+      <dd>
+        <%= @the_executive.operations_level %>
+      </dd>
+
+      <dt>
+        Finance level
+      </dt>
+      <dd>
+        <%= @the_executive.finance_level %>
+      </dd>
+
+      <dt>
+        Marketing level
+      </dt>
+      <dd>
+        <%= @the_executive.marketing_level %>
+      </dd>
+
+      <dt>
+        Research level
+      </dt>
+      <dd>
+        <%= @the_executive.research_level %>
+      </dd>
+
+      <dt>
+        Salary
+      </dt>
+      <dd>
+        <%= @the_executive.salary %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_executive.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_executive.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit executive
+    </h2>
+
+    <form action="/modify_executive/<%= @the_executive.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_executive.name %>">
+      </div>
+
+      <div>
+        <label for="map_id_box">
+          Map
+        </label>
+
+        <input type="text" id="map_id_box" name="query_map_id" value="<%= @the_executive.map_id %>">
+      </div>
+
+      <div>
+        <label for="position_box">
+          Position
+        </label>
+
+        <input type="text" id="position_box" name="query_position" value="<%= @the_executive.position %>">
+      </div>
+
+      <div>
+        <label for="operations_level_box">
+          Operations level
+        </label>
+
+        <input type="text" id="operations_level_box" name="query_operations_level" value="<%= @the_executive.operations_level %>">
+      </div>
+
+      <div>
+        <label for="finance_level_box">
+          Finance level
+        </label>
+
+        <input type="text" id="finance_level_box" name="query_finance_level" value="<%= @the_executive.finance_level %>">
+      </div>
+
+      <div>
+        <label for="marketing_level_box">
+          Marketing level
+        </label>
+
+        <input type="text" id="marketing_level_box" name="query_marketing_level" value="<%= @the_executive.marketing_level %>">
+      </div>
+
+      <div>
+        <label for="research_level_box">
+          Research level
+        </label>
+
+        <input type="text" id="research_level_box" name="query_research_level" value="<%= @the_executive.research_level %>">
+      </div>
+
+      <div>
+        <label for="salary_box">
+          Salary
+        </label>
+
+        <input type="text" id="salary_box" name="query_salary" value="<%= @the_executive.salary %>">
+      </div>
+
+      <button>
+        Update executive
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

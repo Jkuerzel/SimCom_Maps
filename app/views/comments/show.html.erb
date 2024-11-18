@@ -1,0 +1,101 @@
+<div>
+  <div>
+    <h1>
+      Comment #<%= @the_comment.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/comments">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_comment/<%= @the_comment.id %>">
+          Delete comment
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_comment.user_id %>
+      </dd>
+
+      <dt>
+        Comment text
+      </dt>
+      <dd>
+        <%= @the_comment.comment_text %>
+      </dd>
+
+      <dt>
+        Map
+      </dt>
+      <dd>
+        <%= @the_comment.map_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_comment.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_comment.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit comment
+    </h2>
+
+    <form action="/modify_comment/<%= @the_comment.id %>"  method="post" >
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_comment.user_id %>">
+      </div>
+
+      <div>
+        <label for="comment_text_box">
+          Comment text
+        </label>
+
+        <input type="text" id="comment_text_box" name="query_comment_text" value="<%= @the_comment.comment_text %>">
+      </div>
+
+      <div>
+        <label for="map_id_box">
+          Map
+        </label>
+
+        <input type="text" id="map_id_box" name="query_map_id" value="<%= @the_comment.map_id %>">
+      </div>
+
+      <button>
+        Update comment
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

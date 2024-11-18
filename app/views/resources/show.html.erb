@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Resource #<%= @the_resource.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/resources">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_resource/<%= @the_resource.id %>">
+          Delete resource
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_resource.name %>
+      </dd>
+
+      <dt>
+        Transport amount
+      </dt>
+      <dd>
+        <%= @the_resource.transport_amount %>
+      </dd>
+
+      <dt>
+        Building
+      </dt>
+      <dd>
+        <%= @the_resource.building_id %>
+      </dd>
+
+      <dt>
+        Production time per unit
+      </dt>
+      <dd>
+        <%= @the_resource.production_time_per_unit %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_resource.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_resource.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit resource
+    </h2>
+
+    <form action="/modify_resource/<%= @the_resource.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_resource.name %>">
+      </div>
+
+      <div>
+        <label for="transport_amount_box">
+          Transport amount
+        </label>
+
+        <input type="text" id="transport_amount_box" name="query_transport_amount" value="<%= @the_resource.transport_amount %>">
+      </div>
+
+      <div>
+        <label for="building_id_box">
+          Building
+        </label>
+
+        <input type="text" id="building_id_box" name="query_building_id" value="<%= @the_resource.building_id %>">
+      </div>
+
+      <div>
+        <label for="production_time_per_unit_box">
+          Production time per unit
+        </label>
+
+        <input type="time" id="production_time_per_unit_box" name="query_production_time_per_unit" value="<%= @the_resource.production_time_per_unit %>">
+      </div>
+
+      <button>
+        Update resource
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

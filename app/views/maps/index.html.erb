@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all maps
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new map
+    </h2>
+
+    <form action="/insert_map" method="post">
+      <div>
+        <label for="owner_id_box">
+          Owner
+        </label>
+
+        <input type="text" id="owner_id_box" name="query_owner_id">
+      </div>
+
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="map_buildings_count_box">
+          Map buildings count
+        </label>
+
+        <input type="text" id="map_buildings_count_box" name="query_map_buildings_count">
+      </div>
+
+      <div>
+        <label for="executives_count_box">
+          Executives count
+        </label>
+
+        <input type="text" id="executives_count_box" name="query_executives_count">
+      </div>
+
+      <button>
+        Create map
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Owner
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Map buildings count
+        </th>
+
+        <th>
+          Executives count
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_maps.each do |a_map| %>
+      <tr>
+        <td>
+          <%= a_map.id %>
+        </td>
+
+        <td>
+          <%= a_map.owner_id %>
+        </td>
+
+        <td>
+          <%= a_map.name %>
+        </td>
+
+        <td>
+          <%= a_map.map_buildings_count %>
+        </td>
+
+        <td>
+          <%= a_map.executives_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_map.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_map.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/maps/<%= a_map.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

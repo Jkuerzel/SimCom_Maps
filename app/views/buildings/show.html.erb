@@ -1,0 +1,131 @@
+<div>
+  <div>
+    <h1>
+      Building #<%= @the_building.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/buildings">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_building/<%= @the_building.id %>">
+          Delete building
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_building.name %>
+      </dd>
+
+      <dt>
+        Wage cost per hour
+      </dt>
+      <dd>
+        <%= @the_building.wage_cost_per_hour %>
+      </dd>
+
+      <dt>
+        Construction price
+      </dt>
+      <dd>
+        <%= @the_building.construction_price %>
+      </dd>
+
+      <dt>
+        Description
+      </dt>
+      <dd>
+        <%= @the_building.description %>
+      </dd>
+
+      <dt>
+        Map buildings count
+      </dt>
+      <dd>
+        <%= @the_building.map_buildings_count %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_building.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_building.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit building
+    </h2>
+
+    <form action="/modify_building/<%= @the_building.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_building.name %>">
+      </div>
+
+      <div>
+        <label for="wage_cost_per_hour_box">
+          Wage cost per hour
+        </label>
+
+        <input type="text" id="wage_cost_per_hour_box" name="query_wage_cost_per_hour" value="<%= @the_building.wage_cost_per_hour %>">
+      </div>
+
+      <div>
+        <label for="construction_price_box">
+          Construction price
+        </label>
+
+        <input type="text" id="construction_price_box" name="query_construction_price" value="<%= @the_building.construction_price %>">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <input type="text" id="description_box" name="query_description" value="<%= @the_building.description %>">
+      </div>
+
+      <div>
+        <label for="map_buildings_count_box">
+          Map buildings count
+        </label>
+
+        <input type="text" id="map_buildings_count_box" name="query_map_buildings_count" value="<%= @the_building.map_buildings_count %>">
+      </div>
+
+      <button>
+        Update building
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

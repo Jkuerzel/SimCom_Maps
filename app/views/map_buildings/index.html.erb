@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all map buildings
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new map building
+    </h2>
+
+    <form action="/insert_map_building" method="post">
+      <div>
+        <label for="map_id_box">
+          Map
+        </label>
+
+        <input type="text" id="map_id_box" name="query_map_id">
+      </div>
+
+      <div>
+        <label for="building_id_box">
+          Building
+        </label>
+
+        <input type="text" id="building_id_box" name="query_building_id">
+      </div>
+
+      <div>
+        <label for="position_id_box">
+          Position
+        </label>
+
+        <input type="text" id="position_id_box" name="query_position_id">
+      </div>
+
+      <div>
+        <label for="level_box">
+          Level
+        </label>
+
+        <input type="text" id="level_box" name="query_level">
+      </div>
+
+      <button>
+        Create map building
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Map
+        </th>
+
+        <th>
+          Building
+        </th>
+
+        <th>
+          Position
+        </th>
+
+        <th>
+          Level
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_map_buildings.each do |a_map_building| %>
+      <tr>
+        <td>
+          <%= a_map_building.id %>
+        </td>
+
+        <td>
+          <%= a_map_building.map_id %>
+        </td>
+
+        <td>
+          <%= a_map_building.building_id %>
+        </td>
+
+        <td>
+          <%= a_map_building.position_id %>
+        </td>
+
+        <td>
+          <%= a_map_building.level %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_map_building.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_map_building.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/map_buildings/<%= a_map_building.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

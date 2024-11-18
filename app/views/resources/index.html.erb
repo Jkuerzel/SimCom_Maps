@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all resources
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new resource
+    </h2>
+
+    <form action="/insert_resource" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="transport_amount_box">
+          Transport amount
+        </label>
+
+        <input type="text" id="transport_amount_box" name="query_transport_amount">
+      </div>
+
+      <div>
+        <label for="building_id_box">
+          Building
+        </label>
+
+        <input type="text" id="building_id_box" name="query_building_id">
+      </div>
+
+      <div>
+        <label for="production_time_per_unit_box">
+          Production time per unit
+        </label>
+
+        <input type="time" id="production_time_per_unit_box" name="query_production_time_per_unit">
+      </div>
+
+      <button>
+        Create resource
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Transport amount
+        </th>
+
+        <th>
+          Building
+        </th>
+
+        <th>
+          Production time per unit
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_resources.each do |a_resource| %>
+      <tr>
+        <td>
+          <%= a_resource.id %>
+        </td>
+
+        <td>
+          <%= a_resource.name %>
+        </td>
+
+        <td>
+          <%= a_resource.transport_amount %>
+        </td>
+
+        <td>
+          <%= a_resource.building_id %>
+        </td>
+
+        <td>
+          <%= a_resource.production_time_per_unit %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_resource.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_resource.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/resources/<%= a_resource.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

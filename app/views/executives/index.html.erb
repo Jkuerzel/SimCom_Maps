@@ -1,0 +1,198 @@
+<div>
+  <div>
+    <h1>
+      List of all executives
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new executive
+    </h2>
+
+    <form action="/insert_executive" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="map_id_box">
+          Map
+        </label>
+
+        <input type="text" id="map_id_box" name="query_map_id">
+      </div>
+
+      <div>
+        <label for="position_box">
+          Position
+        </label>
+
+        <input type="text" id="position_box" name="query_position">
+      </div>
+
+      <div>
+        <label for="operations_level_box">
+          Operations level
+        </label>
+
+        <input type="text" id="operations_level_box" name="query_operations_level">
+      </div>
+
+      <div>
+        <label for="finance_level_box">
+          Finance level
+        </label>
+
+        <input type="text" id="finance_level_box" name="query_finance_level">
+      </div>
+
+      <div>
+        <label for="marketing_level_box">
+          Marketing level
+        </label>
+
+        <input type="text" id="marketing_level_box" name="query_marketing_level">
+      </div>
+
+      <div>
+        <label for="research_level_box">
+          Research level
+        </label>
+
+        <input type="text" id="research_level_box" name="query_research_level">
+      </div>
+
+      <div>
+        <label for="salary_box">
+          Salary
+        </label>
+
+        <input type="text" id="salary_box" name="query_salary">
+      </div>
+
+      <button>
+        Create executive
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Map
+        </th>
+
+        <th>
+          Position
+        </th>
+
+        <th>
+          Operations level
+        </th>
+
+        <th>
+          Finance level
+        </th>
+
+        <th>
+          Marketing level
+        </th>
+
+        <th>
+          Research level
+        </th>
+
+        <th>
+          Salary
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_executives.each do |an_executive| %>
+      <tr>
+        <td>
+          <%= an_executive.id %>
+        </td>
+
+        <td>
+          <%= an_executive.name %>
+        </td>
+
+        <td>
+          <%= an_executive.map_id %>
+        </td>
+
+        <td>
+          <%= an_executive.position %>
+        </td>
+
+        <td>
+          <%= an_executive.operations_level %>
+        </td>
+
+        <td>
+          <%= an_executive.finance_level %>
+        </td>
+
+        <td>
+          <%= an_executive.marketing_level %>
+        </td>
+
+        <td>
+          <%= an_executive.research_level %>
+        </td>
+
+        <td>
+          <%= an_executive.salary %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_executive.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_executive.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/executives/<%= an_executive.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

@@ -21,4 +21,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  
+  has_many  :comments, class_name: "Comment", foreign_key: "user_id", dependent: :nullify
+  has_many  :maps, class_name: "Map", foreign_key: "owner_id", dependent: :destroy
+  has_many  :likes, class_name: "Like", foreign_key: "user_id", dependent: :nullify
 end

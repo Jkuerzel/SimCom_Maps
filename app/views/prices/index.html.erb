@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all prices
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new price
+    </h2>
+
+    <form action="/insert_price" method="post">
+      <div>
+        <label for="resource_id_box">
+          Resource
+        </label>
+
+        <input type="text" id="resource_id_box" name="query_resource_id">
+      </div>
+
+      <div>
+        <label for="quality_level_box">
+          Quality level
+        </label>
+
+        <input type="text" id="quality_level_box" name="query_quality_level">
+      </div>
+
+      <div>
+        <label for="price_box">
+          Price
+        </label>
+
+        <input type="text" id="price_box" name="query_price">
+      </div>
+
+      <button>
+        Create price
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Resource
+        </th>
+
+        <th>
+          Quality level
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_prices.each do |a_price| %>
+      <tr>
+        <td>
+          <%= a_price.id %>
+        </td>
+
+        <td>
+          <%= a_price.resource_id %>
+        </td>
+
+        <td>
+          <%= a_price.quality_level %>
+        </td>
+
+        <td>
+          <%= a_price.price %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_price.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_price.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/prices/<%= a_price.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

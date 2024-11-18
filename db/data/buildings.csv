@@ -1,0 +1,36 @@
+id,name,wage_cost_per_hour,construction_price,description
+17,Food processing plant,380.0,86250.0,Food
+21,Mill,380.0,27600.0,Food
+32,Slaughterhouse,414.0,20700.0,Food
+10,Concrete plant,380.0,58650.0,Construction
+11,Construction factory,483.0,72450.0,Construction
+29,Ranch,138.0,10350.0,Agriculture
+14,Farm,104.0,6900.0,Agriculture
+18,General contractor,345.0,48300.0,Construction
+4,Bakery,449.0,37950.0,Food
+5,Beverage factory,241.0,13800.0,Food
+8,Catering,656.0,103500.0,Food
+28,Quarry,276.0,24150.0,Construction
+16,Fashion factory,138.0,13800.0,Fashion
+23,Oil rig,518.0,69000.0,Energy
+26,Power plant,414.0,51750.0,Energy
+30,Refinery,483.0,69000.0,Energy
+1,Aerospace electronics,725.0,141450.0,Electronics
+12,Electronics factory,380.0,82800.0,Electronics
+7,Car factory,449.0,93150.0,Automotive
+2,Aerospace factory,587.0,106950.0,Aerospace
+19,Hangar,759.0,100050.0,Aerospace
+27,Propulsion factory,621.0,103500.0,Aerospace
+34,Vertical integration facility,759.0,113850.0,Aerospace
+13,Factory,414.0,48300.0,Resources
+22,Mine,276.0,24150.0,Resources
+31,Shipping depot,311.0,51750.0,Resources
+35,Water reservoir,345.0,20700.0,Resources
+33,Software R&D,587.0,65550.0,Research
+25,Plant research center,449.0,103500.0,Research
+24,Physics laboratory,587.0,165600.0,Research
+20,Kitchen,518.0,82800.0,Research
+15,Fashion & Design,449.0,72450.0,Research
+9,Chemistry laboratory,414.0,96600.0,Research
+6,Breeding laboratory,414.0,96600.0,Research
+3,Automotive R&D,552.0,138000.0,Research

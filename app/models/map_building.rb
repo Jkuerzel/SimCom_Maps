@@ -18,8 +18,8 @@ class MapBuilding < ApplicationRecord
   #Add Indirect Associations
 
   #Add Validations
-  validates :position_id, format: true
-  validates :position_id, uniqueness: true
-  validates :level, presence: true
-  validates :building_id, presence: true
+  #validates :position_id, format: true
+  #validates :position_id, uniqueness: true
+  #validates :level, presence: true
+  #validates :building_id, presence: true
 end

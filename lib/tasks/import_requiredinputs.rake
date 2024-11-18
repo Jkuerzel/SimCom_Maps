@@ -1,5 +1,5 @@
 namespace :import do
-  desc "Import required inputs data from CSV to RequiredInput model"
+  desc "Import required inputs data from CSV to Resourcedependency model"
   task required_inputs: :environment do
     require 'csv'
 
@@ -15,22 +15,24 @@ namespace :import do
     # Import each row from the CSV
     CSV.foreach(csv_path, headers: true) do |row|
       product_id = row["product_id"]
-      resource_id = row["resource_id"]
+      input_id = row["input_id"]
       quantity_required = row["quantity_required"]
 
-      # Directly create RequiredInput record without verifying Product existence
-      if Resource.exists?(id: resource_id)
-        RequiredInput.create!(
-          product_id: product_id,
-          resource_id: resource_id,
-          quantity_required: quantity_required
-        )
-        puts "Successfully imported RequiredInput: Product ID #{product_id}, Resource ID #{resource_id}"
+      # Initialize a new Resourcedependency instance
+      dependency = Resourcedependency.new(
+        product_id: product_id,
+        input_id: input_id,
+        quantity_required: quantity_required
+      )
+
+      # Save without validations
+      if dependency.save(validate: false)
+        puts "Successfully imported Resourcedependency: Product ID #{product_id}, Input ID #{input_id}"
       else
-        puts "Skipping row with non-existent resource_id: #{resource_id}"
+        puts "Failed to save Resourcedependency for Product ID #{product_id} and Input ID #{input_id}"
       end
     end
 
-    puts "Required inputs data import completed!"
+    puts "Resourcedependency data import completed!"
   end
 end

@@ -1,5 +1,5 @@
 namespace :import do
-  desc "Import building data from CSV to Building model"
+  desc "Reset and import buildings data from CSV to Building model"
   task buildings: :environment do
     require 'csv'
 
@@ -12,12 +12,30 @@ namespace :import do
       exit
     end
 
+    # Destroy all existing Building records
+    Building.delete_all
+    puts "All existing Building records deleted."
+
     # Import each row from the CSV
-    CSV.foreach(csv_path, headers: true) do |row|
-      # Create a new Building record with the row data
-      Building.create!(row.to_hash)
+    CSV.foreach(csv_path, headers: true, col_sep: ';') do |row|
+      building_attributes = {
+        id: row["id"],
+        name: row["name"],
+        wage_cost_per_hour: row["wage_cost_per_hour"],
+        construction_price: row["construction_price"],
+        description: row["description"],
+        image_link: row["image_link"]
+      }
+
+      # Directly create Building record without validations
+      building = Building.new(building_attributes)
+      if building.save(validate: false)
+        puts "Successfully imported Building ID #{building.id} - #{building.name}"
+      else
+        puts "Failed to import Building ID #{building.id} - #{building.name}"
+      end
     end
 
-    puts "Buildings data imported successfully!"
+    puts "Buildings data import completed!"
   end
 end

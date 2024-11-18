@@ -1,146 +1,146 @@
-id,name,transport_amount
-100,Aerospace research,0
-18,Aluminium,1
-125,Apple cider,1
-123,Apple pie,2
-3,Apples,1
-82,Attitude control,1
-58,Automotive research,0
-94,BFR,2000
-50,Basic interior,2
-22,Batteries,1
-15,Bauxite,1
-121,Bread,1
-33,Breeding research,0
-102,Bricks,1
-112,Bulldozer,5
-134,Butter,1
-51,Car body,2
-76,Carbon composite,1
-75,Carbon fibers,0.1
-103,Cement,1
-122,Cheese,1
-17,Chemicals,1
-34,Chemistry research,0
-140,Chocolate,1
-104,Clay,1
-81,Cockpit,1
-132,Cocktails,2
-136,Cocoa,0.1
-118,Coffee beans,0.1
-119,Coffee powder,1
-52,Combustion engine,2
-111,Construction units,0
-40,Cotton,0.5
-115,Cows,1
-10,Crude oil,1
-12,Diesel,1
-23,Displays,1
-137,Dough,1
-62,Dress,1
-55,Economy car,5
-53,Economy e-car,5
-9,Eggs,0.1
-48,Electric motor,2
-21,Electronic components,1
-32,Electronics research,0
-30,Energy research,0
-73,Ethanol,1
-41,Fabric,0.5
-59,Fashion research,0
-80,Flight computer,1
-133,Flour,0.1
-139,Fodder,1
-127,Frozen pizza,1
-77,Fuselage,2
-126,Ginger beer,1
-45,Glass,1
-61,Gloves,1
-68,Gold ore,10
-69,Golden bars,1000
-6,Grain,0.1
-5,Grapes,1
-129,Hamburger,2
-64,Handbags,1
-87,Heat shield,1
-79,High grade e-comps,1
-88,Ion drive,1
-42,Iron ore,1
-147,Jack o'lantern,1
-89,Jet engine,1
-95,Jumbo jet,2000
-26,Laptops,2
-130,Lasagna,2
-46,Leather,1
-105,Limestone,1
-56,Luxury car,5
-49,Luxury car interior,2
-54,Luxury e-car,5
-96,Luxury jet,1000
-70,Luxury watch,1
-113,Materials research,0
-131,Meat balls,2
-74,Methane,1
-117,Milk,1
-14,Minerals,1
-31,Mining research,0
-27,Monitors,2
-71,Necklace,1
-47,On-board computer,1
-124,Orange juice,1
-4,Oranges,1
-92,Orbital booster,100
-128,Pasta,1
-11,Petrol,1
-116,Pigs,1
-108,Planks,1
-29,Plant research,0
-19,Plastic,1
-1,Power,0
-20,Processors,1
-84,Propellant tank,1
-146,Pumpkin,1
-149,Pumpkin soup,2
-98,Quadcopter,2
-145,Recipes,0
-101,Reinforced concrete,10
-114,Robots,2
-86,Rocket engine,1
-83,Rocket fuel,1
-142,Salad,2
-143,Samosa,2
-44,Sand,1
-99,Satellite,10
-138,Sauce,2
-8,Sausages,0.1
-66,Seeds,0.1
-16,Silicon,1
-97,Single engine plane,100
-24,Smart phones,2
-65,Sneakers,1
-35,Software,0
-85,Solid fuel booster,1
-93,Starship,100
-7,Steak,1
-43,Steel,1
-107,Steel beams,5
-63,Stiletto Heel,1
-90,Sub-orbital 2nd stage,20
-91,Sub-orbital rocket,20
-135,Sugar,1
-72,Sugarcane,0.1
-25,Tablets,2
-28,Televisions,2
-110,Tools,1
-13,Transport,0
-57,Truck,5
-60,Underwear,1
-141,Vegetable oil,1
-120,Vegetables,0.2
-2,Water,0
-109,Windows,1
-78,Wing,2
-148,Witch costume,1
-106,Wood,1
-67,Xmas crackers,0.5
-144,Xmas ornament,0.5
+id;name;transport_amount;building_id;units_per_hour;image_link
+100;Aerospace research;0;;;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/aero-research.png
+18;Aluminium;1;13;130.21;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/aluminium.png
+125;Apple cider;1;5;36.56;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/apple-cider.png
+123;Apple pie;2;4;5.98;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/apple-pie.png
+3;Apples;1;14;202.19;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/apples.png
+82;Attitude control;1;1;2.72;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/attitude-control.png
+58;Automotive research;0;3;4.19;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/automotive-research.png
+94;BFR;2000;34;0.21;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/BFR.png
+50;Basic interior;2;7;31.89;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/car-interior.png
+22;Batteries;1;12;25.26;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/batteries.png
+15;Bauxite;1;22;84.94;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/bauxite.png
+121;Bread;1;4;11.96;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/bread.png
+33;Breeding research;0;6;3.85;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/breeding-research.png
+102;Bricks;1;10;367.35;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/bricks.png
+112;Bulldozer;5;7;5.97;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/bulldozer.png
+134;Butter;1;17;13.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/butter.png
+51;Car body;2;7;23.92;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/car-body.png
+76;Carbon composite;1;13;68.45;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/carbon-composite.png
+75;Carbon fibers;0.1;30;245.11;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/carbon-fiber.png
+103;Cement;1;10;298.47;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cement.png
+122;Cheese;1;17;5.12;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cheese.png
+17;Chemicals;1;13;213.91;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/chemicals.png
+34;Chemistry research;0;9;4.71;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/chemistry-research.png
+140;Chocolate;1;17;47.44;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/chocolate.png
+104;Clay;1;28;949.32;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/clay.png
+81;Cockpit;1;1;2.26;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cockpit.png
+132;Cocktails;2;8;0.52;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cocktails.png
+136;Cocoa;0.1;14;169.8387;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cocoa-beans.png
+118;Coffee beans;0.1;14;412.4681;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/coffee-beans.png
+119;Coffee powder;1;21;22.96;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/coffee-ground.png
+52;Combustion engine;2;27;5.6;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/combustion-engine.png
+111;Construction units;0;18;0.99;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/construction-units.png
+40;Cotton;0.5;14;258.8;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cotton.png
+115;Cows;1;29;37.68;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/cow.png
+10;Crude oil;1;23;36.54;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/crude-oil.png
+12;Diesel;1;30;115.13;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/diesel.png
+23;Displays;1;12;32.14;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/displays.png
+137;Dough;1;4;11.96;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/dough.png
+62;Dress;1;16;150.7;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/dress.png
+55;Economy car;5;7;13.95;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/economy-car.png
+53;Economy e-car;5;7;19.93;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/economy-e-car.png
+9;Eggs;0.1;29;316.47;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/eggs.png
+48;Electric motor;2;27;30.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/electric-motor.png
+21;Electronic components;1;12;41.33;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/electronic-components.png
+32;Electronics research;0;24;2.4;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/electronics-research.png
+30;Energy research;0;24;3.3;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/energy-research.png
+73;Ethanol;1;5;60.94;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/ethanol.png
+41;Fabric;0.5;16;241.12;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/fabric.png
+59;Fashion research;0;15;6.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/fashion-research.png
+80;Flight computer;1;1;2.26;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/flight-computer.png
+133;Flour;0.1;21;87.25;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/flour.png
+139;Fodder;1;21;284.7;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/fodder.png
+127;Frozen pizza;1;17;9.18;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/pizza.png
+77;Fuselage;2;2;3.3;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/fuselage.png
+126;Ginger beer;1;5;73.13;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/ginger-beer.png
+45;Glass;1;13;128.35;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/glass.png
+61;Gloves;1;16;143.17;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/gloves.png
+68;Gold ore;10;22;49.96;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/gold-ore.png
+69;Golden bars;1000;13;29.95;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/golden-bars.png
+6;Grain;0.1;14;808.75;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/grain.png
+5;Grapes;1;14;161.75;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/grapes.png
+129;Hamburger;2;8;0.52;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/hamburger.png
+64;Handbags;1;16;67.82;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/handbags.png
+87;Heat shield;1;2;12.01;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/heat-shield.png
+79;High grade e-comps;1;12;1.84;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/high-grade-e-components.png
+88;Ion drive;1;27;0.56;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/ion-drive.png
+42;Iron ore;1;22;159.89;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/iron-ore.png
+147;Jack o'lantern;1;12;284.7;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/jack-o-lantern.png
+89;Jet engine;1;27;0.84;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/jet-engine.png
+95;Jumbo jet;2000;19;0.06;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/jumbojet2.png
+26;Laptops;2;12;9.18;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/laptops.png
+130;Lasagna;2;8;1.56;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/lasagna.png
+46;Leather;1;29;30.14;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/leather.png
+105;Limestone;1;28;699.5;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/limestone.png
+56;Luxury car;5;7;1.99;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/luxury-car.png
+49;Luxury car interior;2;7;19.93;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/luxury-car-interior.png
+54;Luxury e-car;5;7;3.99;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/luxury-e-car.png
+96;Luxury jet;1000;19;0.17;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/private-jet.png
+70;Luxury watch;1;16;18.84;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/gold-watch.png
+113;Materials research;0;9;3.419;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/materials-research.png
+131;Meat balls;2;8;1.04;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/meatballs.png
+74;Methane;1;23;48.72;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/methane.png
+117;Milk;1;29;120.56;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/milk.png
+14;Minerals;1;22;104.92;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/minerals.png
+31;Mining research;0;24;3;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/mining-research.png
+27;Monitors;2;12;18.37;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/monitors.png
+71;Necklace;1;16;41.44;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/necklace.png
+47;On-board computer;1;12;13.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/on-board-computer.png
+124;Orange juice;1;5;91.41;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/orange-juice.png
+4;Oranges;1;14;186.01;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/oranges.png
+92;Orbital booster;100;2;1.5;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/orbital-booster.png
+128;Pasta;1;17;18.37;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/pasta.png
+11;Petrol;1;30;111.41;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/petrol.png
+116;Pigs;1;29;82.89;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/pig.png
+108;Planks;1;11;115.1304348;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/planks.png
+29;Plant research;0;25;4.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/plant-research.png
+19;Plastic;1;30;204.2580645;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/plastic.png
+1;Power;0;26;2566.94;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/power.png
+20;Processors;1;12;9.18;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/processors.png
+84;Propellant tank;1;2;4.51;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/fuel-tank.png
+146;Pumpkin;1;14;4.12;https://d1fxy698ilbz6u.cloudfront.net/static/images/ico/seasonal-icon-plain.png
+149;Pumpkin soup;2;8;2.09;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/pumpkin-soup.png
+98;Quadcopter;2;1;12.45;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/quadcopter.png
+145;Recipes;0;20;3.81;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/recipes.png
+101;Reinforced concrete;10;10;188.27;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/reinforced-concrete.png
+114;Robots;2;12;2.3;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/robots.png
+86;Rocket engine;1;27;0.28;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/rocket-engine.png
+83;Rocket fuel;1;30;77.9893617;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/rocket-fuel.png
+142;Salad;2;8;2.09;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/salad.png
+143;Samosa;2;8;1.83;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/samosas.png
+44;Sand;1;28;1249.11;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sand.png
+99;Satellite;10;1;0.11;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/satellite.png
+138;Sauce;2;8;0.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/gravy-boat.png
+8;Sausages;0.1;32;77.01;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sausages.png
+66;Seeds;0.1;14;889.63;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/seeds.png
+16;Silicon;1;13;154.02;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/silicon.png
+97;Single engine plane;100;19;1.48;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/single-engine.png
+24;Smart phones;2;12;11.48;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/smart-phones.png
+65;Sneakers;1;16;173.31;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sneakers.png
+35;Software;0;33;5.71;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/software.png
+85;Solid fuel booster;1;27;0.28;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/solid-rocket.png
+93;Starship;100;2;0.3;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/starship.png
+7;Steak;1;32;25.67;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/steak.png
+43;Steel;1;13;192.52;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/steel.png
+107;Steel beams;5;11;129.98;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/steel-beams.png
+63;Stiletto Heel;1;16;97.96;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/simmi-shoes.png
+90;Sub-orbital 2nd stage;20;2;3;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sub-orbital-second-stage.png
+91;Sub-orbital rocket;20;34;0.63;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sub-orbital-rocket2.png
+135;Sugar;1;17;41.33;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sugar.png
+72;Sugarcane;0.1;14;647;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/sugarcane.png
+25;Tablets;2;12;11.48;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/tablets.png
+28;Televisions;2;12;16.07;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/televisions.png
+110;Tools;1;11;26;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/tools.png
+13;Transport;0;31;3173.95;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/transport.png
+57;Truck;5;7;4.78;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/truck.png
+60;Underwear;1;16;165.77;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/underwear.png
+141;Vegetable oil;1;17;36.74;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/vegetable-oil.png
+120;Vegetables;0.2;14;283.06;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/vegetables.png
+2;Water;0;35;1626.43;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/water.png
+109;Windows;1;11;16.71;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/windows.png
+78;Wing;2;2;8.11;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/wing.png
+148;Witch costume;1;16;120.56;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/witch-costume.png
+106;Wood;1;14;76.83;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/wood.png
+67;Xmas crackers;0.5;13;222.47;https://d1fxy698ilbz6u.cloudfront.net/static/images/ico/seasonal-icon-plain.png
+144;Xmas ornament;0.5;13;179.69;https://d1fxy698ilbz6u.cloudfront.net/static/images/resources/xmas-ornament.png

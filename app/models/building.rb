@@ -5,6 +5,7 @@
 #  id                  :bigint           not null, primary key
 #  construction_price  :float
 #  description         :string
+#  image_link          :string
 #  map_buildings_count :integer
 #  name                :string
 #  wage_cost_per_hour  :float

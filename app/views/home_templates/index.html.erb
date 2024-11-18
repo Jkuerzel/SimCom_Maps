@@ -1,1 +1,17 @@
 <h1>Home</h1>
+<div>
+  <img src="<%= @the_building.image_link %>" alt="Description of the image" style="width: 200px; height: 200px;">
+</div>
+
+<div>
+<% @the_building.products.each do |product| %>
+  <img src="<%= product.image_link %>" alt="Description of the image" style="width: 50px; height: 50px;">
+<% end %>
+</div>
+
+<div>
+Production per hour: <%=@the_resource.units_per_hour%> Units
+</div>
+<div>
+Transport needed: <%=@the_resource.transport_amount%> Units
+</div>

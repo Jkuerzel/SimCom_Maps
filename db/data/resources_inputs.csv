@@ -1,4 +1,4 @@
-product_id,resource_id,quantity_required
+product_id,input_id,quantity_required
 100,91,1
 100,94,1
 18,1,15

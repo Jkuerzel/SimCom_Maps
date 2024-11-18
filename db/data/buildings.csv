@@ -1,36 +1,36 @@
-id,name,wage_cost_per_hour,construction_price,description
-17,Food processing plant,380.0,86250.0,Food
-21,Mill,380.0,27600.0,Food
-32,Slaughterhouse,414.0,20700.0,Food
-10,Concrete plant,380.0,58650.0,Construction
-11,Construction factory,483.0,72450.0,Construction
-29,Ranch,138.0,10350.0,Agriculture
-14,Farm,104.0,6900.0,Agriculture
-18,General contractor,345.0,48300.0,Construction
-4,Bakery,449.0,37950.0,Food
-5,Beverage factory,241.0,13800.0,Food
-8,Catering,656.0,103500.0,Food
-28,Quarry,276.0,24150.0,Construction
-16,Fashion factory,138.0,13800.0,Fashion
-23,Oil rig,518.0,69000.0,Energy
-26,Power plant,414.0,51750.0,Energy
-30,Refinery,483.0,69000.0,Energy
-1,Aerospace electronics,725.0,141450.0,Electronics
-12,Electronics factory,380.0,82800.0,Electronics
-7,Car factory,449.0,93150.0,Automotive
-2,Aerospace factory,587.0,106950.0,Aerospace
-19,Hangar,759.0,100050.0,Aerospace
-27,Propulsion factory,621.0,103500.0,Aerospace
-34,Vertical integration facility,759.0,113850.0,Aerospace
-13,Factory,414.0,48300.0,Resources
-22,Mine,276.0,24150.0,Resources
-31,Shipping depot,311.0,51750.0,Resources
-35,Water reservoir,345.0,20700.0,Resources
-33,Software R&D,587.0,65550.0,Research
-25,Plant research center,449.0,103500.0,Research
-24,Physics laboratory,587.0,165600.0,Research
-20,Kitchen,518.0,82800.0,Research
-15,Fashion & Design,449.0,72450.0,Research
-9,Chemistry laboratory,414.0,96600.0,Research
-6,Breeding laboratory,414.0,96600.0,Research
-3,Automotive R&D,552.0,138000.0,Research
+id;name;wage_cost_per_hour;construction_price;description;image_link;
+1;Aerospace electronics;725;141450;Electronics;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/aero-electronics-2-lvl1.png
+2;Aerospace factory;587;106950;Aerospace;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/aerospace-2-lvl1.png
+3;Automotive R&D;552;138000;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/race-track-lvl1.png
+4;Bakery;449;37950;Food;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/bakery-lvl1.png
+5;Beverage factory;241;13800;Food;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/beverage-factory-lvl1.png
+6;Breeding laboratory;414;96600;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/breeding-research-lvl1.png
+7;Car factory;449;93150;Automotive;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/carfactory-lvl1.png
+8;Catering;656;103500;Food;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/catering-lvl1.png
+9;Chemistry laboratory;414;96600;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/chemistry-research-lvl1.png
+10;Concrete plant;380;58650;Construction;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/concrete-plant-lvl1.png
+11;Construction factory;483;72450;Construction;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/construction-factory-lvl1.png
+12;Electronics factory;380;82800;Electronics;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/efactory4-lvl1.png
+13;Factory;414;48300;Resources;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/factory-lvl1.png
+14;Farm;104;6900;Agriculture;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/plantation-lvl1.png
+15;Fashion & Design;449;72450;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/fashion-research-lvl1.png
+16;Fashion factory;138;13800;Fashion;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/clothsfactory-lvl1.png
+17;Food processing plant;380;86250;Food;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/food-processing-lvl1.png
+18;General contractor;345;48300;Construction;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/general-contractor-lvl1.png
+19;Hangar;759;100050;Aerospace;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/horizontal-integration-lvl1.png
+20;Kitchen;518;82800;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/kitchen-lvl1.png
+21;Mill;380;27600;Food;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/mill-lvl1.png
+22;Mine;276;24150;Resources;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/mine-lvl1.png
+23;Oil rig;518;69000;Energy;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/oilrig-lvl1.png
+24;Physics laboratory;587;165600;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/physics-lab-lvl1.png
+25;Plant research center;449;103500;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/plantresearch.png
+26;Power plant;414;51750;Energy;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/powerplant-lvl1.png
+27;Propulsion factory;621;103500;Aerospace;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/propulsion-2-lvl1.png
+28;Quarry;276;24150;Construction;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/quarry-lvl1.png
+29;Ranch;138;10350;Agriculture;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/farm-lvl1.png
+30;Refinery;483;69000;Energy;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/refinery-lvl1.png
+31;Shipping depot;311;51750;Resources;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/shipping-lvl1.png
+32;Slaughterhouse;414;20700;Food;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/slaughterhouse-lvl1.png
+33;Software R&D;587;65550;Research;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/swresearch.png
+34;Vertical integration facility;759;113850;Aerospace;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/vertical-integration-lvl1.png
+35;Water reservoir;345;20700;Resources;https://d1fxy698ilbz6u.cloudfront.net/static/images/landscape/reservoir-lvl1.png

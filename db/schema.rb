@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_17_235048) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_18_015914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_17_235048) do
     t.integer "map_buildings_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_link"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -99,9 +100,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_17_235048) do
     t.string "name"
     t.float "transport_amount"
     t.integer "building_id"
-    t.time "production_time_per_unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_link"
+    t.decimal "units_per_hour"
   end
 
   create_table "users", force: :cascade do |t|

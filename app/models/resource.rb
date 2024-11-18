@@ -2,13 +2,14 @@
 #
 # Table name: resources
 #
-#  id                       :bigint           not null, primary key
-#  name                     :string
-#  production_time_per_unit :time
-#  transport_amount         :float
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  building_id              :integer
+#  id               :bigint           not null, primary key
+#  image_link       :string
+#  name             :string
+#  transport_amount :float
+#  units_per_hour   :decimal(, )
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  building_id      :integer
 #
 class Resource < ApplicationRecord
   #Add Direct Associations

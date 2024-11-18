@@ -21,5 +21,8 @@ class MapBuilding < ApplicationRecord
   #validates :position_id, format: true
   #validates :position_id, uniqueness: true
   #validates :level, presence: true
-  #validates :building_id, presence: true
+  # Ensure `position_id` is within the allowed range
+  validates :position_id, inclusion: { in: 1..18, message: "must be between 1 and 18" }
+  # Ensure `position_id` is unique per `map_id`
+  validates :position_id, uniqueness: { scope: :map_id, message: "already taken for this map" }
 end

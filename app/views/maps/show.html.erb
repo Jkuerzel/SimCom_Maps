@@ -1,116 +1,127 @@
 <div>
   <div>
     <h1>
-      Map #<%= @the_map.id %> details
+      <%= @the_map.name %> - details
     </h1>
 
+    <% matching_buildings = @the_map.map_buildings %>
+
+    <% if matching_buildings.empty? %>
+      <p>Build something</p>
+    <% else %>
+      <% matching_buildings.each do |the_building| %>
+        <div class="image-container">
+          <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 100px; height: 100px;">
+        </div>
+      <% end %>
+    <% end %>
+
+
+
+    
+  </div>
+</div>
+
+<hr>
+
+<%if @the_map.owner_id==current_user.id%>
+  <div>
+    <div>
+      <h2>
+        Edit map
+      </h2>
+
+      <form action="/modify_map/<%= @the_map.id %>"  method="post" >
+      <div>
+          <label for="name_box">
+            Name
+          </label>
+
+          <input type="text" id="name_box" name="query_name" value="<%= @the_map.name %>">
+        </div>
+
+        <button>
+          Update map
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <div>
+      <h2>
+        Add a new map building
+      </h2>
+
+      <form action="/insert_map_building" method="post">
+        <input type="hidden" name="map_id" value="<%= @the_map.id %>">
+
+        <div>
+          <label for="building_id_box">
+            Building
+          </label>
+          <input type="text" id="building_id_box" name="query_building_id">
+        </div>
+
+        <div>
+          <label for="position_id_box">
+            Position
+          </label>
+          <input type="text" id="position_id_box" name="query_position_id">
+        </div>
+
+        <div>
+          <label for="level_box">
+            Level
+          </label>
+          <input type="text" id="level_box" name="query_level">
+        </div>
+
+        <button>
+          Create map building
+        </button>
+      </form>
+    </div>
+  </div>
+<%end%>
+
+<div>
+<dl>
+    <dt>
+      Owner
+    </dt>
+    <dd>
+      <%= @the_map.owner.email %>
+    </dd>
+
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_map.created_at) %> ago
+    </dd>
+
+    <dt>
+      Updated at
+    </dt>
+    <dd>
+      <%= time_ago_in_words(@the_map.updated_at) %> ago
+    </dd>
+  </dl>
+</div>
     <div>
       <div>
         <a href="/maps">
           Go back
         </a>
       </div>
-
+      <%if @the_map.owner_id==current_user.id%>
       <div>
         <a href="/delete_map/<%= @the_map.id %>">
           Delete map
         </a>
       </div>
+      <%end%>
     </div>
-
-    <dl>
-      <dt>
-        Owner
-      </dt>
-      <dd>
-        <%= @the_map.owner_id %>
-      </dd>
-
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_map.name %>
-      </dd>
-
-      <dt>
-        Map buildings count
-      </dt>
-      <dd>
-        <%= @the_map.map_buildings_count %>
-      </dd>
-
-      <dt>
-        Executives count
-      </dt>
-      <dd>
-        <%= @the_map.executives_count %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_map.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_map.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
-
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit map
-    </h2>
-
-    <form action="/modify_map/<%= @the_map.id %>"  method="post" >
-      <div>
-        <label for="owner_id_box">
-          Owner
-        </label>
-
-        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_map.owner_id %>">
-      </div>
-
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name" value="<%= @the_map.name %>">
-      </div>
-
-      <div>
-        <label for="map_buildings_count_box">
-          Map buildings count
-        </label>
-
-        <input type="text" id="map_buildings_count_box" name="query_map_buildings_count" value="<%= @the_map.map_buildings_count %>">
-      </div>
-
-      <div>
-        <label for="executives_count_box">
-          Executives count
-        </label>
-
-        <input type="text" id="executives_count_box" name="query_executives_count" value="<%= @the_map.executives_count %>">
-      </div>
-
-      <button>
-        Update map
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>

@@ -59,17 +59,12 @@ Rails.application.routes.draw do
   # Routes for the Map resource:
 
   # CREATE
-  post("/insert_map", { :controller => "maps", :action => "create" })
-          
+  post("/insert_map", { :controller => "maps", :action => "create" })     
   # READ
   get("/maps", { :controller => "maps", :action => "index" })
-  
   get("/maps/:path_id", { :controller => "maps", :action => "show" })
-  
   # UPDATE
-  
   post("/modify_map/:path_id", { :controller => "maps", :action => "update" })
-  
   # DELETE
   get("/delete_map/:path_id", { :controller => "maps", :action => "destroy" })
 
@@ -190,10 +185,8 @@ Rails.application.routes.draw do
   #------------------------------
 
   devise_for :users
-  root to: "home#index"
+  root to: "home#login"
 
-  # This is a blank app! Pick your first screen, build out the RCAV, and go from there. E.g.:
 
-  # get "/your_first_screen" => "pages#first"
   
 end

@@ -4,7 +4,10 @@ class MapsController < ApplicationController
 
     @list_of_maps = matching_maps.order({ :created_at => :desc })
 
-    render({ :template => "maps/index" })
+    redirect_to("/")
+    return
+    #render({ :template => "maps/index" })
+
   end
 
   def show
@@ -19,11 +22,11 @@ class MapsController < ApplicationController
 
   def create
     the_map = Map.new
-    the_map.owner_id = params.fetch("query_owner_id")
+    the_map.owner_id = current_user.id
     the_map.name = params.fetch("query_name")
-    the_map.map_buildings_count = params.fetch("query_map_buildings_count")
-    the_map.executives_count = params.fetch("query_executives_count")
-
+    the_map.map_buildings_count=0
+    the_map.executives_count=0
+    
     if the_map.valid?
       the_map.save
       redirect_to("/maps", { :notice => "Map created successfully." })

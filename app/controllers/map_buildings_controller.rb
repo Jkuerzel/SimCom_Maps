@@ -19,16 +19,16 @@ class MapBuildingsController < ApplicationController
 
   def create
     the_map_building = MapBuilding.new
-    the_map_building.map_id = params.fetch("query_map_id")
+    the_map_building.map_id = params[:map_id]
     the_map_building.building_id = params.fetch("query_building_id")
     the_map_building.position_id = params.fetch("query_position_id")
     the_map_building.level = params.fetch("query_level")
-
+  
     if the_map_building.valid?
       the_map_building.save
-      redirect_to("/map_buildings", { :notice => "Map building created successfully." })
+      redirect_to("/maps/#{the_map_building.map_id}", notice: "Map building created successfully.")
     else
-      redirect_to("/map_buildings", { :alert => the_map_building.errors.full_messages.to_sentence })
+      redirect_to("/maps/#{the_map_building.map_id}", alert: the_map_building.errors.full_messages.to_sentence)
     end
   end
 

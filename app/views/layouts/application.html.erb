@@ -8,11 +8,52 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+
+<style>
+  /* Flex container to arrange items in a row */
+  .image-row {
+    display: flex;
+    gap: 20px; /* Space between each plate */
+    justify-content: center; /* Center align the row */
+  }
+
+  /* Styling each image container */
+  .image-container {
+    width: 100px;
+    height: 100px;
+    background-color: #d1d1d1; /* Light grey color for the plate */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.3), /* Main shadow */
+                inset -3px -3px 5px rgba(255, 255, 255, 0.5), /* Inner highlight */
+                inset 3px 3px 5px rgba(0, 0, 0, 0.1); /* Inner shadow */
+    transform: translateY(5px); /* Slight lift */
+  }
+
+  .image-container img {
+    width: 80px;
+    height: 80px;
+  }
+</style>
+
+
   </head>
 
   <body>
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
+
+      <%if current_user != nil%>
+        <a href="/users/sign_out">Sign Out</a>
+        <a href="/users/edit">Edit my Account</a>
+      <%else%>
+        <a href="/users/sign_in">Login</a>
+        <a href="/users/sign_up">Create Account</a>
+      <%end%>
+
     <%= yield %>
   </body>
 </html>

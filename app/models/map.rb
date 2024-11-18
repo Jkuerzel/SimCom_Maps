@@ -12,7 +12,7 @@
 #
 class Map < ApplicationRecord
   #Add Direct Associations
-  belongs_to :user, required: true, class_name: "User", foreign_key: "owner_id", counter_cache: true
+  belongs_to :owner, required: true, class_name: "User", foreign_key: "owner_id", counter_cache: true
   has_many  :comments, class_name: "Comment", foreign_key: "map_id", dependent: :destroy
   has_many  :likes, class_name: "Like", foreign_key: "map_id", dependent: :destroy
   has_many  :map_buildings, class_name: "MapBuilding", foreign_key: "map_id", dependent: :destroy

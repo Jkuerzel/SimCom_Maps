@@ -1,0 +1,133 @@
+<h1>SimCom Mapper</h1>
+
+<hr>
+<h2> Most popular maps </h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+
+        <th>
+          Owner
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Map buildings count
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_maps.each do |a_map| %>
+      <tr>
+
+        <td>
+          <%= a_map.owner.email %>
+        </td>
+
+        <td>
+          <%= a_map.name %>
+        </td>
+
+        <td>
+          <%= a_map.map_buildings_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_map.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/maps/<%= a_map.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<h2>My maps</h2>
+<% list_of_my_maps=@list_of_maps.where({:owner_id=>current_user.id})%>
+<% if list_of_my_maps.empty? %>
+  <p>No maps found.</p>
+<% else %>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Map buildings count
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+      <% list_of_my_maps.each do |a_map| %>
+      <tr>
+
+        <td>
+          <%= a_map.name %>
+        </td>
+
+        <td>
+          <%= a_map.map_buildings_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_map.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/maps/<%= a_map.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<%end%>
+
+<% if list_of_my_maps.empty? %>
+  <h2>Create your first map</h2>
+<% else %>
+  <h2>Create a new map</h2>
+<% end %>
+
+<div>
+    <form action="/insert_map" method="post">
+
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <button>
+        Create map
+      </button>
+    </form>
+</div>

@@ -6,4 +6,11 @@ class HomeController < ApplicationController
 
     render({:template=>"home_templates/index"})
   end
+  def login
+
+    @the_resource=Resource.where({:id=>10}).at(0)
+    @the_building=Building.where({:id=>10}).at(0)
+    @list_of_maps=Map.all
+    render({:template=>"home_templates/login"})
+  end
 end

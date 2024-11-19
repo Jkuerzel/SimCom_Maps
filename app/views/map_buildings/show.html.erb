@@ -96,7 +96,7 @@
           <% @the_map_building.product.inputs.each do |input| %>
             <img src="<%= input.image_link %>" style="width: 50px; height: 50px;">
             <% if @the_map_building.quality_level>0%>
-              <% input_price=input.prices.where({quality_level=@the_map_building.quality_level - 1}).at(0).price%>
+              <% input_price=input.prices.where({:quality_level=>@the_map_building.quality_level - 1}).at(0).price%>
               <% #input_price=Price.where(resource_id: input.id, quality_level: @the_map_building.quality_level - 1).at(0).price%>
             <%else%>
               <% input_price=Price.where(resource_id: input.id, quality_level: @the_map_building.quality_level).at(0).price%>

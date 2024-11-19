@@ -1,20 +1,5 @@
 Rails.application.routes.draw do
-  # Routes for the Productionrun resource:
 
-  # CREATE
-  post("/insert_productionrun", { :controller => "productionruns", :action => "create" })
-          
-  # READ
-  get("/productionruns", { :controller => "productionruns", :action => "index" })
-  
-  get("/productionruns/:path_id", { :controller => "productionruns", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_productionrun/:path_id", { :controller => "productionruns", :action => "update" })
-  
-  # DELETE
-  get("/delete_productionrun/:path_id", { :controller => "productionruns", :action => "destroy" })
 
   #------------------------------
 
@@ -51,6 +36,8 @@ Rails.application.routes.draw do
   # UPDATE
   
   post("/modify_map_building/:path_id", { :controller => "map_buildings", :action => "update" })
+  post("/modify_map_building/:path_id/level", { :controller => "map_buildings", :action => "update_level" })
+  post("/modify_map_building/:path_id/type", { :controller => "map_buildings", :action => "update_type" })
   
   # DELETE
   get("/delete_map_building/:path_id", { :controller => "map_buildings", :action => "destroy" })

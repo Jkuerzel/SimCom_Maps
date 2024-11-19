@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_18_160813) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_19_010911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_18_160813) do
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "production_time"
+    t.integer "quality_level"
+    t.integer "product_id"
   end
 
   create_table "maps", force: :cascade do |t|
@@ -75,15 +78,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_18_160813) do
     t.integer "resource_id"
     t.string "quality_level"
     t.float "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "productionruns", force: :cascade do |t|
-    t.integer "product_id"
-    t.string "quality_level"
-    t.time "production_time"
-    t.integer "map_building_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

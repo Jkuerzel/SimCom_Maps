@@ -4,7 +4,7 @@
     <div style="display: block; border: 1px solid red;">
       <div style="display: block; border: 1px solid red;">
         <h1>
-          #<%= @the_map_building.id %> <%= @the_map_building.building_type.name%>
+          <%= @the_map_building.building_type.name%>
         </h1>
 
         <h2>
@@ -19,22 +19,14 @@
     </div>
 
     <hr>
-    <form action="/modify_map_building/<%= @the_map_building.id %>" method="post" style="display: block; border: 1px solid red;">
-      <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
-      <input type="hidden" name="query_building_id" value="<%= @the_map_building.id %>">
-      <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id%>">
+    <form action="/modify_map_building/<%= @the_map_building.id %>/level" method="post" style="display: block; border: 1px solid red;">
       <input type="hidden" name="query_level" value="<%= @the_map_building.level + 1%>">
-
       <button type="submit">
         Level Up
       </button>
     </form>
-    <form action="/modify_map_building/<%= @the_map_building.id %>" method="post" style="display: block; border: 1px solid red;">
-      <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
-      <input type="hidden" name="query_building_id" value="<%= @the_map_building.id %>">
-      <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id%>">
+    <form action="/modify_map_building/<%= @the_map_building.id %>/level" method="post" style="display: block; border: 1px solid red;">
       <input type="hidden" name="query_level" value="<%= @the_map_building.level - 1%>">
-
       <button type="submit">
         Level Down
       </button>
@@ -46,16 +38,11 @@
           Edit map building
         </h2>
 
-        <form action="/modify_map_building/<%= @the_map_building.id %>"  method="post" >
-          <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
-          <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id%>">
-          <input type="hidden" name="query_level" value="<%= @the_map_building.level%>">
-
+        <form action="/modify_map_building/<%= @the_map_building.id %>/type"  method="post" >
           <div style="display: block; border: 1px solid red;">
             <label for="building_id_box">
               Building
             </label>
-
             <input type="text" id="building_id_box" name="query_building_id" value="<%= @the_map_building.building_id %>">
           </div>
 
@@ -83,11 +70,41 @@
     </div>
   </div>
   <div style="flex: 1; border: 1px solid black; padding: 10px;">
-    <div style="flex: 1; border: 1px solid black; padding: 10px;">
-
-      <h2>
+    <!--
+    Current Production Block
+    -->
+    <div style="display: flex; justify-content:center">
+      <h3>
         Show Current Production Setting
-      </h2>
+      </h3>
+    </div>
+    
+    <div style="display: flex; border: 1px solid black; padding: 10px;">
+    <!--Left Side-->
+      <div style="flex: 1; border: 1px solid black; padding: 10px;">
+
+        <img src="<%= @the_map_building.product.image_link %>" style="width: 100px; height: 100px;">
+      </div>
+    <!--Right Side-->
+      <div>
+        <div style="flex: 1; border: 1px solid black; padding: 10px;">
+          <p>Product Exchange Price: <%= @the_map_building.outcome_price.price %> $</p>
+          <p>Production per hour: <%= @the_map_building.product.units_per_hour * @the_map_building.production_time %> Units</p>
+          <p>Quality level: <%= @the_map_building.quality_level %></p>
+        </div>
+        <div style="flex: 1; border: 1px solid black; padding: 10px;">
+          <% @the_map_building.product.inputs.each do |input| %>
+            <img src="<%= input.image_link %>" style="width: 50px; height: 50px;">
+            <% if @the_map_building.quality_level>0%>
+              <% input_price=Price.where(resource_id: input.id, quality_level: @the_map_building.quality_level - 1).at(0).price%>
+            <%else%>
+              <% input_price=Price.where(resource_id: input.id, quality_level: @the_map_building.quality_level).at(0).price%>
+            <%end%>
+            <%=input_price%>$
+            
+          <% end %>
+        </div>
+      </div>
     </div>
     <div style="flex: 1; border: 1px solid black; padding: 10px;">
       <h2>
@@ -96,7 +113,19 @@
       <div class="image-row" style="display: flex; flex-direction: column; gap: 20px;">
         <% @the_map_building.building_type.products.each do |product| %>
           <div class="image-container" style="display: block; border: 1px solid red;">
+            <form action="/modify_map_building/<%= @the_map_building.id %>" method="post">
+              <!-- Hidden attributes -->
+              <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
+              <input type="hidden" name="query_building_id" value="<%= @the_map_building.id %>">
+              <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id %>">
+              <input type="hidden" name="query_level" value="<%= @the_map_building.level %>">
+              <input type="hidden" name="query_production_time" value="<%= @the_map_building.production_time %>">
+              <input type="hidden" name="query_product_id" value="<%= product.id %>">
+              <input type="hidden" name="query_quality_level" value="<%= @the_map_building.quality_level %>">
 
+              <!-- Image as a button -->
+              <input type="image" src="<%= product.image_link %>" alt="Submit" style="width: 100px; height: 100px;">
+            </form>
           </div>
         <% end %>
 

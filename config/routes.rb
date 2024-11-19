@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   # READ
   get("/maps", { :controller => "maps", :action => "index" })
   get("/maps/:path_id", { :controller => "maps", :action => "show" })
-  get("/maps/:path_id/new_building", { :controller => "maps", :action => "new_building" })
+  get("/maps/:path_id/new_building/:position_path", { :controller => "maps", :action => "new_building" })
   # UPDATE
   post("/modify_map/:path_id", { :controller => "maps", :action => "update" })
   # DELETE

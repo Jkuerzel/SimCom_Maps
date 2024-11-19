@@ -3,37 +3,30 @@
     <h1>
       <%= @the_map.name %> - details
     </h1>
-
-    <% matching_buildings = @the_map.map_buildings %>
-
-    <% if matching_buildings.empty? %>
-      <p>Build something</p>
-    <% else %>
-    <div class="image-row">
-      <% matching_buildings.each do |the_building| %>
-        <div class="image-container">
-          <a href="/map_buildings/<%= the_building.id %>">
-            <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 100px; height: 100px;">
-          </a>
-        </div>
-      <% end %>
-      <div class="image-container">
-        <a href="/maps/<%= @the_map.id %>/new_building">
-          <img src="https://media.istockphoto.com/id/688550958/vector/black-plus-sign-positive-symbol.jpg?s=612x612&w=0&k=20&c=0tymWBTSEqsnYYXWeWmJPxMotTGUwaGMGs6BMJvr7X4=">
-        </a>
-      </div>
-    <% end %>
-    </div>
-
-
-
-    
   </div>
 </div>
 
 
 
 <hr>
+<div style="display: flex; flex-wrap:wrap; align-content:flex-start;">
+  <% for the_position_id in 1..18 %>
+  <% the_building = @the_map.map_buildings.find_by(position_id: the_position_id) %>
+  <div class="image-container">
+    <% if the_building %>
+      <a href="/map_buildings/<%= the_building.id %>">
+        <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 100px; height: 100px;">
+      </a>
+    <% else %>
+      <a href="/maps/<%= @the_map.id %>/new_building/<%= the_position_id %>">
+        <img src="https://media.istockphoto.com/id/688550958/vector/black-plus-sign-positive-symbol.jpg?s=612x612&w=0&k=20&c=0tymWBTSEqsnYYXWeWmJPxMotTGUwaGMGs6BMJvr7X4=" alt="Add new building" style="width: 100px; height: 100px;">
+      </a>
+    <% end %>
+  </div>
+<% end %>
+</div>
+<hr>
+
 
 <%if @the_map.owner_id==current_user.id%>
   <div>

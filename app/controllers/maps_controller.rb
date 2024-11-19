@@ -56,8 +56,8 @@ class MapsController < ApplicationController
 
   def new_building
     the_id = params.fetch("path_id")
+    @the_position_id=params.fetch("position_path")
     @the_map = Map.where({ :id => the_id }).at(0)
-
 
     render({ :template => "maps/new" })
   end

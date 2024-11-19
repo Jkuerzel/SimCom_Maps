@@ -4,19 +4,13 @@
 
 <form action="/insert_map_building" method="post">
   <input type="hidden" name="map_id" value="<%= @the_map.id %>">
+  <input type="hidden" name="query_position_id" value="<%= @the_position_id %>">
 
   <div>
     <label for="building_id_box">
       Building
     </label>
     <input type="text" id="building_id_box" name="query_building_id">
-  </div>
-
-  <div>
-    <label for="position_id_box">
-      Position
-    </label>
-    <input type="text" id="position_id_box" name="query_position_id">
   </div>
 
   <div>

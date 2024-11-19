@@ -18,15 +18,17 @@ class ProductionrunsController < ApplicationController
   end
 
   def create
-    the_productionrun = Productionrun.new
+    # Find the existing record by ID or initialize a new one
+    the_productionrun = Productionrun.find_or_initialize_by(id: params.fetch("query_id"))
+  
+    # Update attributes
     the_productionrun.product_id = params.fetch("query_product_id")
     the_productionrun.quality_level = params.fetch("query_quality_level")
     the_productionrun.production_time = params.fetch("query_production_time")
     the_productionrun.map_building_id = params.fetch("query_map_building_id")
-
-    if the_productionrun.valid?
-      the_productionrun.save
-      redirect_to("/productionruns", { :notice => "Productionrun created successfully." })
+  
+    if the_productionrun.save
+      redirect_to("/productionruns", { :notice => "Productionrun created or updated successfully." })
     else
       redirect_to("/productionruns", { :alert => the_productionrun.errors.full_messages.to_sentence })
     end

@@ -1,116 +1,106 @@
-<div>
-  <div>
-    <h1>
-      Map building #<%= @the_map_building.id %> details
-    </h1>
 
-    <div>
-      <div>
-        <a href="/map_buildings">
+<div style="display: flex;">
+  <div style="flex: 0 0 20%; border: 1px solid black; padding: 10px;">
+    <div style="display: block; border: 1px solid red;">
+      <div style="display: block; border: 1px solid red;">
+        <h1>
+          #<%= @the_map_building.id %> <%= @the_map_building.building_type.name%>
+        </h1>
+
+        <h2>
+          Level <%= @the_map_building.level %>
+        </h2>
+        <div class="image-container" style="display: block; border: 1px solid red;">
+          <img src="<%= @the_map_building.building_type.image_link%>">
+        </div>
+        
+        
+      </div>
+    </div>
+
+    <hr>
+    <form action="/modify_map_building/<%= @the_map_building.id %>" method="post" style="display: block; border: 1px solid red;">
+      <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
+      <input type="hidden" name="query_building_id" value="<%= @the_map_building.id %>">
+      <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id%>">
+      <input type="hidden" name="query_level" value="<%= @the_map_building.level + 1%>">
+
+      <button type="submit">
+        Level Up
+      </button>
+    </form>
+    <form action="/modify_map_building/<%= @the_map_building.id %>" method="post" style="display: block; border: 1px solid red;">
+      <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
+      <input type="hidden" name="query_building_id" value="<%= @the_map_building.id %>">
+      <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id%>">
+      <input type="hidden" name="query_level" value="<%= @the_map_building.level - 1%>">
+
+      <button type="submit">
+        Level Down
+      </button>
+    </form>
+
+    <div style="display: block; border: 1px solid red;">
+      <div style="display: block; border: 1px solid red;">
+        <h2>
+          Edit map building
+        </h2>
+
+        <form action="/modify_map_building/<%= @the_map_building.id %>"  method="post" >
+          <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
+          <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id%>">
+          <input type="hidden" name="query_level" value="<%= @the_map_building.level%>">
+
+          <div style="display: block; border: 1px solid red;">
+            <label for="building_id_box">
+              Building
+            </label>
+
+            <input type="text" id="building_id_box" name="query_building_id" value="<%= @the_map_building.building_id %>">
+          </div>
+
+          <button>
+            Update building type
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+
+    <div style="display: block; border: 1px solid red;">
+      <div style="display: block; border: 1px solid red;">
+        <a href="/maps/<%=@the_map_building.user_map.id%>">
           Go back
         </a>
       </div>
 
-      <div>
+      <div style="display: block; border: 1px solid red;">
         <a href="/delete_map_building/<%= @the_map_building.id %>">
           Delete map building
         </a>
       </div>
     </div>
+  </div>
+  <div style="flex: 1; border: 1px solid black; padding: 10px;">
+    <div style="flex: 1; border: 1px solid black; padding: 10px;">
 
-    <dl>
-      <dt>
-        Map
-      </dt>
-      <dd>
-        <%= @the_map_building.map_id %>
-      </dd>
+      <h2>
+        Show Current Production Setting
+      </h2>
+    </div>
+    <div style="flex: 1; border: 1px solid black; padding: 10px;">
+      <h2>
+        Show Possible Products
+      </h2>
+      <div class="image-row" style="display: flex; flex-direction: column; gap: 20px;">
+        <% @the_map_building.building_type.products.each do |product| %>
+          <div class="image-container" style="display: block; border: 1px solid red;">
 
-      <dt>
-        Building
-      </dt>
-      <dd>
-        <%= @the_map_building.building_id %>
-      </dd>
+          </div>
+        <% end %>
 
-      <dt>
-        Position
-      </dt>
-      <dd>
-        <%= @the_map_building.position_id %>
-      </dd>
-
-      <dt>
-        Level
-      </dt>
-      <dd>
-        <%= @the_map_building.level %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_map_building.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_map_building.updated_at) %> ago
-      </dd>
-    </dl>
+      </div>
+    </div>
   </div>
 </div>
-
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit map building
-    </h2>
-
-    <form action="/modify_map_building/<%= @the_map_building.id %>"  method="post" >
-      <div>
-        <label for="map_id_box">
-          Map
-        </label>
-
-        <input type="text" id="map_id_box" name="query_map_id" value="<%= @the_map_building.map_id %>">
-      </div>
-
-      <div>
-        <label for="building_id_box">
-          Building
-        </label>
-
-        <input type="text" id="building_id_box" name="query_building_id" value="<%= @the_map_building.building_id %>">
-      </div>
-
-      <div>
-        <label for="position_id_box">
-          Position
-        </label>
-
-        <input type="text" id="position_id_box" name="query_position_id" value="<%= @the_map_building.position_id %>">
-      </div>
-
-      <div>
-        <label for="level_box">
-          Level
-        </label>
-
-        <input type="text" id="level_box" name="query_level" value="<%= @the_map_building.level %>">
-      </div>
-
-      <button>
-        Update map building
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>

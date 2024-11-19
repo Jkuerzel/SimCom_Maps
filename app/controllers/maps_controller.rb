@@ -46,10 +46,20 @@ class MapsController < ApplicationController
 
     if the_map.valid?
       the_map.save
+      
+
       redirect_to("/maps/#{the_map.id}", { :notice => "Map updated successfully."} )
     else
       redirect_to("/maps/#{the_map.id}", { :alert => the_map.errors.full_messages.to_sentence })
     end
+  end
+
+  def new_building
+    the_id = params.fetch("path_id")
+    @the_map = Map.where({ :id => the_id }).at(0)
+
+
+    render({ :template => "maps/new" })
   end
 
   def destroy

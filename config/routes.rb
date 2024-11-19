@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   # Routes for the Map building resource:
 
   # CREATE
+
   post("/insert_map_building", { :controller => "map_buildings", :action => "create" })
           
   # READ
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
   # READ
   get("/maps", { :controller => "maps", :action => "index" })
   get("/maps/:path_id", { :controller => "maps", :action => "show" })
+  get("/maps/:path_id/new_building", { :controller => "maps", :action => "new_building" })
   # UPDATE
   post("/modify_map/:path_id", { :controller => "maps", :action => "update" })
   # DELETE

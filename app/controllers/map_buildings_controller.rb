@@ -17,6 +17,7 @@ class MapBuildingsController < ApplicationController
     render({ :template => "map_buildings/show" })
   end
 
+
   def create
     the_map_building = MapBuilding.new
     the_map_building.map_id = params[:map_id]

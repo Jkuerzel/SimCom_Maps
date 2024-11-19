@@ -14,7 +14,31 @@ class MapBuildingsController < ApplicationController
 
     @the_map_building = matching_map_buildings.at(0)
 
+    if @the_map_building.quality_level>0
+      @minimum_input_quality=@the_map_building.quality_level - 1
+    else
+      @minimum_input_quality=@the_map_building.quality_level
+    end
+
+    units_produced_per_hour=@the_map_building.product.units_per_hour * @the_map_building.level
+    
+    @cost_per_unit=0
+    @the_map_building.product.inputs.each do |input|
+      amount= @the_map_building.product.dependant_resources.where({:input_id=>input.id}).at(0).quantity_required
+      input_price=input.prices.where({:quality_level=>@minimum_input_quality}).at(0).price
+      @cost_per_unit=@cost_per_unit+amount*input_price
+    end
+
+    @units_per_day=units_produced_per_hour*24
+    @revenue_per_day=units_produced_per_hour*@the_map_building.outcome_price.price*24
+    @wage_cost_per_day=@the_map_building.building_type.wage_cost_per_hour*24
+    @cost_of_input_per_day=@cost_per_unit * units_produced_per_hour*24
+    @profit_per_day=@revenue_per_day-@wage_cost_per_day-@cost_of_input_per_day
+    
+    @transport_amount_per_unit=@the_map_building.product.transport_amount
+
     render({ :template => "map_buildings/show" })
+    
   end
 
 
@@ -89,6 +113,20 @@ class MapBuildingsController < ApplicationController
     the_map_building.building_id = params.fetch("query_building_id")
     product_id=Building.where({:id=>params.fetch("query_building_id")}).first.products.first.id
     the_map_building.product_id = product_id
+  
+    if the_map_building.valid?
+      the_map_building.save
+      redirect_to("/map_buildings/#{the_map_building.id}", { :notice => "Map building updated successfully."} )
+    else
+      redirect_to("/map_buildings/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
+    end
+  end
+
+  def update_product
+    the_id = params.fetch("path_id")
+    the_map_building = MapBuilding.where({ :id => the_id }).at(0)
+  
+    the_map_building.product_id = params.fetch("query_product_id")
   
     if the_map_building.valid?
       the_map_building.save

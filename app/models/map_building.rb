@@ -2,16 +2,17 @@
 #
 # Table name: map_buildings
 #
-#  id              :bigint           not null, primary key
-#  level           :integer
-#  production_time :integer
-#  quality_level   :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  building_id     :integer
-#  map_id          :integer
-#  position_id     :integer
-#  product_id      :integer
+#  id                         :bigint           not null, primary key
+#  level                      :integer
+#  production_buildings_count :integer
+#  production_time            :integer
+#  quality_level              :integer
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  building_id                :integer
+#  map_id                     :integer
+#  position_id                :integer
+#  product_id                 :integer
 #
 class MapBuilding < ApplicationRecord
   #Add Direct Associations

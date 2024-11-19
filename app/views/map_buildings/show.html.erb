@@ -79,31 +79,63 @@
       </h3>
     </div>
     
-    <div style="display: flex; border: 1px solid black; padding: 10px;">
-    <!--Left Side-->
-      <div style="flex: 1; border: 1px solid black; padding: 10px;">
-
-        <img src="<%= @the_map_building.product.image_link %>" style="width: 100px; height: 100px;">
+    <div style="display: flex; justify-content:space-between; border: 1px solid black; padding: 10px;">
+      <!--Left Block-- Produced Product -->
+      <div style="display: flex; flex-direction: column;">
+        <h3>
+          Current Product
+        </h3>
+        <div style="flex: 1; border: 1px solid black; padding: 10px;">
+          <h3> <%=@the_map_building.product.name%> </h3>
+          <img src="<%= @the_map_building.product.image_link %>" style="width: 100px; height: 100px;">
+          <p>Quality level: <%= @the_map_building.quality_level %></p>
+          <p>Transport Units needed: <%=@transport_amount_per_unit%></p>
+        </div>
       </div>
-    <!--Right Side-->
-      <div>
+      <!--Middle Block-- Input Resources -->
+      <div style="display: flex; flex-direction: column;">
+        <h3>
+          Input Resources
+        </h3>
+        <% if @the_map_building&.product&.inputs.present? %>
+        <div style="display: flex; flex-direction: column; border: 1px solid black; padding: 10px;">
+          <% @the_map_building.product.inputs.each do |input| %>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+              <div style="border: 1px solid black;">
+                <img src="<%= input.image_link %>" style="width: 50px; height: 50px;">
+              </div>
+              <div>
+                <% input_price=input.prices.where({:quality_level=>@minimum_input_quality}).at(0).price%>
+                Price per Unit: <%=input_price%> $,
+              </div>
+              <div>
+                Quality: <%=@minimum_input_quality%>,
+              </div>
+              <div>
+                <% amount= @the_map_building.product.dependant_resources.where({:input_id=>input.id}).at(0).quantity_required%>
+                Amount needed: <%=amount%>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <% else %>
+        <div>
+          <p> No Inputs needed!</p>
+        </div>
+        <%end%>
+      </div>
+      <!--Right Block -- Daily outcome -->
+      <div style="display: flex; flex-direction: column;">
+        <h3>
+          Daily outcome
+        </h3>
         <div style="flex: 1; border: 1px solid black; padding: 10px;">
           <p>Product Exchange Price: <%= @the_map_building.outcome_price.price %> $</p>
-          <p>Production per hour: <%= @the_map_building.product.units_per_hour * @the_map_building.production_time %> Units</p>
-          <p>Quality level: <%= @the_map_building.quality_level %></p>
-        </div>
-        <div style="flex: 1; border: 1px solid black; padding: 10px;">
-          <% @the_map_building.product.inputs.each do |input| %>
-            <img src="<%= input.image_link %>" style="width: 50px; height: 50px;">
-            <% if @the_map_building.quality_level>0%>
-              <% input_price=input.prices.where({:quality_level=>@the_map_building.quality_level - 1}).at(0).price%>
-              <% #input_price=Price.where(resource_id: input.id, quality_level: @the_map_building.quality_level - 1).at(0).price%>
-            <%else%>
-              <% input_price=Price.where(resource_id: input.id, quality_level: @the_map_building.quality_level).at(0).price%>
-            <%end%>
-            <%=input_price%>$
-            
-          <% end %>
+          <p> Units per day: <%= @units_per_day %> Units</p>
+          <p> Revenue per day: <%= @revenue_per_day%> $</p>
+          <p> Wage cost per day: <%= @wage_cost_per_day%> $</p>
+          <p> Cost of Input Resources per day: <%= @cost_of_input_per_day%> $</p>
+          <p> Profit per day: <%=@profit_per_day%> $</p>
         </div>
       </div>
     </div>
@@ -111,23 +143,22 @@
       <h2>
         Show Possible Products
       </h2>
-      <div class="image-row" style="display: flex; flex-direction: column; gap: 20px;">
+      <!-- Available Items-->
+      <div style="display: flex; flex-wrap: wrap; align-content: flex-start">
         <% @the_map_building.building_type.products.each do |product| %>
+        <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100px; height: 150px; margin:5px;">
           <div class="image-container" style="display: block; border: 1px solid red;">
-            <form action="/modify_map_building/<%= @the_map_building.id %>" method="post">
+            <form action="/modify_map_building/<%= @the_map_building.id %>/product" method="post">
               <!-- Hidden attributes -->
-              <input type="hidden" name="query_map_id" value="<%= @the_map_building.user_map.id %>">
-              <input type="hidden" name="query_building_id" value="<%= @the_map_building.id %>">
-              <input type="hidden" name="query_position_id" value="<%= @the_map_building.position_id %>">
-              <input type="hidden" name="query_level" value="<%= @the_map_building.level %>">
-              <input type="hidden" name="query_production_time" value="<%= @the_map_building.production_time %>">
               <input type="hidden" name="query_product_id" value="<%= product.id %>">
-              <input type="hidden" name="query_quality_level" value="<%= @the_map_building.quality_level %>">
-
               <!-- Image as a button -->
               <input type="image" src="<%= product.image_link %>" alt="Submit" style="width: 100px; height: 100px;">
             </form>
           </div>
+          <div>
+            <%=product.name%>
+          </div>
+        </div>
         <% end %>
 
       </div>

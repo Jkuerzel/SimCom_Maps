@@ -36,8 +36,8 @@ class MapBuildingsController < ApplicationController
       @cost_per_unit=(@cost_per_unit+amount*@input_price).round(2)
     end
 
-    @product_price = (@the_map_building.outcome_price.price).round(2)
-
+    #@product_price = (@the_map_building.outcome_price.price).round(2)
+    @product_price=Price.where({:resource_id=>@the_map_building.product}).where({:quality_level=>@the_map_building.quality_level}).first.price.round(2)
     
     @units_per_day=units_produced_per_hour*24
     @revenue_per_day=(units_produced_per_hour*@product_price*24).round(2)

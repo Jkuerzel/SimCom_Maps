@@ -1,5 +1,3 @@
-# lib/tasks/import_prices.rake
-
 namespace :import do
   desc "Import prices from CSV file into the prices table"
   task prices: :environment do
@@ -11,6 +9,9 @@ namespace :import do
       puts "File not found: #{file_path}"
       next
     end
+
+    # Clear the current entries in the Price table
+    Price.delete_all
 
     CSV.foreach(file_path, headers: true) do |row|
       Price.create!(

@@ -23,17 +23,27 @@ class MapBuildingsController < ApplicationController
     units_produced_per_hour=@the_map_building.product.units_per_hour * @the_map_building.level
     
     @cost_per_unit=0
+
     @the_map_building.product.inputs.each do |input|
-      amount= @the_map_building.product.dependant_resources.where({:input_id=>input.id}).at(0).quantity_required
-      input_price=input.prices.where({:quality_level=>@minimum_input_quality}).at(0).price
-      @cost_per_unit=@cost_per_unit+amount*input_price
+      amount = @the_map_building.product.dependant_resources.where(input_id: input.id).first&.quantity_required
+    
+      if input.prices.where(quality_level: @minimum_input_quality).exists?
+        @input_price=(input.prices.where(quality_level: @minimum_input_quality).first.price).round(2)
+      else
+        @input_price=0
+      end
+      
+      @cost_per_unit=(@cost_per_unit+amount*@input_price).round(2)
     end
 
+    @product_price = (@the_map_building.outcome_price.price).round(2)
+
+    
     @units_per_day=units_produced_per_hour*24
-    @revenue_per_day=units_produced_per_hour*@the_map_building.outcome_price.price*24
-    @wage_cost_per_day=@the_map_building.building_type.wage_cost_per_hour*24
-    @cost_of_input_per_day=@cost_per_unit * units_produced_per_hour*24
-    @profit_per_day=@revenue_per_day-@wage_cost_per_day-@cost_of_input_per_day
+    @revenue_per_day=(units_produced_per_hour*@product_price*24).round(2)
+    @wage_cost_per_day=(@the_map_building.building_type.wage_cost_per_hour*24).round(2)
+    @cost_of_input_per_day=(@cost_per_unit * units_produced_per_hour*24).round(2)
+    @profit_per_day=(@revenue_per_day-@wage_cost_per_day-@cost_of_input_per_day).round(2)
     
     @transport_amount_per_unit=@the_map_building.product.transport_amount
 
@@ -127,6 +137,20 @@ class MapBuildingsController < ApplicationController
     the_map_building = MapBuilding.where({ :id => the_id }).at(0)
   
     the_map_building.product_id = params.fetch("query_product_id")
+  
+    if the_map_building.valid?
+      the_map_building.save
+      redirect_to("/map_buildings/#{the_map_building.id}", { :notice => "Map building updated successfully."} )
+    else
+      redirect_to("/map_buildings/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
+    end
+  end
+
+  def update_quality
+    the_id = params.fetch("path_id")
+    the_map_building = MapBuilding.where({ :id => the_id }).at(0)
+  
+    the_map_building.quality_level = params.fetch("query_quality_level")
   
     if the_map_building.valid?
       the_map_building.save

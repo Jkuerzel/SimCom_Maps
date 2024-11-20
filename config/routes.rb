@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   post("/modify_map_building/:path_id/level", { :controller => "map_buildings", :action => "update_level" })
   post("/modify_map_building/:path_id/type", { :controller => "map_buildings", :action => "update_type" })
   post("/modify_map_building/:path_id/product", { :controller => "map_buildings", :action => "update_product" })
+  post("/modify_map_building/:path_id/quality_level", { :controller => "map_buildings", :action => "update_quality" })
   
   # DELETE
   get("/delete_map_building/:path_id", { :controller => "map_buildings", :action => "destroy" })

@@ -23,4 +23,8 @@ class Resource < ApplicationRecord
   has_many :products, through: :input_relationships, source: :product
   #Add Validations
   validates :transport_amount, numericality: { greater_than_or_equal_to: 0 }
+
+  def price_for_quality(level)
+    self.prices.where(:quality_level=> level).first.price
+  end
 end

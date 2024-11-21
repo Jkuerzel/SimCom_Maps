@@ -30,4 +30,5 @@ class MapBuilding < ApplicationRecord
   validates :position_id, inclusion: { in: 1..18, message: "must be between 1 and 18" }
   # Ensure `position_id` is unique per `map_id`
   validates :position_id, uniqueness: { scope: :map_id, message: "already taken for this map" }
+  validates :level, presence: true
 end

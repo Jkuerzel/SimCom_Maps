@@ -23,6 +23,19 @@ class Map < ApplicationRecord
   validates :owner_id, presence: true
   validates :name, presence: true
 
+  def production
+
+    # Initialize ledger for all resources
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0 } } }
+
+    self.map_buildings.each do |the_map_building|
+      
+      @ledger[the_map_building.product_id][the_map_building.quality_level][:produced] += (the_map_building.product.units_per_hour*the_map_building.level*24).round(0)
+
+    end
+  
+    @ledger
+  end
   
 
   def total_profit

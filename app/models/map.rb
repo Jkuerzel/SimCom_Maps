@@ -25,24 +25,32 @@ class Map < ApplicationRecord
 
   def production
     # Initialize ledger for all resources
-    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0 } } }
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil } } }
   
-    # Step 1: Populate Produced Resources
+    # Step 1: Populate Produced Resources and Fetch Product Prices
     self.map_buildings.each do |the_map_building|
       product_id = the_map_building.product_id
       quality = the_map_building.quality_level
       @units_per_day = (the_map_building.product.units_per_hour * the_map_building.level * 24).round(2)
   
+      # Add production to ledger
       @ledger[product_id][quality][:produced] += @units_per_day
+  
+      # Fetch and assign product price
+      product_price = the_map_building.product.price_for_quality(quality) rescue 0.0
+      @ledger[product_id][quality][:price] = product_price
+  
+      # Debug: Show product price
+      puts "Product Price for Resource #{product_id} at Quality #{quality}: #{product_price}"
     end
   
-    # Step 1.1: Initialize All Inputs
+    # Step 1.1: Initialize All Inputs and Fetch Input Prices
     self.map_buildings.each do |the_map_building|
       the_map_building.product.inputs.each do |input|
         input_id = input.id
-        @ledger[input_id] ||= {}
         (0..12).each do |quality| # Assuming qualities range from 0 to 12
-          @ledger[input_id][quality] ||= { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0 }
+          price_value = input.price_for_quality(quality) rescue 0.0 # Default to 0.0 if no price is found
+          @ledger[input_id][quality][:price] = price_value
         end
       end
     end
@@ -126,6 +134,8 @@ class Map < ApplicationRecord
   
     @ledger
   end
+  
+  
   
   
   

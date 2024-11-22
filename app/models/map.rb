@@ -31,7 +31,7 @@ class Map < ApplicationRecord
     total_map_levels = self.map_buildings.sum(:level)
   
     # Initialize ledger for all resources
-    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0, wage_cost: 0, administration_wages: 0 } } }
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0 } } }
   
     # Step 1: Populate Produced Resources and Fetch Product Prices
     self.map_buildings.each do |the_map_building|
@@ -146,6 +146,7 @@ class Map < ApplicationRecord
         flow[:transport_needed] = flow[:transport_per_unit] * flow[:excess]
         flow[:transport_cost] = flow[:transport_needed] * transport_unit_price
         flow[:revenue] = flow[:price] * flow[:excess]
+        flow[:cost_of_goods_purchased]=flow[:price] * flow[:purchased]
       end
     end
   

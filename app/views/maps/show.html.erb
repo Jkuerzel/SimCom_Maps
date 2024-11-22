@@ -8,46 +8,50 @@
 
 
 <%@ledger=@the_map.production%>
-<table>
+<table style="border-collapse: collapse; width: 100%; text-align: left;">
   <thead>
     <tr>
-      <th>Resource</th>
-      <th>Quality</th>
-      <th>Produced</th>
-      <th>Consumed</th>
-      <th>Excess</th>
-      <th>Purchased</th>
-      <th>Price</th>
-      <th>Fee paid</th>
-      <th>Transport Units</th>
-      <th>Transport Cost</th>
-      <th>Wage Cost Workers</th>
-      <th>Wage Cost Admin</th>
-      <th>Revenue</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Resource</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Quality</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Produced</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Consumed</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Excess</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Purchased</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Price</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Fee paid</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Transport Units</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Transport Cost</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Wage Cost Workers</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Wage Cost Admin</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Cost of Purchased Goods</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Revenue</th>
     </tr>
   </thead>
   <tbody>
     <% @ledger.each do |resource_id, qualities| %>
       <% qualities.each do |quality, flow| %>
         <tr>
-          <td><%= resource_id %></td>
-          <td><%= quality %></td>
-          <td><%= flow[:produced].round(0) %></td>
-          <td><%= flow[:consumed].round(0) %></td>
-          <td><%= flow[:excess].round(0) %></td>
-          <td><%= flow[:purchased].round(0) %></td>
-          <td><%= flow[:price].round(2) %> $</td>
-          <td><%= flow[:fee_paid].round(2) %></td>
-          <td><%= flow[:transport_needed].round(0) %></td>
-          <td><%= flow[:transport_cost].round(2) %> $</td>
-          <td><%= flow[:wage_cost].round(2) %> $</td>
-          <td><%= flow[:administration_wages].round(2) %> $</td>
-          <td><%= flow[:revenue].round(2) %> $</td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= resource_id %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= quality %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:produced].round(0) %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:consumed].round(0) %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:excess].round(0) %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:purchased].round(0) %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:price].round(2) %> $</td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:fee_paid].round(2) %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:transport_needed].round(0) %></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:transport_cost].round(2) %> $</td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:wage_cost].round(2) %> $</td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:administration_wages].round(2) %> $</td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:cost_of_goods_purchased].round(2) %> $</td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:revenue].round(2) %> $</td>
+          
         </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
+
 
 <hr>
 <div style="display: flex; flex-wrap:wrap; align-content:flex-start;">

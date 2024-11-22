@@ -24,18 +24,113 @@ class Map < ApplicationRecord
   validates :name, presence: true
 
   def production
-
     # Initialize ledger for all resources
-    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0 } } }
-
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0 } } }
+  
+    # Step 1: Populate Produced Resources
     self.map_buildings.each do |the_map_building|
-      
-      @ledger[the_map_building.product_id][the_map_building.quality_level][:produced] += (the_map_building.product.units_per_hour*the_map_building.level*24).round(0)
-
+      product_id = the_map_building.product_id
+      quality = the_map_building.quality_level
+      @units_per_day = (the_map_building.product.units_per_hour * the_map_building.level * 24).round(2)
+  
+      @ledger[product_id][quality][:produced] += @units_per_day
     end
+  
+    # Step 1.1: Initialize All Inputs
+    self.map_buildings.each do |the_map_building|
+      the_map_building.product.inputs.each do |input|
+        input_id = input.id
+        @ledger[input_id] ||= {}
+        (0..12).each do |quality| # Assuming qualities range from 0 to 12
+          @ledger[input_id][quality] ||= { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0 }
+        end
+      end
+    end
+  
+    # Step 2: Populate Consumed Resources and Purchases
+    self.map_buildings.each do |the_map_building|
+      product_id = the_map_building.product_id
+      quality = the_map_building.quality_level
+      produced_amount = @ledger[product_id][quality][:produced] # Amount produced at this quality
+  
+      # Process each input required by the product
+      the_map_building.product.inputs.each do |input|
+        input_id = input.id
+        dependency = the_map_building.product.dependant_resources.find_by(input_id: input.id)
+  
+        next unless dependency # Skip if no dependency is defined
+  
+        input_quantity_required = dependency.quantity_required
+  
+        # Calculate required input based on the produced amount
+        required_amount = input_quantity_required * produced_amount
+  
+        # Determine the minimum quality required for this input
+        required_quality = [quality - 1, 0].max # Minimum input quality
+        remaining_needed = required_amount
+  
+        # Debug: Show initial requirement
+        puts "Processing Input ID #{input_id} for Building ID #{the_map_building.id}..."
+        puts "Required Quality: #{required_quality}, Required Amount: #{required_amount}"
+  
+        # Use available production (prioritize lower quality)
+        @ledger[input_id].keys.sort.each do |available_quality|
+          # Skip qualities that do not meet the minimum required quality
+          next if available_quality < required_quality
+  
+          # Calculate available amount
+          available_amount = @ledger[input_id][available_quality][:produced] - @ledger[input_id][available_quality][:consumed]
+  
+          if available_amount > 0
+            allocation = [available_amount, remaining_needed].min
+            @ledger[input_id][available_quality][:consumed] += allocation
+            remaining_needed -= allocation
+  
+            # Debug: Show allocation
+            puts "Allocated #{allocation} from Quality #{available_quality} of Resource #{input_id} for Product #{product_id}."
+            puts "Remaining Needed for Resource #{input_id}: #{remaining_needed}"
+  
+            # Stop consuming if the requirement is fully met
+            break if remaining_needed <= 0
+          end
+        end
+  
+        # Record purchases at the correct quality
+        if remaining_needed > 0
+          @ledger[input_id][required_quality][:shortfall] += remaining_needed
+          @ledger[input_id][required_quality][:purchased] += remaining_needed
+  
+          # Debug: Show purchased amounts
+          puts "Purchased #{remaining_needed} of Resource #{input_id} at Quality #{required_quality} for Product #{product_id}."
+        end
+      end
+    end
+  
+    # Step 3: Calculate Excess
+    @ledger.each do |resource_id, qualities|
+      qualities.each do |quality, flow|
+        flow[:excess] = flow[:produced] - flow[:consumed]
+      end
+    end
+  
+    # Step 4: Remove Empty Rows
+    @ledger.each do |resource_id, qualities|
+      qualities.delete_if do |quality, flow|
+        flow[:produced] == 0 && flow[:consumed] == 0 && flow[:excess] == 0 && flow[:shortfall] == 0 && flow[:purchased] == 0
+      end
+    end
+    @ledger.delete_if { |resource_id, qualities| qualities.empty? }
+  
+    # Debug: Show final ledger
+    puts "Final Ledger: #{@ledger.inspect}"
   
     @ledger
   end
+  
+  
+  
+  
+  
   
 
   def total_profit

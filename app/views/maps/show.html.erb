@@ -7,7 +7,34 @@
 </div>
 
 <%=@the_map.production%>
+<%@ledger=@the_map.production%>
+<table>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Quality</th>
+      <th>Produced</th>
+      <th>Consumed</th>
+      <th>Excess</th>
+      <th>Purchased</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ledger.each do |resource_id, qualities| %>
+      <% qualities.each do |quality, flow| %>
+        <tr>
+          <td><%= resource_id %></td>
+          <td><%= quality %></td>
+          <td><%= flow[:produced] %></td>
+          <td><%= flow[:consumed] %></td>
+          <td><%= flow[:excess] %></td>
+          <td><%= flow[:purchased] %></td>
 
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
 <hr>
 <div style="display: flex; flex-wrap:wrap; align-content:flex-start;">

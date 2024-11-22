@@ -31,4 +31,9 @@ class MapBuilding < ApplicationRecord
   # Ensure `position_id` is unique per `map_id`
   validates :position_id, uniqueness: { scope: :map_id, message: "already taken for this map" }
   validates :level, presence: true
+
+  def required_amount(input_id)
+    # Ensure the product has dependant_resources and fetch the quantity required
+    self.product.dependant_resources.find_by(input_id: input_id)&.quantity_required || 0
+  end
 end

@@ -27,8 +27,11 @@ class Map < ApplicationRecord
     # Fetch the transport unit price from a specific resource (e.g., ID 13)
     transport_unit_price = Price.where(resource_id: 13).first.price rescue 0.0
   
+    # Calculate total map level
+    total_map_levels = self.map_buildings.sum(:level)
+  
     # Initialize ledger for all resources
-    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0 } } }
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0, wage_cost: 0, administration_wages: 0 } } }
   
     # Step 1: Populate Produced Resources and Fetch Product Prices
     self.map_buildings.each do |the_map_building|
@@ -47,9 +50,20 @@ class Map < ApplicationRecord
       transport_per_unit = the_map_building.product.transport_amount
       @ledger[product_id][quality][:transport_per_unit] = transport_per_unit
   
-      # Debug: Show product price and transport amount
+      # Calculate and assign wage cost
+      wage_cost_per_day = the_map_building.building_type.wage_cost_per_hour * the_map_building.level * 24
+      @ledger[product_id][quality][:wage_cost] += wage_cost_per_day
+  
+      # Calculate administration wages
+      worker_wages = wage_cost_per_day
+      administration_wages = worker_wages * ((total_map_levels - 1).to_f / 170)
+      @ledger[product_id][quality][:administration_wages] += administration_wages
+  
+      # Debug: Show product price, transport amount, wage cost, and administration wages
       puts "Product Price for Resource #{product_id} at Quality #{quality}: #{product_price}"
       puts "Transport Per Unit for Resource #{product_id} at Quality #{quality}: #{transport_per_unit}"
+      puts "Wage Cost Per Day for Resource #{product_id} at Quality #{quality}: #{wage_cost_per_day}"
+      puts "Administration Wages for Resource #{product_id} at Quality #{quality}: #{administration_wages}"
     end
   
     # Step 1.1: Initialize All Inputs and Fetch Input Prices and Transport Amounts
@@ -149,14 +163,7 @@ class Map < ApplicationRecord
     @ledger
   end
   
-  
-  
-  
-  
-  
-  
-  
-  
+ 
   
 
   def total_profit

@@ -27,9 +27,24 @@ class Map < ApplicationRecord
     # Fetch the transport unit price from a specific resource (e.g., ID 13)
     transport_unit_price = Price.where(resource_id: 13).first.price rescue 0.0
   
+    ###########################################
+    # Calculating Adminstrative Overhead of Map
+    ###########################################
     # Calculate total map level
     total_map_levels = self.map_buildings.sum(:level)
-  
+    # Calculate Base Level Administrative Overhead
+    ao_percentage = ((total_map_levels - 1).to_f / 170)
+    # Calculate COO impact
+    coo_levels=self.executives.where({:position=>1}).first.operations_level rescue 0.0
+    # Calculate other C-Level staff impact
+    staff_levels = self.executives.where(position: 2..4).sum(:operations_level).to_i / 4
+    #Total exectuives impact
+    executive_impact=(ao_percentage/100)*(coo_levels+staff_levels)
+    #Effective AO
+    eff_ao_percentage=ao_percentage-executive_impact
+
+    self.executives.where({:position=>1})
+
     # Initialize ledger for all resources
     @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0, income_impact: 0 } } }
   
@@ -56,7 +71,7 @@ class Map < ApplicationRecord
   
       # Calculate administration wages
       worker_wages = wage_cost_per_day
-      administration_wages = worker_wages * ((total_map_levels - 1).to_f / 170)
+      administration_wages = worker_wages * eff_ao_percentage
       @ledger[product_id][quality][:administration_wages] += administration_wages
   
       # Debug: Show product price, transport amount, wage cost, and administration wages
@@ -162,7 +177,48 @@ class Map < ApplicationRecord
     # Debug: Show final ledger
     puts "Final Ledger: #{@ledger.inspect}"
   
+    # Step 5: Calculate Income Statement
+    @income_statement = {} # Initialize as an empty hash
+
+    # Revenue
+    @income_statement[:total_revenue] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:revenue] } }
+
+    # Cost of Purchased Goods
+    @income_statement[:total_cost_of_purchased_goods] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:cost_of_goods_purchased] } }
+
+    # Worker Wages
+    @income_statement[:total_worker_wages] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:wage_cost] } }
+
+    # COGS
+    @income_statement[:cogs] = @income_statement[:total_cost_of_purchased_goods] + @income_statement[:total_worker_wages]
+
+    # Freight Out (Transport Costs)
+    @income_statement[:freight_out] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:transport_cost] } }
+
+    # Gross Income
+    @income_statement[:gross_income] = @income_statement[:total_revenue] - @income_statement[:cogs] - @income_statement[:freight_out]
+
+    # Operating Expenses
+    @income_statement[:total_admin_overhead_wages] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:administration_wages] } }
+    @income_statement[:executives_salaries] = self.executives.all.sum(:salary)
+    @income_statement[:total_fees_paid] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:fee_paid] } }
+
+    # Operating Income
+    @income_statement[:operating_income] = @income_statement[:gross_income] - @income_statement[:total_admin_overhead_wages] - @income_statement[:executives_salaries] - @income_statement[:total_fees_paid]
+
+    # Debug: Display Income Statement
+    puts "Income Statement:"
+    @income_statement.each do |key, value|
+      puts "#{key.to_s.humanize}: #{value.round(2)}"
+    end
+
+    @income_statement
     @ledger
+
+    {
+      ledger: @ledger,
+      income_statement: @income_statement
+    }
   end
   
  

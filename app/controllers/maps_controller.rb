@@ -17,6 +17,11 @@ class MapsController < ApplicationController
 
     @the_map = matching_maps.at(0)
 
+
+    production_results = @the_map.production
+    @ledger = production_results[:ledger]
+    @income_statement = production_results[:income_statement]
+
     render({ :template => "maps/show" })
   end
 

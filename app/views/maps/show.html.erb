@@ -21,6 +21,7 @@
       <th>Fee paid</th>
       <th>Transport Units</th>
       <th>Transport Cost</th>
+      <th>Revenue</th>
     </tr>
   </thead>
   <tbody>
@@ -37,8 +38,7 @@
           <td><%= flow[:fee_paid].round(2) %></td>
           <td><%= flow[:transport_needed].round(0) %></td>
           <td><%= flow[:transport_cost].round(2) %> $</td>
-
-
+          <td><%= flow[:revenue].round(2) %> $</td>
         </tr>
       <% end %>
     <% end %>

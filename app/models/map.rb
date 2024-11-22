@@ -28,7 +28,7 @@ class Map < ApplicationRecord
     transport_unit_price = Price.where(resource_id: 13).first.price rescue 0.0
   
     # Initialize ledger for all resources
-    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0 } } }
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0 } } }
   
     # Step 1: Populate Produced Resources and Fetch Product Prices
     self.map_buildings.each do |the_map_building|
@@ -124,13 +124,14 @@ class Map < ApplicationRecord
       end
     end
   
-    # Step 3: Calculate Excess and Transport Costs
+    # Step 3: Calculate Excess, Transport Costs, and Revenue
     @ledger.each do |resource_id, qualities|
       qualities.each do |quality, flow|
         flow[:excess] = flow[:produced] - flow[:consumed]
         flow[:fee_paid] = flow[:price] * flow[:excess] * 0.03
         flow[:transport_needed] = flow[:transport_per_unit] * flow[:excess]
         flow[:transport_cost] = flow[:transport_needed] * transport_unit_price
+        flow[:revenue] = flow[:price] * flow[:excess]
       end
     end
   
@@ -147,6 +148,7 @@ class Map < ApplicationRecord
   
     @ledger
   end
+  
   
   
   

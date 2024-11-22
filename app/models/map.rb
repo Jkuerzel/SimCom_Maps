@@ -24,8 +24,11 @@ class Map < ApplicationRecord
   validates :name, presence: true
 
   def production
+    # Fetch the transport unit price from a specific resource (e.g., ID 13)
+    transport_unit_price = Price.where(resource_id: 13).first.price rescue 0.0
+  
     # Initialize ledger for all resources
-    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil } } }
+    @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0 } } }
   
     # Step 1: Populate Produced Resources and Fetch Product Prices
     self.map_buildings.each do |the_map_building|
@@ -40,17 +43,24 @@ class Map < ApplicationRecord
       product_price = the_map_building.product.price_for_quality(quality) rescue 0.0
       @ledger[product_id][quality][:price] = product_price
   
-      # Debug: Show product price
+      # Fetch and assign transport per unit
+      transport_per_unit = the_map_building.product.transport_amount
+      @ledger[product_id][quality][:transport_per_unit] = transport_per_unit
+  
+      # Debug: Show product price and transport amount
       puts "Product Price for Resource #{product_id} at Quality #{quality}: #{product_price}"
+      puts "Transport Per Unit for Resource #{product_id} at Quality #{quality}: #{transport_per_unit}"
     end
   
-    # Step 1.1: Initialize All Inputs and Fetch Input Prices
+    # Step 1.1: Initialize All Inputs and Fetch Input Prices and Transport Amounts
     self.map_buildings.each do |the_map_building|
       the_map_building.product.inputs.each do |input|
         input_id = input.id
         (0..12).each do |quality| # Assuming qualities range from 0 to 12
           price_value = input.price_for_quality(quality) rescue 0.0 # Default to 0.0 if no price is found
+          transport_per_unit = input.transport_amount
           @ledger[input_id][quality][:price] = price_value
+          @ledger[input_id][quality][:transport_per_unit] = transport_per_unit
         end
       end
     end
@@ -114,10 +124,13 @@ class Map < ApplicationRecord
       end
     end
   
-    # Step 3: Calculate Excess
+    # Step 3: Calculate Excess and Transport Costs
     @ledger.each do |resource_id, qualities|
       qualities.each do |quality, flow|
         flow[:excess] = flow[:produced] - flow[:consumed]
+        flow[:fee_paid] = flow[:price] * flow[:excess] * 0.03
+        flow[:transport_needed] = flow[:transport_per_unit] * flow[:excess]
+        flow[:transport_cost] = flow[:transport_needed] * transport_unit_price
       end
     end
   
@@ -134,6 +147,7 @@ class Map < ApplicationRecord
   
     @ledger
   end
+  
   
   
   

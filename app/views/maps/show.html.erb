@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<%=@the_map.production%>
+
 <%@ledger=@the_map.production%>
 <table>
   <thead>
@@ -18,6 +18,9 @@
       <th>Excess</th>
       <th>Purchased</th>
       <th>Price</th>
+      <th>Fee paid</th>
+      <th>Transport Units</th>
+      <th>Transport Cost</th>
     </tr>
   </thead>
   <tbody>
@@ -26,11 +29,14 @@
         <tr>
           <td><%= resource_id %></td>
           <td><%= quality %></td>
-          <td><%= flow[:produced] %></td>
-          <td><%= flow[:consumed] %></td>
-          <td><%= flow[:excess] %></td>
-          <td><%= flow[:purchased] %></td>
-          <td><%= flow[:price] %></td>
+          <td><%= flow[:produced].round(0) %></td>
+          <td><%= flow[:consumed].round(0) %></td>
+          <td><%= flow[:excess].round(0) %></td>
+          <td><%= flow[:purchased].round(0) %></td>
+          <td><%= flow[:price].round(2) %> $</td>
+          <td><%= flow[:fee_paid].round(2) %></td>
+          <td><%= flow[:transport_needed].round(0) %></td>
+          <td><%= flow[:transport_cost].round(2) %> $</td>
 
 
         </tr>

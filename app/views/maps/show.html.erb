@@ -8,6 +8,7 @@
 
 
 <%@ledger=@the_map.production%>
+<%@ledger=@the_map.production%>
 <table style="border-collapse: collapse; width: 100%; text-align: left;">
   <thead>
     <tr>
@@ -25,9 +26,11 @@
       <th style="padding: 8px; border-bottom: 1px solid #ddd;">Wage Cost Admin</th>
       <th style="padding: 8px; border-bottom: 1px solid #ddd;">Cost of Purchased Goods</th>
       <th style="padding: 8px; border-bottom: 1px solid #ddd;">Revenue</th>
+      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Net</th>
     </tr>
   </thead>
   <tbody>
+    <% totals = { produced: 0, consumed: 0, excess: 0, purchased: 0, fee_paid: 0, transport_cost: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0, revenue: 0, income_impact: 0 } %>
     <% @ledger.each do |resource_id, qualities| %>
       <% qualities.each do |quality, flow| %>
         <tr>
@@ -45,12 +48,41 @@
           <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:administration_wages].round(2) %> $</td>
           <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:cost_of_goods_purchased].round(2) %> $</td>
           <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:revenue].round(2) %> $</td>
-          
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:income_impact].round(2) %> $</td>
         </tr>
+        <% # Update totals %>
+        <% totals[:produced] += flow[:produced] %>
+        <% totals[:consumed] += flow[:consumed] %>
+        <% totals[:excess] += flow[:excess] %>
+        <% totals[:purchased] += flow[:purchased] %>
+        <% totals[:fee_paid] += flow[:fee_paid] %>
+        <% totals[:transport_cost] += flow[:transport_cost] %>
+        <% totals[:wage_cost] += flow[:wage_cost] %>
+        <% totals[:administration_wages] += flow[:administration_wages] %>
+        <% totals[:cost_of_goods_purchased] += flow[:cost_of_goods_purchased] %>
+        <% totals[:revenue] += flow[:revenue] %>
+        <% totals[:income_impact] += flow[:income_impact] %>
       <% end %>
     <% end %>
+    <tr style="font-weight: bold; background-color: #f4f4f4;">
+      <td colspan="2" style="padding: 8px; border-top: 2px solid #000;">Totals</td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:produced].round(0) %></td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:consumed].round(0) %></td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:excess].round(0) %></td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:purchased].round(0) %></td>
+      <td></td> <!-- Price doesn't make sense for totals -->
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:fee_paid].round(2) %> $</td>
+      <td></td> <!-- Transport Units doesn't make sense for totals -->
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:transport_cost].round(2) %> $</td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:wage_cost].round(2) %> $</td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:administration_wages].round(2) %> $</td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:cost_of_goods_purchased].round(2) %> $</td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:revenue].round(2) %> $</td>
+      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:income_impact].round(2) %> $</td>
+    </tr>
   </tbody>
 </table>
+
 
 
 <hr>

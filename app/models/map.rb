@@ -196,7 +196,7 @@ class Map < ApplicationRecord
     @income_statement[:freight_out] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:transport_cost] } }
 
     # Gross Income
-    @income_statement[:gross_income] = @income_statement[:total_revenue] - @income_statement[:cogs] - @income_statement[:freight_out]
+    @income_statement[:gross_income] = @income_statement[:total_revenue] - @income_statement[:cogs] 
 
     # Operating Expenses
     @income_statement[:total_admin_overhead_wages] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:administration_wages] } }
@@ -204,7 +204,7 @@ class Map < ApplicationRecord
     @income_statement[:total_fees_paid] = @ledger.sum { |_, qualities| qualities.sum { |_, flow| flow[:fee_paid] } }
 
     # Operating Income
-    @income_statement[:operating_income] = @income_statement[:gross_income] - @income_statement[:total_admin_overhead_wages] - @income_statement[:executives_salaries] - @income_statement[:total_fees_paid]
+    @income_statement[:operating_income] = @income_statement[:gross_income] - @income_statement[:total_admin_overhead_wages] - @income_statement[:executives_salaries] - @income_statement[:total_fees_paid]- @income_statement[:freight_out]
 
     # Debug: Display Income Statement
     puts "Income Statement:"

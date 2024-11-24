@@ -8,16 +8,16 @@
 
 <hr>
 
-<div style="display:flex; justify-content: space-between;">
-  <div style="display: flex; flex-wrap:wrap; align-content:flex-start;">
+<div style="display:flex; justify-content: space-between; border: 1px solid black;">
+  <div style="display: flex; flex-wrap:wrap; align-content:flex-start; border: 1px solid black;">
     <% for the_position_id in 1..18 %>
     <% the_building = @the_map.map_buildings.find_by(position_id: the_position_id) %>
       <% if the_building %>
-        <div style="display: flex; align-content:space-between;">
+        <div style="display: flex; align-content:space-between;border: 1px solid black;">
         
-          <div class="image-container">
+          <div class="image-container" style="width: 120px; height: 120px;">
             <a href="/map_buildings/<%= the_building.id %>">
-              <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 100px; height: 100px;">
+              <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 180px; height: 180px;">
             </a>
           </div>
 

@@ -36,4 +36,25 @@ class MapBuilding < ApplicationRecord
     # Ensure the product has dependant_resources and fetch the quantity required
     self.product.dependant_resources.find_by(input_id: input_id)&.quantity_required || 0
   end
+
+  # Increment the level
+  def increment_level
+    update(level: level + 1)
+  end
+
+  # Decrement the level, ensuring it doesn't go below 0 (optional)
+  def decrement_level
+    update(level: [level - 1, 0].max)
+  end
+
+  # Increment the level
+  def increment_quality
+    update(quality_level: [quality_level + 1, 12].min)
+  end
+
+  # Decrement the level, ensuring it doesn't go below 0 (optional)
+  def decrement_quality
+    update(quality_level: [quality_level - 1, 0].max)
+  end
+
 end

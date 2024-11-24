@@ -161,5 +161,46 @@ class MapBuildingsController < ApplicationController
       redirect_to("/map_buildings/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
     end
   end
-  
+
+  def increment_level
+    the_id = params.fetch("path_id")
+    the_map_building = MapBuilding.where({ :id => the_id }).at(0)
+    if the_map_building.increment_level
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => "Level updated successfully."} )
+    else
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => 'Failed to increase level.'} )
+    end
+  end
+
+  def decrement_level
+    the_id = params.fetch("path_id")
+    the_map_building = MapBuilding.where({ :id => the_id }).at(0)
+
+    if the_map_building.decrement_level
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => "Level updated successfully."} )
+    else
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => 'Failed to decrease level.'} )
+    end
+  end
+
+  def increment_quality
+    the_id = params.fetch("path_id")
+    the_map_building = MapBuilding.where({ :id => the_id }).at(0)
+    if the_map_building.increment_quality
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => "Quality updated successfully."} )
+    else
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => 'Failed to increase quality.'} )
+    end
+  end
+
+  def decrement_quality
+    the_id = params.fetch("path_id")
+    the_map_building = MapBuilding.where({ :id => the_id }).at(0)
+
+    if the_map_building.decrement_quality
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => "Quality updated successfully."} )
+    else
+      redirect_to("/maps/#{the_map_building.user_map.id}", { :notice => 'Failed to decrease quality.'} )
+    end
+  end
 end

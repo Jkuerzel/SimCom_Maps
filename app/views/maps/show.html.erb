@@ -8,48 +8,53 @@
 
 <hr>
 
-<div style="display: flex; flex-wrap:wrap; align-content:flex-start;">
-  <% for the_position_id in 1..18 %>
-  <% the_building = @the_map.map_buildings.find_by(position_id: the_position_id) %>
-    <% if the_building %>
-      <div style="display: flex; align-content:space-between;">
-      
-        <div class="image-container">
-          <a href="/map_buildings/<%= the_building.id %>">
-            <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 100px; height: 100px;">
+<div style="display:flex; justify-content: space-between;">
+  <div style="display: flex; flex-wrap:wrap; align-content:flex-start;">
+    <% for the_position_id in 1..18 %>
+    <% the_building = @the_map.map_buildings.find_by(position_id: the_position_id) %>
+      <% if the_building %>
+        <div style="display: flex; align-content:space-between;">
+        
+          <div class="image-container">
+            <a href="/map_buildings/<%= the_building.id %>">
+              <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 100px; height: 100px;">
+            </a>
+          </div>
+
+          <div style="display: flex; flex-direction:column;">
+
+            <div>
+              <img src="<%= the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
+            </div>
+
+            <div style="display: flex; justify-content: space-between">
+              <%= button_to "↓", "/modify_map_building/decrement_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+              <p>Q<%=the_building.quality_level%></p>
+              <%= button_to "↑", "/modify_map_building/increment_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+            </div>
+
+            <div style="display: flex; justify-content: space-between">
+              <%= button_to "↓", "/modify_map_building/decrement_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+              <p>Level <%=the_building.level%></p>
+              <%= button_to "↑", "/modify_map_building/increment_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+            </div>
+
+          </div>
+
+        </div>
+      <% else %>
+        <div>
+          <a href="/maps/<%= @the_map.id %>/new_building/<%= the_position_id %>">
+            <img src="https://media.istockphoto.com/id/688550958/vector/black-plus-sign-positive-symbol.jpg?s=612x612&w=0&k=20&c=0tymWBTSEqsnYYXWeWmJPxMotTGUwaGMGs6BMJvr7X4=" alt="Add new building" style="width: 100px; height: 100px;">
           </a>
         </div>
-
-        <div style="display: flex; flex-direction:column;">
-
-          <div>
-            <img src="<%= the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
-          </div>
-
-          <div style="display: flex; justify-content: space-between">
-            <%= button_to "↓", "/modify_map_building/decrement_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-            <p>Q<%=the_building.quality_level%></p>
-            <%= button_to "↑", "/modify_map_building/increment_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-          </div>
-
-          <div style="display: flex; justify-content: space-between">
-            <%= button_to "↓", "/modify_map_building/decrement_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-            <p>Level <%=the_building.level%></p>
-            <%= button_to "↑", "/modify_map_building/increment_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-          </div>
-
-
-        </div>
-
-      </div>
-    <% else %>
-      <div>
-        <a href="/maps/<%= @the_map.id %>/new_building/<%= the_position_id %>">
-          <img src="https://media.istockphoto.com/id/688550958/vector/black-plus-sign-positive-symbol.jpg?s=612x612&w=0&k=20&c=0tymWBTSEqsnYYXWeWmJPxMotTGUwaGMGs6BMJvr7X4=" alt="Add new building" style="width: 100px; height: 100px;">
-        </a>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+  <div>
+    <p>Gross income <%=@income_statement[:gross_income].round(0)%> $</p>
+    <p>Operating income <%=@income_statement[:operating_income].round(0)%> $</p>
+  </div>
 </div>
 
 <hr>

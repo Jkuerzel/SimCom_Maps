@@ -31,6 +31,7 @@ class MapsController < ApplicationController
     the_map.name = params.fetch("query_name")
     the_map.map_buildings_count=0
     the_map.executives_count=0
+    the_map.bonus=0
     
     if the_map.valid?
       the_map.save

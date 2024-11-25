@@ -3,6 +3,7 @@
 # Table name: maps
 #
 #  id                  :bigint           not null, primary key
+#  bonus               :integer          default(0), not null
 #  executives_count    :integer
 #  map_buildings_count :integer
 #  name                :string

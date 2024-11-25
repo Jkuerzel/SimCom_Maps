@@ -62,6 +62,7 @@ class MapBuildingsController < ApplicationController
     the_map_building.level = 1
     the_map_building.quality_level = 0
     the_map_building.production_time = 24
+    the_map_building.abundance = 100
 
     product_id=Building.where({:id=>params.fetch("query_building_id")}).first.products.first.id
 

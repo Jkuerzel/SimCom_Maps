@@ -98,19 +98,22 @@ class Map < ApplicationRecord
     self.map_buildings.each do |the_map_building|
       product_id = the_map_building.product_id
       quality = the_map_building.quality_level
-      produced_amount = @ledger[product_id][quality][:produced] # Amount produced at this quality
-  
+
+      # Calculate the produced amount for this specific building
+      produced_amount = (the_map_building.product.units_per_hour * the_map_building.level * 24).round(2)
+
       # Process each input required by the product
       the_map_building.product.inputs.each do |input|
         input_id = input.id
         dependency = the_map_building.product.dependant_resources.find_by(input_id: input.id)
-  
+
         next unless dependency # Skip if no dependency is defined
-  
+
         input_quantity_required = dependency.quantity_required
-  
+
         # Calculate required input based on the produced amount
         required_amount = input_quantity_required * produced_amount
+
   
         # Determine the minimum quality required for this input
         required_quality = [quality - 1, 0].max # Minimum input quality

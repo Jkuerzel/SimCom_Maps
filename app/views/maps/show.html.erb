@@ -40,10 +40,10 @@
     </button>
 
   </div>
-  <p>Gross profit: <%= @income_statement[:gross_income].round %> $</p>
-  <p>Gross margin: <%= ((@income_statement[:gross_income]/@income_statement[:total_revenue])*100).round(1) %> %</p>
-  <p>Operating income: <%= @income_statement[:operating_income].round %> $</p>
-  <p>Profit margin: <%= ((@income_statement[:operating_income]/@income_statement[:total_revenue])*100).round(1) %> %</p>
+  <p>Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $</p>
+  <p>Gross margin: <%= ((@income_statement[:gross_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
+  <p>Operating income: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $</p>
+  <p>Profit margin: <%= ((@income_statement[:operating_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
   
 </div>
 

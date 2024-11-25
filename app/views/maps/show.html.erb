@@ -9,97 +9,91 @@
 <hr>
 
  
-<!-- Adding or modifying the buildings -->
+<div style="display: flex; flex-wrap: wrap; align-content: flex-start;">
 
-<div style="display:flex; justify-content: space-between; border: 1px solid black;">
-  <div style="display: flex; flex-wrap:wrap; align-content:flex-start; border: 1px solid black;">
-    <% for @the_position_id in 1..18 %>
-    <% the_building = @the_map.map_buildings.find_by(position_id: @the_position_id) %>
-      <% if the_building %>
-        <div style="display: flex; align-content:space-between;border: 1px solid black;">
-        
-          <div class="image-container" style="width: 120px; height: 120px;">
-            <img src="<%= the_building.building_type.image_link %>" 
-              alt="Open Modal" 
-              style="cursor: pointer; width: 150px; height: auto;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#exampleModal">
+  <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
+  
+  <% for @the_position_id in 1..18 %>
+    <% @the_building = @map_buildings_by_position[@the_position_id] %>
+
+    <!-- Modal -->
+    <div class="modal fade" id="buildingtypemodal<%= @the_position_id %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= @the_position_id %>" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel<%= @the_position_id %>">Choose a building</h1>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
 
-          <div style="display: flex; flex-direction:column;">
-
-            <div>
-              <img src="<%= the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
-            </div>
-
-            <div style="display: flex; justify-content: space-between">
-              <%= button_to "↓", "/modify_map_building/decrement_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-              <p>Q<%=the_building.quality_level%></p>
-              <%= button_to "↑", "/modify_map_building/increment_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-            </div>
-
-            <div style="display: flex; justify-content: space-between">
-              <%= button_to "↓", "/modify_map_building/decrement_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-              <p>Level <%=the_building.level%></p>
-              <%= button_to "↑", "/modify_map_building/increment_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-            </div>
-
-          </div>
-
-        </div>
-      <% else %>
-        
-        <div>
-          <!-- Button trigger modal -->
-          <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
-              alt="Open Modal" 
-              style="cursor: pointer; width: 150px; height: auto;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#exampleModal">
-
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Choose a building</h1>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-
-                <div class="modal-body" style="display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: center; padding: 5px; gap: 15px;">
-                  <% Building.all.each do |building_type| %>
-                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 120px;">
-                      <p style="margin-bottom: 5px;"><%= building_type.name %></p>
-
-                      <form action="/insert_map_building" method="post">
-                        <input type="hidden" name="map_id" value="<%= @the_map.id %>">
-                        <input type="hidden" name="query_position_id" value="<%= @the_position_id %>">
-                        <input type="hidden" name="query_building_id" value="<%= building_type.id %>">
-                        <img src="<%= building_type.image_link %>" alt="Add new building" 
-                            style="width: 100px; height: 100px; cursor: pointer;" 
-                            onclick="this.closest('form').submit();">
-                      </form>
-
-                    </div>
-                  <% end %>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Delete building</button>
-                </div>
+          <div class="modal-body" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+            <% Building.all.each do |building_type| %>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 120px;">
+                <p><%= building_type.name %></p>
+                <%= form_with url: "/insert_map_building", method: :post, local: true do |f| %>
+                  <%= f.hidden_field :map_id, value: @the_map.id %>
+                  <%= f.hidden_field :query_position_id, value: @the_position_id %>
+                  <%= f.hidden_field :query_building_id, value: building_type.id %>
+                  <%= image_tag building_type.image_link, alt: "Add new building", 
+                                style: "width: 100px; height: 100px; cursor: pointer;", 
+                                onclick: "this.closest('form').submit();" %>
+                <% end %>
               </div>
+            <% end %>
+          </div>
 
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <% if @the_building %>
+              <a href="/delete_map_building/<%= @the_map.id %>/<%= @the_building.id %>" 
+                class="btn btn-primary" 
+                data-confirm="Are you sure you want to delete this building?">
+                Delete Building
+              </a>
+            <% end %>
           </div>
         </div>
-      <% end %>
+      </div>
+    </div>
+
+    <!-- Building or Placeholder -->
+    <% if @the_building %>
+      <div style="display: flex; align-content: space-between; border: 1px solid black; padding: 10px;">
+        <div class="image-container" style="width: 120px; height: 120px;">
+          <img src="<%= @the_building.building_type.image_link %>" 
+               alt="Open Modal" 
+               style="cursor: pointer; width: 150px; height: auto;" 
+               data-bs-toggle="modal" 
+               data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <div>
+            <img src="<%= @the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <%= button_to "↓", "/modify_map_building/decrement_quality/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
+            <p>Q<%= @the_building.quality_level %></p>
+            <%= button_to "↑", "/modify_map_building/increment_quality/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <%= button_to "↓", "/modify_map_building/decrement_level/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
+            <p>Level <%= @the_building.level %></p>
+            <%= button_to "↑", "/modify_map_building/increment_level/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div>
+        <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
+             alt="Open Modal" 
+             style="cursor: pointer; width: 150px; height: auto;" 
+             data-bs-toggle="modal" 
+             data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+      </div>
     <% end %>
-  </div>
-  <div>
-    <p>Gross income <%=@income_statement[:gross_income].round(0)%> $</p>
-    <p>Operating income <%=@income_statement[:operating_income].round(0)%> $</p>
-  </div>
+  <% end %>
+
 </div>
+
 
 <hr>
 

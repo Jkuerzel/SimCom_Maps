@@ -96,12 +96,13 @@ class MapBuildingsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("map_building_id")
+    map_id = params.fetch("map_id")
     the_map_building = MapBuilding.where({ :id => the_id }).at(0)
 
     the_map_building.destroy
 
-    redirect_to("/map_buildings", { :notice => "Map building deleted successfully."} )
+    redirect_to("/maps/#{map_id}", { :notice => "Map building deleted successfully."} )
   end
 
   def update_level

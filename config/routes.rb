@@ -48,7 +48,7 @@ Rails.application.routes.draw do
 
   
   # DELETE
-  get("/delete_map_building/:path_id", { :controller => "map_buildings", :action => "destroy" })
+  get("/delete_map_building/:map_id/:map_building_id", { :controller => "map_buildings", :action => "destroy" })
 
   #------------------------------
 

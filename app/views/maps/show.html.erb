@@ -1,8 +1,4 @@
 
-
-
-
-
 <div>
   <div>
     <h1>
@@ -18,10 +14,8 @@
 
   <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
   
-  <% for @the_position_id in 1..18 %>
+  <% for @the_position_id in 1..14 %>
     <% @the_building = @map_buildings_by_position[@the_position_id] %>
- 
-
 
     <!-- Building or Placeholder -->
     <% if @the_building %>
@@ -31,30 +25,22 @@
       the_map: @the_map, 
       the_building: @the_building %>
 
-      <div style="display: flex; align-content: space-between; border: 1px solid black; padding: 10px;">
-        <div class="image-container" style="width: 120px; height: 120px;">
+      <div style="display: flex; align-content: space-between; padding: 0px; height: 120px; width: 120px;">
+        <div class="image-container" style="position: relative; width: 120px; height: 120px; padding: 0px;">
+          <!-- First Image (Background) -->
           <img src="<%= @the_building.building_type.image_link %>" 
-               alt="Open Modal" 
-               style="cursor: pointer; width: 150px; height: auto;" 
-               data-bs-toggle="modal" 
-               data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-        </div>
-        <div style="display: flex; flex-direction: column;">
-          <div>
-            <img src="<%= @the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <%= button_to "↓", "/modify_map_building/decrement_quality/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
-            <p>Q<%= @the_building.quality_level %></p>
-            <%= button_to "↑", "/modify_map_building/increment_quality/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <%= button_to "↓", "/modify_map_building/decrement_level/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
-            <p>Level <%= @the_building.level %></p>
-            <%= button_to "↑", "/modify_map_building/increment_level/#{@the_building.id}", method: :patch, class: "btn btn-success" %>
-          </div>
+              alt="Open Modal" 
+              style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+
+          <!-- Second Image (Foreground, Bottom Right) -->
+          <img src="<%= @the_building.product.image_link %>" 
+              alt="Product" 
+              style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
         </div>
       </div>
+
     <% else %>
 
       <%= render 'maps/choosebuildingtype', 
@@ -62,10 +48,10 @@
       the_map: @the_map, 
       the_building: @the_building %>
 
-      <div>
+      <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
         <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
              alt="Open Modal" 
-             style="cursor: pointer; width: 150px; height: auto;" 
+             style="cursor: pointer; width: auto; height: auto;" 
              data-bs-toggle="modal" 
              data-bs-target="#buildingtypemodal<%= @the_position_id %>">
       </div>
@@ -73,7 +59,6 @@
   <% end %>
 
 </div>
-
 
 <hr>
 
@@ -87,88 +72,19 @@
       Income statement
     </button>
 
-    <!-- Modal Structure -->
-    <div class="modal" tabindex="-1" id="income_statement_modal">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Income Statement</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <table style="border-collapse: collapse; width: 100%; text-align: left; font-family: Arial, sans-serif;">
-              <thead>
-                <tr style="background-color: #f4f4f4;">
-                  <th style="padding: 8px; border-bottom: 2px solid #ddd;">Metric</th>
-                  <th style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Revenue Section -->
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">Total Revenue</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_revenue].round %> $</td>
-                </tr>
-
-                <!-- COGS Section -->
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">Cost of Purchased Goods</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_cost_of_purchased_goods].round %> $</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">Worker Wages</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_worker_wages].round %> $</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">Cost of Goods Sold (COGS)</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:cogs].round %> $</td>
-                </tr>
-
-                <!-- Freight Out Section -->
-
-                <!-- Gross Income Section -->
-                <tr style="background-color: #e8f4e8;">
-                  <td style="padding: 8px; border-bottom: 2px solid #ddd; font-weight: bold;">Gross Income</td>
-                  <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:gross_income].round %> $</td>
-                </tr>
-
-                <!-- Operating Expenses Section -->
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">Admin Overhead Wages</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_admin_overhead_wages].round %> $</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">Executive Salaries</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:executives_salaries].round %> $</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total Fees Paid</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_fees_paid].round %> $</td>
-                </tr>
-
-                <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;">Freight Out</td>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:freight_out].round %> $</td>
-                </tr>
-
-                <!-- Operating Income Section -->
-                <tr style="background-color: #e8f4e8;">
-                  <td style="padding: 8px; border-bottom: 2px solid #ddd; font-weight: bold;">Operating Income</td>
-                  <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:operating_income].round %> $</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'maps/income_statement', 
+      the_position_id: @the_position_id, 
+      the_map: @the_map, 
+      the_building: @the_building %>
 
   </div>
 
   <div style="padding: 5px">
+
+    <%= render 'maps/flow_of_goods', 
+      the_position_id: @the_position_id, 
+      the_map: @the_map, 
+      the_building: @the_building %>
 
     <button type="button" class="btn" 
         style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
@@ -177,63 +93,6 @@
       Flow of goods
     </button>
 
-    <div class="modal" tabindex="-1" id="production_modal" ">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Flow of goods</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-          </div>
-          <div class="modal-body" style="overflow-x: auto;">
-            <table style="border-collapse: collapse; width: 100%; text-align: left; padding: 20px;">
-              <thead>
-                <tr>
-                  <th style="padding: 8px; border-bottom: 1px solid #ddd;">Resource</th>
-                  <th style="padding: 8px; border-bottom: 1px solid #ddd;">Q</th>
-                  <th style="padding: 8px; border-bottom: 1px solid #ddd;">Produced</th>
-                  <th style="padding: 8px; border-bottom: 1px solid #ddd;">Consumed</th>
-                  <th style="padding: 8px; border-bottom: 1px solid #ddd;">Excess</th>
-                  <th style="padding: 8px; border-bottom: 1px solid #ddd;">Purchased</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <% totals = { produced: 0, consumed: 0, excess: 0, purchased: 0, fee_paid: 0, transport_cost: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0, revenue: 0, income_impact: 0 } %>
-                <% @ledger.each do |resource_id, qualities| %>
-                  <% qualities.each do |quality, flow| %>
-                    <tr>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><img class="img-fluid" src="<%= Resource.where({:id=>resource_id}).first.image_link %>"</td>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= quality %></td>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:produced].round(0) %></td>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:consumed].round(0) %></td>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:excess].round(0) %></td>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:purchased].round(0) %></td>
-                    </tr>
-                    <% # Update totals %>
-                    <% totals[:produced] += flow[:produced] %>
-                    <% totals[:consumed] += flow[:consumed] %>
-                    <% totals[:excess] += flow[:excess] %>
-                    <% totals[:purchased] += flow[:purchased] %>
-
-                  <% end %>
-                <% end %>
-                <tr style="font-weight: bold; background-color: #f4f4f4;">
-                  <td colspan="2" style="padding: 8px; border-top: 2px solid #000;">Totals</td>
-                  <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:produced].round(0) %></td>
-                  <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:consumed].round(0) %></td>
-                  <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:excess].round(0) %></td>
-                  <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:purchased].round(0) %></td>
-
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 

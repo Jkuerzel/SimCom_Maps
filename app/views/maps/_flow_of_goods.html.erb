@@ -1,0 +1,57 @@
+<div class="modal" tabindex="-1" id="production_modal" ">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Flow of goods</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+      </div>
+      <div class="modal-body" style="overflow-x: auto;">
+        <table style="border-collapse: collapse; width: 100%; text-align: left; padding: 20px;">
+          <thead>
+            <tr>
+              <th style="padding: 8px; border-bottom: 1px solid #ddd;">Resource</th>
+              <th style="padding: 8px; border-bottom: 1px solid #ddd;">Q</th>
+              <th style="padding: 8px; border-bottom: 1px solid #ddd;">Produced</th>
+              <th style="padding: 8px; border-bottom: 1px solid #ddd;">Consumed</th>
+              <th style="padding: 8px; border-bottom: 1px solid #ddd;">Excess</th>
+              <th style="padding: 8px; border-bottom: 1px solid #ddd;">Purchased</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <% totals = { produced: 0, consumed: 0, excess: 0, purchased: 0, fee_paid: 0, transport_cost: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0, revenue: 0, income_impact: 0 } %>
+            <% @ledger.each do |resource_id, qualities| %>
+              <% qualities.each do |quality, flow| %>
+                <tr>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><img class="img-fluid" src="<%= Resource.where({:id=>resource_id}).first.image_link %>"</td>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= quality %></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:produced].round(0) %></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:consumed].round(0) %></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:excess].round(0) %></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:purchased].round(0) %></td>
+                </tr>
+                <% # Update totals %>
+                <% totals[:produced] += flow[:produced] %>
+                <% totals[:consumed] += flow[:consumed] %>
+                <% totals[:excess] += flow[:excess] %>
+                <% totals[:purchased] += flow[:purchased] %>
+
+              <% end %>
+            <% end %>
+            <tr style="font-weight: bold; background-color: #f4f4f4;">
+              <td colspan="2" style="padding: 8px; border-top: 2px solid #000;">Totals</td>
+              <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:produced].round(0) %></td>
+              <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:consumed].round(0) %></td>
+              <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:excess].round(0) %></td>
+              <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:purchased].round(0) %></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

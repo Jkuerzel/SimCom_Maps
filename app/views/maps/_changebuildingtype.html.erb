@@ -5,6 +5,11 @@
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel<%= @the_position_id %>">Choose a building</h1>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="/delete_map_building/<%= @the_map.id %>/<%= @the_building.id %>" 
+          class="btn btn-primary" 
+          data-confirm="Are you sure you want to delete this building?">
+          Delete Building
+        </a>
       </div>
 
       <div class="modal-body" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
@@ -24,13 +29,11 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <% if @the_building %>
           <a href="/delete_map_building/<%= @the_map.id %>/<%= @the_building.id %>" 
             class="btn btn-primary" 
             data-confirm="Are you sure you want to delete this building?">
             Delete Building
           </a>
-        <% end %>
       </div>
     </div>
   </div>

@@ -78,19 +78,20 @@ class MapBuildingsController < ApplicationController
   def update
     the_id = params.fetch("path_id")
     the_map_building = MapBuilding.where({ :id => the_id }).at(0)
-
-    the_map_building.map_id = params.fetch("query_map_id")
-    the_map_building.building_id = params.fetch("query_building_id")
-    the_map_building.position_id = params.fetch("query_position_id")
-    the_map_building.level = params.fetch("query_level")
+  
+    the_map_building.map_id = params.fetch("query_map_id").to_i
+    the_map_building.building_id = params.fetch("query_building_id").to_i
+    the_map_building.position_id = params.fetch("query_position_id").to_i 
+    the_map_building.level = params.fetch("query_level", 1).to_i
     the_map_building.production_time = params.fetch("query_production_time")
-    the_map_building.quality_level = params.fetch("query_quality_level")
+    the_map_building.quality_level = params.fetch("query_quality_level").to_i
     the_map_building.product_id = params.fetch("query_product_id")
-
+  
     if the_map_building.valid?
       the_map_building.save
-      redirect_to("/map_buildings/#{the_map_building.id}", { :notice => "Map building updated successfully."} )
+      redirect_to("/maps/#{the_map_building.map_id}", { :notice => "Map building updated successfully."} )
     else
+      Rails.logger.debug("Validation Errors: #{the_map_building.errors.full_messages}")
       redirect_to("/map_buildings/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
     end
   end

@@ -31,6 +31,13 @@ class MapBuilding < ApplicationRecord
   validates :position_id, uniqueness: { scope: :map_id, message: "already taken for this map" }
   validates :position_id, uniqueness: { scope: :map_id, message: "Position must be unique within the same map" }
 
+  validates :quality_level, numericality: { 
+    only_integer: true, 
+    greater_than_or_equal_to: 0, 
+    less_than_or_equal_to: 12,
+    message: "must be between 0 and 12"
+  }
+
   def required_amount(input_id)
     # Ensure the product has dependant_resources and fetch the quantity required
     self.product.dependant_resources.find_by(input_id: input_id)&.quantity_required || 0

@@ -8,92 +8,7 @@
 </div>
 
 <hr>
-
- 
-<div style="display: flex; flex-wrap: wrap; align-content: flex-start;">
-
-  <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
-  
-  <% for @the_position_id in 1..14 %>
-    <% @the_building = @map_buildings_by_position[@the_position_id] %>
-
-    <!-- Building or Placeholder -->
-    <% if @the_building %>
-
-      <%= render 'maps/changebuildingtype', 
-      the_position_id: @the_position_id, 
-      the_map: @the_map, 
-      the_building: @the_building %>
-
-      <div style="display: flex; flex-direction:column; width: 300px; height: 220px; border: 1px solid black;">
-        <div style="border: 1px solid black;">
-          <%=@the_building.building_type.name%>
-        </div>
-        <div style="display:flex;">
-          <div class="image-container" style="position: relative; width: 120px; height: 120px; padding: 0px; border: 1px solid black;">
-            <!-- First Image (Background) -->
-            <img src="<%= @the_building.building_type.image_link %>" 
-                alt="Open Modal" 
-                style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
-                data-bs-toggle="modal" 
-                data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-
-            <!-- Second Image (Foreground, Bottom Right) -->
-            <img src="<%= @the_building.product.image_link %>" 
-                alt="Product" 
-                style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
-          </div>
-          <div>
-            <p>
-             Quality: <%=@the_building.quality_level%>
-            </p>
-            <p>
-             Level: <%=@the_building.level%>
-            </p>
-
-            <select class="form-select" aria-label="Default select example">
-              <% for @quality_level in 0..12 %>
-                <option value="<%= @quality_level %>" <%= "selected" if @quality_level == @the_building.quality_level %>><%= @quality_level %></option>
-              <% end %>
-            </select>
-          </div>
-        </div>
-        <div>
-          <%= render 'maps/updatebuilding', 
-          the_position_id: @the_position_id, 
-          the_map: @the_map, 
-          the_building: @the_building %>
-
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update_properties">
-            <i class="bi bi-gear"></i>
-          </button>
-
-        </div>
-      </div>
-
-    <% else %>
-
-      <%= render 'maps/choosebuildingtype', 
-      the_position_id: @the_position_id, 
-      the_map: @the_map, 
-      the_building: @the_building %>
-      <div style="display: flex; flex-direction:column; justify-content: center; width: 300px; height: 220px;">
-        <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
-          <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
-              alt="Open Modal" 
-              style="cursor: pointer; width: auto; height: auto;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-
-</div>
-
-<hr>
-
-<div style="display: flex";>
+<div style="display: flex; align-items: center; gap: 10px;">
   <div style="padding: 5px">
     <!-- Trigger Button -->
     <button type="button" class="btn" 
@@ -125,7 +40,91 @@
     </button>
 
   </div>
+  <p>Gross profit: <%= @income_statement[:gross_income].round %> $</p>
+  <p>Gross margin: <%= ((@income_statement[:gross_income]/@income_statement[:total_revenue])*100).round(1) %> %</p>
+  <p>Operating income: <%= @income_statement[:operating_income].round %> $</p>
+  <p>Profit margin: <%= ((@income_statement[:operating_income]/@income_statement[:total_revenue])*100).round(1) %> %</p>
+  
 </div>
+
+<hr>
+ 
+<div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 10px;">
+
+  <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
+  
+  <% for @the_position_id in 1..14 %>
+    <% @the_building = @map_buildings_by_position[@the_position_id] %>
+
+    <!-- Building or Placeholder -->
+    <% if @the_building %>
+
+      <%= render 'maps/changebuildingtype', 
+      the_position_id: @the_position_id, 
+      the_map: @the_map, 
+      the_building: @the_building %>
+
+      <div style="display: flex; flex-direction:column; justify-content: space-between; width: 300px; height: 220px; border: 1px solid black; padding:5px;">
+        <div style="border: 1px solid black;">
+          <%=@the_building.building_type.name%>
+        </div>
+        <div style="display:flex;">
+          <div class="image-container" style="position: relative; width: 120px; height: 120px; padding: 0px; border: 1px solid black;">
+            <!-- First Image (Background) -->
+            <img src="<%= @the_building.building_type.image_link %>" 
+                alt="Open Modal" 
+                style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
+                data-bs-toggle="modal" 
+                data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+
+            <!-- Second Image (Foreground, Bottom Right) -->
+            <img src="<%= @the_building.product.image_link %>" 
+                alt="Product" 
+                style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
+          </div>
+          <div>
+            <p>
+             Quality: <%=@the_building.quality_level%>
+            </p>
+            <p>
+             Level: <%=@the_building.level%>
+            </p>
+
+          </div>
+        </div>
+        <div>
+          <%= render 'maps/updatebuilding', 
+          the_position_id: @the_position_id, 
+          the_map: @the_map, 
+          the_building: @the_building %>
+
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update_properties_<%= @the_position_id %>">
+            <i class="bi bi-gear"></i>
+          </button>
+
+        </div>
+      </div>
+
+    <% else %>
+
+      <%= render 'maps/choosebuildingtype', 
+      the_position_id: @the_position_id, 
+      the_map: @the_map, 
+      the_building: @the_building %>
+      <div style="display: flex; flex-direction:column; justify-content: center; width: 300px; height: 220px;">
+        <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
+          <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
+              alt="Open Modal" 
+              style="cursor: pointer; width: auto; height: auto;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+</div>
+
 
 <hr>
 

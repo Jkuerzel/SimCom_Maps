@@ -19,6 +19,34 @@
 
 
 <style>
+  /* Select menu Styles*/
+
+  .image-select-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .image-option {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+
+  .image-option.active {
+    border-color: #007bff; /* Highlight selected option */
+  }
+
+  .select-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+
+
   /* Flex container to arrange items in a row */
   .image-row {
     display: flex;

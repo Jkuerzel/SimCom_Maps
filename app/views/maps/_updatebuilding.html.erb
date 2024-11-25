@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="update_properties" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="update_properties_<%= the_position_id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,38 +8,87 @@
       </div>
       <div class="modal-body">
         
-        <form action="/modify_map_building/<%=@the_building.id%>">
+        <form action="/modify_map_building/<%= the_building.id %>" method="post">
+          <input type="hidden" name="query_position_id" id="selectedPosition" value="<%= the_position_id %>">
+          <input type="hidden" name="query_building_id" id="selectedBuildingtype" value="<%= the_building.building_type.id %>">
+          <input type="hidden" name="query_production_time" id="selectedproductiontime" value="24">
+          <input type="hidden" name="query_map_id" id="user_map" value="<%= the_map.id %>">
+          
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Quality</label>
-            <select class="form-select" aria-label="Default select example">
-              <% for @quality_level in 0..12 %>
-                <option value="<%= @quality_level %>" <%= "selected" if @quality_level == @the_building.quality_level %>><%= @quality_level %></option>
+            <label for="quality_level_input" class="form-label">Quality</label>
+            <select id="quality_level_input" class="form-select" aria-label="Default select example" name="query_quality_level">
+              <% for quality_level in 0..12 %>
+                <option value="<%= quality_level %>" <%= "selected" if quality_level == the_building.quality_level %>><%= quality_level %></option>
               <% end %>
             </select>
           </div>
+
           <div class="mb-3">
-            <label for="customRange3" class="form-label">Building level: <span id="rangeValue">20</span></label>
-            <input type="range" class="form-range" min="1" max="40" step="1" id="customRange3" value="1">
+            <label for="level_range_<%= the_position_id %>" class="form-label">
+              Building level: <span id="rangeValue_<%= the_position_id %>"><%= the_building.level || 1 %></span>
+            </label>
+            <input id="level_range_<%= the_position_id %>" 
+                  type="range" 
+                  class="form-range" 
+                  min="1" 
+                  max="40" 
+                  step="1" 
+                  value="<%= the_building.level || 1 %>" 
+                  name="query_level">
+          </div>
+
+          <div class="mb-3">
+            <label for="input_resource_<%= the_position_id %>" class="form-label">Select Product:</label>
+            <div id="input_resource_<%= the_position_id %>" class="image-select-container">
+              <% the_building.building_type.products.each do |product| %>
+                <div class="image-option <%= "active" if the_building.product == product %>" data-value="<%= product.id %>">
+                  <img src="<%= product.image_link %>" alt="Product <%= product.id %>" class="select-image">
+                </div>
+              <% end %>
+            </div>
+            <input type="hidden" name="query_product_id" id="selectedProduct_<%= the_position_id %>" value="<%= the_building.product&.id %>">
           </div>
 
           <script>
-            // Get the range input and the display element
-            const rangeInput = document.getElementById('customRange3');
-            const rangeValueDisplay = document.getElementById('rangeValue');
+            document.addEventListener('DOMContentLoaded', () => {
+            // Image selection logic
+            const imageOptions = document.querySelectorAll('.image-option');
+            const hiddenInput = document.getElementById('selectedProduct_<%= the_position_id %>');
 
-            // Set initial value display
-            rangeValueDisplay.textContent = rangeInput.value;
+            if (imageOptions.length && hiddenInput) {
+              imageOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                  // Remove active class from all options
+                  imageOptions.forEach(opt => opt.classList.remove('active'));
 
-            // Update value display on input change
-            rangeInput.addEventListener('input', (event) => {
-              rangeValueDisplay.textContent = event.target.value;
-            });
+                  // Add active class to the selected option
+                  option.classList.add('active');
+
+                  // Update hidden input with the selected value
+                  hiddenInput.value = option.getAttribute('data-value');
+                });
+              });
+            }
+
+            // Range slider logic
+            const rangeInput = document.getElementById('level_range_<%= the_position_id %>');
+            const rangeValueDisplay = document.getElementById('rangeValue_<%= the_position_id %>');
+
+            if (rangeInput && rangeValueDisplay) {
+              // Set initial value display
+              rangeValueDisplay.textContent = rangeInput.value;
+
+              // Update value display on input change
+              rangeInput.addEventListener('input', (event) => {
+                rangeValueDisplay.textContent = event.target.value;
+              });
+            }
+          });
+
           </script>
+
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

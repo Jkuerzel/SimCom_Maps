@@ -122,16 +122,16 @@ class MapBuildingsController < ApplicationController
   def update_type
     the_id = params.fetch("path_id")
     the_map_building = MapBuilding.where({ :id => the_id }).at(0)
-  
+    the_map_id= params.fetch("map_id")
     the_map_building.building_id = params.fetch("query_building_id")
     product_id=Building.where({:id=>params.fetch("query_building_id")}).first.products.first.id
     the_map_building.product_id = product_id
   
     if the_map_building.valid?
       the_map_building.save
-      redirect_to("/map_buildings/#{the_map_building.id}", { :notice => "Map building updated successfully."} )
+      redirect_to("/maps/#{the_map_id}", { :notice => "Map building updated successfully."} )
     else
-      redirect_to("/map_buildings/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
+      redirect_to("/maps/#{the_map_id}", { :alert => the_map_building.errors.full_messages.to_sentence })
     end
   end
 

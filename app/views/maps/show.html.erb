@@ -1,3 +1,8 @@
+
+
+
+
+
 <div>
   <div>
     <h1>
@@ -15,48 +20,17 @@
   
   <% for @the_position_id in 1..18 %>
     <% @the_building = @map_buildings_by_position[@the_position_id] %>
+ 
 
-    <!-- Modal -->
-    <div class="modal fade" id="buildingtypemodal<%= @the_position_id %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= @the_position_id %>" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel<%= @the_position_id %>">Choose a building</h1>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-
-          <div class="modal-body" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-            <% Building.all.each do |building_type| %>
-              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 120px;">
-                <p><%= building_type.name %></p>
-                <%= form_with url: "/insert_map_building", method: :post, local: true do |f| %>
-                  <%= f.hidden_field :map_id, value: @the_map.id %>
-                  <%= f.hidden_field :query_position_id, value: @the_position_id %>
-                  <%= f.hidden_field :query_building_id, value: building_type.id %>
-                  <%= image_tag building_type.image_link, alt: "Add new building", 
-                                style: "width: 100px; height: 100px; cursor: pointer;", 
-                                onclick: "this.closest('form').submit();" %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <% if @the_building %>
-              <a href="/delete_map_building/<%= @the_map.id %>/<%= @the_building.id %>" 
-                class="btn btn-primary" 
-                data-confirm="Are you sure you want to delete this building?">
-                Delete Building
-              </a>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Building or Placeholder -->
     <% if @the_building %>
+
+      <%= render 'maps/changebuildingtype', 
+      the_position_id: @the_position_id, 
+      the_map: @the_map, 
+      the_building: @the_building %>
+
       <div style="display: flex; align-content: space-between; border: 1px solid black; padding: 10px;">
         <div class="image-container" style="width: 120px; height: 120px;">
           <img src="<%= @the_building.building_type.image_link %>" 
@@ -82,6 +56,12 @@
         </div>
       </div>
     <% else %>
+
+      <%= render 'maps/choosebuildingtype', 
+      the_position_id: @the_position_id, 
+      the_map: @the_map, 
+      the_building: @the_building %>
+
       <div>
         <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
              alt="Open Modal" 

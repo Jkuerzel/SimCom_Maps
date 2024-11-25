@@ -56,17 +56,17 @@ class MapBuildingsController < ApplicationController
 
   def create
     the_map_building = MapBuilding.new
-    the_map_building.map_id = params[:map_id]
+    the_map_building.map_id = params.fetch("map_id")
     the_map_building.building_id = params.fetch("query_building_id")
     the_map_building.position_id = params.fetch("query_position_id")
-    the_map_building.level = params.fetch("query_level")
+    the_map_building.level = 1
     the_map_building.quality_level = 0
     the_map_building.production_time = 24
 
     product_id=Building.where({:id=>params.fetch("query_building_id")}).first.products.first.id
 
     the_map_building.product_id = product_id
-  
+    
     if the_map_building.valid?
       the_map_building.save
       redirect_to("/maps/#{the_map_building.map_id}", notice: "Map building created successfully.")

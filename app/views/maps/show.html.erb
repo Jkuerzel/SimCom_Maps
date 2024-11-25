@@ -8,13 +8,108 @@
 
 <hr>
 
+ 
+<!-- Adding or modifying the buildings -->
+
+<div style="display:flex; justify-content: space-between; border: 1px solid black;">
+  <div style="display: flex; flex-wrap:wrap; align-content:flex-start; border: 1px solid black;">
+    <% for @the_position_id in 1..18 %>
+    <% the_building = @the_map.map_buildings.find_by(position_id: @the_position_id) %>
+      <% if the_building %>
+        <div style="display: flex; align-content:space-between;border: 1px solid black;">
+        
+          <div class="image-container" style="width: 120px; height: 120px;">
+            <img src="<%= the_building.building_type.image_link %>" 
+              alt="Open Modal" 
+              style="cursor: pointer; width: 150px; height: auto;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#exampleModal">
+          </div>
+
+          <div style="display: flex; flex-direction:column;">
+
+            <div>
+              <img src="<%= the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
+            </div>
+
+            <div style="display: flex; justify-content: space-between">
+              <%= button_to "↓", "/modify_map_building/decrement_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+              <p>Q<%=the_building.quality_level%></p>
+              <%= button_to "↑", "/modify_map_building/increment_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+            </div>
+
+            <div style="display: flex; justify-content: space-between">
+              <%= button_to "↓", "/modify_map_building/decrement_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+              <p>Level <%=the_building.level%></p>
+              <%= button_to "↑", "/modify_map_building/increment_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
+            </div>
+
+          </div>
+
+        </div>
+      <% else %>
+        
+        <div>
+          <!-- Button trigger modal -->
+          <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
+              alt="Open Modal" 
+              style="cursor: pointer; width: 150px; height: auto;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#exampleModal">
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Choose a building</h1>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                <div class="modal-body" style="display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: center; padding: 5px; gap: 15px;">
+                  <% Building.all.each do |building_type| %>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 120px;">
+                      <p style="margin-bottom: 5px;"><%= building_type.name %></p>
+
+                      <form action="/insert_map_building" method="post">
+                        <input type="hidden" name="map_id" value="<%= @the_map.id %>">
+                        <input type="hidden" name="query_position_id" value="<%= @the_position_id %>">
+                        <input type="hidden" name="query_building_id" value="<%= building_type.id %>">
+                        <img src="<%= building_type.image_link %>" alt="Add new building" 
+                            style="width: 100px; height: 100px; cursor: pointer;" 
+                            onclick="this.closest('form').submit();">
+                      </form>
+
+                    </div>
+                  <% end %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Delete building</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <p>Gross income <%=@income_statement[:gross_income].round(0)%> $</p>
+    <p>Operating income <%=@income_statement[:operating_income].round(0)%> $</p>
+  </div>
+</div>
+
+<hr>
+
 <div style="display: flex";>
   <div style="padding: 5px">
     <!-- Trigger Button -->
     <button type="button" class="btn" 
         style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
         data-bs-toggle="modal" 
-        data-bs-target="#production_modal">
+        data-bs-target="#income_statement_modal">
       Income statement
     </button>
 
@@ -133,7 +228,7 @@
                 <% @ledger.each do |resource_id, qualities| %>
                   <% qualities.each do |quality, flow| %>
                     <tr>
-                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= resource_id %></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><img class="img-fluid" src="<%= Resource.where({:id=>resource_id}).first.image_link %>"</td>
                       <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= quality %></td>
                       <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:produced].round(0) %></td>
                       <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:consumed].round(0) %></td>
@@ -167,175 +262,6 @@
     </div>
   </div>
 </div>
-
-<hr>
-
-<div style="display:flex; justify-content: space-between; border: 1px solid black;">
-  <div style="display: flex; flex-wrap:wrap; align-content:flex-start; border: 1px solid black;">
-    <% for the_position_id in 1..18 %>
-    <% the_building = @the_map.map_buildings.find_by(position_id: the_position_id) %>
-      <% if the_building %>
-        <div style="display: flex; align-content:space-between;border: 1px solid black;">
-        
-          <div class="image-container" style="width: 120px; height: 120px;">
-            <a href="/map_buildings/<%= the_building.id %>">
-              <img src="<%= the_building.building_type.image_link %>" alt="Building on the map" style="width: 180px; height: 180px;">
-            </a>
-          </div>
-
-          <div style="display: flex; flex-direction:column;">
-
-            <div>
-              <img src="<%= the_building.product.image_link %>" alt="Building on the map" style="width: 40px; height: 40px;">
-            </div>
-
-            <div style="display: flex; justify-content: space-between">
-              <%= button_to "↓", "/modify_map_building/decrement_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-              <p>Q<%=the_building.quality_level%></p>
-              <%= button_to "↑", "/modify_map_building/increment_quality/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-            </div>
-
-            <div style="display: flex; justify-content: space-between">
-              <%= button_to "↓", "/modify_map_building/decrement_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-              <p>Level <%=the_building.level%></p>
-              <%= button_to "↑", "/modify_map_building/increment_level/#{the_building.id}", method: :patch, class: "btn btn-success" %>
-            </div>
-
-          </div>
-
-        </div>
-      <% else %>
-        <div>
-          <a href="/maps/<%= @the_map.id %>/new_building/<%= the_position_id %>">
-            <img src="https://media.istockphoto.com/id/688550958/vector/black-plus-sign-positive-symbol.jpg?s=612x612&w=0&k=20&c=0tymWBTSEqsnYYXWeWmJPxMotTGUwaGMGs6BMJvr7X4=" alt="Add new building" style="width: 100px; height: 100px;">
-          </a>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-  <div>
-    <p>Gross income <%=@income_statement[:gross_income].round(0)%> $</p>
-    <p>Operating income <%=@income_statement[:operating_income].round(0)%> $</p>
-  </div>
-</div>
-
-<hr>
-
-
-<div style="padding: 0 100px;"> <!-- Padding links und rechts -->
-  <h2>Income Statement</h2>
-  <table style="border-collapse: collapse; width: 100%; text-align: left; font-family: Arial, sans-serif;">
-    <thead>
-      <tr style="background-color: #f4f4f4;">
-        <th style="padding: 8px; border-bottom: 2px solid #ddd;">Metric</th>
-        <th style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Revenue Section -->
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">Total Revenue</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_revenue].round %> $</td>
-      </tr>
-
-      <!-- COGS Section -->
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">Cost of Purchased Goods</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_cost_of_purchased_goods].round %> $</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">Worker Wages</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_worker_wages].round %> $</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">Cost of Goods Sold (COGS)</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:cogs].round %> $</td>
-      </tr>
-
-      <!-- Freight Out Section -->
-
-      <!-- Gross Income Section -->
-      <tr style="background-color: #e8f4e8;">
-        <td style="padding: 8px; border-bottom: 2px solid #ddd; font-weight: bold;">Gross Income</td>
-        <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:gross_income].round %> $</td>
-      </tr>
-
-      <!-- Operating Expenses Section -->
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">Admin Overhead Wages</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_admin_overhead_wages].round %> $</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">Executive Salaries</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:executives_salaries].round %> $</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total Fees Paid</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_fees_paid].round %> $</td>
-      </tr>
-
-      <tr>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">Freight Out</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:freight_out].round %> $</td>
-      </tr>
-
-      <!-- Operating Income Section -->
-      <tr style="background-color: #e8f4e8;">
-        <td style="padding: 8px; border-bottom: 2px solid #ddd; font-weight: bold;">Operating Income</td>
-        <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:operating_income].round %> $</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
-<hr>
-
-
-<hr>
-
-<table style="border-collapse: collapse; width: 100%; text-align: left;">
-  <thead>
-    <tr>
-      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Resource</th>
-      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Quality</th>
-      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Produced</th>
-      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Consumed</th>
-      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Excess</th>
-      <th style="padding: 8px; border-bottom: 1px solid #ddd;">Purchased</th>
-
-    </tr>
-  </thead>
-  <tbody>
-    <% totals = { produced: 0, consumed: 0, excess: 0, purchased: 0, fee_paid: 0, transport_cost: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0, revenue: 0, income_impact: 0 } %>
-    <% @ledger.each do |resource_id, qualities| %>
-      <% qualities.each do |quality, flow| %>
-        <tr>
-          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= resource_id %></td>
-          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= quality %></td>
-          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:produced].round(0) %></td>
-          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:consumed].round(0) %></td>
-          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:excess].round(0) %></td>
-          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:purchased].round(0) %></td>
-        </tr>
-        <% # Update totals %>
-        <% totals[:produced] += flow[:produced] %>
-        <% totals[:consumed] += flow[:consumed] %>
-        <% totals[:excess] += flow[:excess] %>
-        <% totals[:purchased] += flow[:purchased] %>
-
-      <% end %>
-    <% end %>
-    <tr style="font-weight: bold; background-color: #f4f4f4;">
-      <td colspan="2" style="padding: 8px; border-top: 2px solid #000;">Totals</td>
-      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:produced].round(0) %></td>
-      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:consumed].round(0) %></td>
-      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:excess].round(0) %></td>
-      <td style="padding: 8px; border-top: 2px solid #000;"><%= totals[:purchased].round(0) %></td>
-
-    </tr>
-  </tbody>
-</table>
 
 <hr>
 
@@ -395,31 +321,3 @@
     </dd>
   </dl>
 </div>
-    <div>
-      <div>
-        <a href="/maps">
-          Go back
-        </a>
-      </div>
-      <%if @the_map.owner_id==current_user.id%>
-      <div>
-        <a href="/delete_map/<%= @the_map.id %>">
-          Delete map
-        </a>
-      </div>
-      <%end%>
-    </div>
-
-
-<h1><%=@the_map.total_profit.round(0)%> $</h1>
-
--
-<!--
-
-Revenue
-Cost of Goods Sold
-Sold Products
-fees paid
-transport cost
-
--->

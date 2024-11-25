@@ -46,8 +46,6 @@ class MapsController < ApplicationController
 
     the_map.owner_id = params.fetch("query_owner_id")
     the_map.name = params.fetch("query_name")
-    the_map.map_buildings_count = params.fetch("query_map_buildings_count")
-    the_map.executives_count = params.fetch("query_executives_count")
 
     if the_map.valid?
       the_map.save

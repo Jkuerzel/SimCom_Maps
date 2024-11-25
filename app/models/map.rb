@@ -33,15 +33,15 @@ class Map < ApplicationRecord
     # Calculate total map level
     total_map_levels = self.map_buildings.sum(:level)
     # Calculate Base Level Administrative Overhead
-    ao_percentage = ((total_map_levels - 1).to_f / 170)
+    @ao_percentage = ((total_map_levels - 1).to_f / 170)
     # Calculate COO impact
     coo_levels=self.executives.where({:position=>1}).first.operations_level rescue 0.0
     # Calculate other C-Level staff impact
     staff_levels = self.executives.where(position: 2..4).sum(:operations_level).to_i / 4
     #Total exectuives impact
-    executive_impact=(ao_percentage/100)*(coo_levels+staff_levels)
+    executive_impact=(@ao_percentage/100)*(coo_levels+staff_levels)
     #Effective AO
-    eff_ao_percentage=ao_percentage-executive_impact
+    eff_ao_percentage=@ao_percentage-executive_impact
 
     self.executives.where({:position=>1})
 

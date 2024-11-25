@@ -45,6 +45,7 @@
   <p>Operating income: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $</p>
   <p>Profit margin: <%= ((@income_statement[:operating_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
   
+  
 </div>
 
 <hr>
@@ -136,6 +137,7 @@
       </h2>
 
       <form action="/modify_map/<%= @the_map.id %>"  method="post" >
+      <input type="hidden" name="query_owner_id" id="user_id" value="<%= current_user.id %>">
       <div>
           <label for="name_box">
             Name

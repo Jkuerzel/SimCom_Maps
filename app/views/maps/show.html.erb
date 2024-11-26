@@ -1,32 +1,32 @@
 <div style="display: flex; flex-direction:column; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1200px; margin: 0 auto;">
-  <div class="col rounded rounded-1 bg-secondary bg-gradient text-white p-3">
-    <div style="display:flex; justify-content: space-between;">
-      <h2>
-        <%= @the_map.name %> - details
-      </h2>
-      <div class="container text-center" style="width:450px; font-size: 10px; display:flex; flex-direction: column; justify-content: space-between;">
-        <div class="row" style="">
-          <div class=" col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="" >
-            Production bonus: <%=@the_map.bonus%> %
-          </div>
-          <div class="ms-2 col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="">
-            Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
-          </div>
+
+  <div class="col rounded rounded-1 bg-secondary bg-gradient text-white p-3" style="display:flex; justify-content: space-between; align-items: center;">
+    <h2 class="m-0" style="flex-shrink: 0;">
+      <%= @the_map.name %> - details
+    </h2>
+    <div class="container text-center" style="margin-left: 350px; font-size: 10px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="row" style="">
+        <div class="mb-2 me-2 col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="" >
+          Production bonus: <%=@the_map.bonus%> %
         </div>
-        <div class="row" style="">
-          <div class="col rounded-pill bg-success text-white" style="">
-            Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
-          </div>
-          <div class="mx-2 col rounded-pill bg-success text-white" style="">
-            Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $
-          </div>
-          <div class="col rounded-pill bg-success text-white" style="">
-            Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
-          </div>
+        <div class="mb-2 col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="">
+          Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
+        </div>
+      </div>
+      <div class="row" style="">
+        <div class="col rounded-pill bg-success text-white" style="">
+          Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
+        </div>
+        <div class="mx-2 col rounded-pill bg-success text-white" style="">
+          Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $
+        </div>
+        <div class="col rounded-pill bg-success text-white" style="">
+          Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
         </div>
       </div>
     </div>
   </div>
+
 
   <hr>
   <div style="display: flex; align-items: center; gap: 10px;">

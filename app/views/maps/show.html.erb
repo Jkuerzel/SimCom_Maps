@@ -130,6 +130,39 @@
 </div>
 
 
+<div>
+  <% i=0 %>
+  <% positions = ["COO", "CFO", "CMO", "CTO"] %>
+  <% positions.each do |position| %>
+    <% i=i+1 %>
+    <div>
+      <% if @the_map.executives.where({:position=>i}).exists? %>
+        <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
+      <% else %>
+        <%= position %> skill: Missing
+      <% end %>
+    </div>
+    <div>
+      <% if @the_map.executives.where({:position=>i}).exists? %>
+      <% else %>
+      <%= render 'maps/create_executive', 
+        position: position,
+        position_id: i, 
+        the_map: @the_map  %>
+
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>">
+        Create Executive
+      </button>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+
+
+
+
+
 <hr>
 
 <%if @the_map.owner_id==current_user.id%>

@@ -20,9 +20,7 @@ class Executive < ApplicationRecord
   #Add Indirect Associations
   #Add Validations
   validates :salary, presence: true
-  validates :research_level, presence: true
   validates :position, presence: true
   validates :operations_level, presence: true
-  validates :marketing_level, presence: true
-  validates :finance_level, presence: true
+
 end

@@ -53,8 +53,8 @@ class Map < ApplicationRecord
     self.map_buildings.each do |the_map_building|
       product_id = the_map_building.product_id
       quality = the_map_building.quality_level
-      @units_per_day = (the_map_building.product.units_per_hour * the_map_building.level * 24).round(2)
-  
+      @units_per_day = (the_map_building.product.units_per_hour * the_map_building.abundance/100 * the_map_building.level * 24).round(2)
+      
       # Add production to ledger
       @ledger[product_id][quality][:produced] += @units_per_day
   
@@ -66,8 +66,14 @@ class Map < ApplicationRecord
       transport_per_unit = the_map_building.product.transport_amount
       @ledger[product_id][quality][:transport_per_unit] = transport_per_unit
   
+      if the_map_building.robots==true
+        robots_factor=0.97
+      else
+        robots_factor=100
+      end
+
       # Calculate and assign wage cost
-      wage_cost_per_day = the_map_building.building_type.wage_cost_per_hour * the_map_building.level * 24
+      wage_cost_per_day = the_map_building.building_type.wage_cost_per_hour * the_map_building.level * ((100.0-self.bonus)/100) * robots_factor * 24
       @ledger[product_id][quality][:wage_cost] += wage_cost_per_day
   
       # Calculate administration wages

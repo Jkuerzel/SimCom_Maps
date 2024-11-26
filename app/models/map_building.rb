@@ -8,6 +8,7 @@
 #  production_buildings_count :integer
 #  production_time            :integer
 #  quality_level              :integer
+#  robots                     :boolean          default(FALSE), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  building_id                :integer

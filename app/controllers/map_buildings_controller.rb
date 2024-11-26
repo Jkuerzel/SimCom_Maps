@@ -63,6 +63,7 @@ class MapBuildingsController < ApplicationController
     the_map_building.quality_level = 0
     the_map_building.production_time = 24
     the_map_building.abundance = 100
+    the_map_building.robots = FALSE
 
     product_id=Building.where({:id=>params.fetch("query_building_id")}).first.products.first.id
 
@@ -87,13 +88,21 @@ class MapBuildingsController < ApplicationController
     the_map_building.production_time = params.fetch("query_production_time")
     the_map_building.quality_level = params.fetch("query_quality_level").to_i
     the_map_building.product_id = params.fetch("query_product_id")
+    the_map_building.robots = params.fetch("query_robots")
+
+    if [22, 23, 28].include?(the_map_building.building_type.id)
+      the_map_building.abundance = params.fetch("query_abundance")
+    else
+      the_map_building.abundance = 100
+    end
+    
   
     if the_map_building.valid?
       the_map_building.save
       redirect_to("/maps/#{the_map_building.map_id}", { :notice => "Map building updated successfully."} )
     else
       Rails.logger.debug("Validation Errors: #{the_map_building.errors.full_messages}")
-      redirect_to("/map_buildings/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
+      redirect_to("/maps/#{the_map_building.id}", { :alert => the_map_building.errors.full_messages.to_sentence })
     end
   end
 
@@ -128,6 +137,7 @@ class MapBuildingsController < ApplicationController
     the_map_building.building_id = params.fetch("query_building_id")
     product_id=Building.where({:id=>params.fetch("query_building_id")}).first.products.first.id
     the_map_building.product_id = product_id
+    the_map_building.abundance = 100
   
     if the_map_building.valid?
       the_map_building.save

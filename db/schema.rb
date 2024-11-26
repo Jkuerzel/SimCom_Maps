@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_25_195746) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_26_004543) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_25_195746) do
     t.integer "product_id"
     t.integer "production_buildings_count"
     t.integer "abundance", default: 100, null: false
+    t.boolean "robots", default: false, null: false
   end
 
   create_table "maps", force: :cascade do |t|

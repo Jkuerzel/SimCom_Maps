@@ -7,13 +7,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
         <form action="/modify_map_building/<%= the_building.id %>" method="post">
           <input type="hidden" name="query_position_id" id="selectedPosition" value="<%= the_position_id %>">
           <input type="hidden" name="query_building_id" id="selectedBuildingtype" value="<%= the_building.building_type.id %>">
           <input type="hidden" name="query_production_time" id="selectedproductiontime" value="24">
           <input type="hidden" name="query_map_id" id="user_map" value="<%= the_map.id %>">
-          
+
           <div class="mb-3">
             <label for="quality_level_input" class="form-label">Quality</label>
             <select id="quality_level_input" class="form-select" aria-label="Default select example" name="query_quality_level">
@@ -24,18 +23,36 @@
           </div>
 
           <div class="mb-3">
-            <label for="level_range_<%= the_position_id %>" class="form-label">
-              Building level: <span id="rangeValue_<%= the_position_id %>"><%= the_building.level || 1 %></span>
+            <label class="form-label">
+              Building level: <span class="range-value"><%= the_building.level || 1 %></span>
             </label>
-            <input id="level_range_<%= the_position_id %>" 
-                  type="range" 
-                  class="form-range" 
-                  min="1" 
-                  max="100" 
-                  step="1" 
-                  value="<%= the_building.level || 1 %>" 
-                  name="query_level">
+            <input 
+              type="range" 
+              class="form-range slider-input" 
+              min="1" 
+              max="100" 
+              step="1" 
+              value="<%= the_building.level || 1 %>" 
+              name="query_level">
           </div>
+
+
+
+          <% if [22, 23, 28].include?(the_building.building_type.id) %>
+          <div class="mb-3">
+            <label class="form-label">
+              Abundance: <span class="range-value"><%= the_building.abundance || 100 %></span>
+            </label>
+            <input 
+              type="range" 
+              class="form-range slider-input" 
+              min="80" 
+              max="100" 
+              step="0.01" 
+              value="<%= the_building.abundance || 100 %>" 
+              name="query_abundance">
+          </div>
+          <%end%>
 
           <div class="mb-3">
             <label for="input_resource_<%= the_position_id %>" class="form-label">Select Product:</label>
@@ -49,47 +66,74 @@
             <input type="hidden" name="query_product_id" id="selectedProduct_<%= the_position_id %>" value="<%= the_building.product&.id %>">
           </div>
 
-          <script>
-            document.addEventListener('DOMContentLoaded', () => {
-            // Image selection logic
-            const imageOptions = document.querySelectorAll('.image-option');
-            const hiddenInput = document.getElementById('selectedProduct_<%= the_position_id %>');
 
-            if (imageOptions.length && hiddenInput) {
-              imageOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                  // Remove active class from all options
-                  imageOptions.forEach(opt => opt.classList.remove('active'));
-
-                  // Add active class to the selected option
-                  option.classList.add('active');
-
-                  // Update hidden input with the selected value
-                  hiddenInput.value = option.getAttribute('data-value');
-                });
-              });
-            }
-
-            // Range slider logic
-            const rangeInput = document.getElementById('level_range_<%= the_position_id %>');
-            const rangeValueDisplay = document.getElementById('rangeValue_<%= the_position_id %>');
-
-            if (rangeInput && rangeValueDisplay) {
-              // Set initial value display
-              rangeValueDisplay.textContent = rangeInput.value;
-
-              // Update value display on input change
-              rangeInput.addEventListener('input', (event) => {
-                rangeValueDisplay.textContent = event.target.value;
-              });
-            }
-          });
-
-          </script>
-
+          <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              role="switch" 
+              id="robotsSwitch" 
+              name="query_robots" 
+              value="true" 
+              <%= "checked" if the_building.robots %>>
+            <label class="form-check-label" for="robotsSwitch">Robots Installed</label>
+          </div>
+          <p></p>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Function to attach slider logic
+  const attachSliderLogic = () => {
+    const sliders = document.querySelectorAll('.slider-input');
+    sliders.forEach(slider => {
+      // Find the associated value display for this slider
+      const valueDisplay = slider.closest('.mb-3').querySelector('.range-value');
+
+      if (valueDisplay) {
+        // Set initial value
+        valueDisplay.textContent = slider.value;
+
+        // Update value display on input change
+        slider.addEventListener('input', (event) => {
+          valueDisplay.textContent = event.target.value;
+        });
+      }
+    });
+  };
+
+  // Call function to attach slider logic
+  attachSliderLogic();
+
+  // Image selection logic
+  const modals = document.querySelectorAll('.modal');
+
+  modals.forEach(modal => {
+    const imageOptions = modal.querySelectorAll('.image-option');
+    const hiddenInput = modal.querySelector('input[name="query_product_id"]');
+
+    if (imageOptions.length && hiddenInput) {
+      imageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          // Remove active class from all options within this modal
+          imageOptions.forEach(opt => opt.classList.remove('active'));
+
+          // Add active class to the selected option
+          option.classList.add('active');
+
+          // Update hidden input with the selected value
+          hiddenInput.value = option.getAttribute('data-value');
+        });
+      });
+    }
+  });
+});
+
+</script>

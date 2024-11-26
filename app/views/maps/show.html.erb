@@ -44,7 +44,7 @@
   <p>Gross margin: <%= ((@income_statement[:gross_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
   <p>Operating income: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $</p>
   <p>Profit margin: <%= ((@income_statement[:operating_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
-  
+  <p>Production bonus: <%= @the_map.bonus %> %</p>
   
 </div>
 
@@ -90,6 +90,9 @@
             <p>
              Level: <%=@the_building.level%>
             </p>
+            <p>
+             Robots <%=@the_building.robots%>
+            </p>
 
           </div>
         </div>
@@ -112,7 +115,7 @@
       the_position_id: @the_position_id, 
       the_map: @the_map, 
       the_building: @the_building %>
-      <div style="display: flex; flex-direction:column; justify-content: center; width: 300px; height: 220px;">
+      <div style="display: flex; flex-direction:column; justify-content: center; width: 300px; height: 220px; border: 1px solid black;">
         <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
           <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
               alt="Open Modal" 

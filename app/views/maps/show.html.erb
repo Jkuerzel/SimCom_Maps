@@ -1,250 +1,251 @@
-
-<div>
-  <div style="display:flex; justify-content: space-between;">
-    <h2>
-      <%= @the_map.name %> - details
-    </h2>
-    <div class="container text-center" style="width:450px; font-size: 10px; display:flex; flex-direction: column; justify-content: space-between;">
-      <div class="row" style="border: 1px solid black;">
-        <div class="col" style="border: 1px solid black;" >
-          Production bonus: <%=@the_map.bonus%> %
-        </div>
-        <div class="col" style="border: 1px solid black;">
-          Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
-        </div>
-      </div>
-      <div class="row" style="border: 1px solid black;">
-        <div class="col" style="border: 1px solid black;">
-          Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
-        </div>
-        <div class="col" style="border: 1px solid black;">
-          Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $
-        </div>
-        <div class="col" style="border: 1px solid black;">
-          Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr>
-<div style="display: flex; align-items: center; gap: 10px;">
-  <div style="padding: 5px">
-    <!-- Trigger Button -->
-    <button type="button" class="btn" 
-        style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#income_statement_modal">
-      Income statement
-    </button>
-
-    <%= render 'maps/income_statement', 
-      the_position_id: @the_position_id, 
-      the_map: @the_map, 
-      the_building: @the_building %>
-
-  </div>
-
-  <div style="padding: 5px">
-
-    <%= render 'maps/flow_of_goods', 
-      the_position_id: @the_position_id, 
-      the_map: @the_map, 
-      the_building: @the_building %>
-
-    <button type="button" class="btn" 
-        style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#production_modal">
-      Flow of goods
-    </button>
-
-  </div>
-
-</div>
-
-<hr>
- 
-<div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 10px;">
-
-  <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
-  
-  <% for @the_position_id in 1..14 %>
-    <% @the_building = @map_buildings_by_position[@the_position_id] %>
-
-    <!-- Building or Placeholder -->
-    <% if @the_building %>
-
-      <%= render 'maps/changebuildingtype', 
-      the_position_id: @the_position_id, 
-      the_map: @the_map, 
-      the_building: @the_building %>
-
-      <div style="display: flex; flex-direction:column; justify-content: space-between; width: 300px; height: 220px; border: 1px solid black; padding:5px;">
-        <div style="border: 1px solid black;">
-          <%=@the_building.building_type.name%>
-        </div>
-        <div style="display:flex;">
-          <div class="image-container" style="position: relative; width: 120px; height: 120px; padding: 0px; border: 1px solid black;">
-            <!-- First Image (Background) -->
-            <img src="<%= @the_building.building_type.image_link %>" 
-                alt="Open Modal" 
-                style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
-                data-bs-toggle="modal" 
-                data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-
-            <!-- Second Image (Foreground, Bottom Right) -->
-            <img src="<%= @the_building.product.image_link %>" 
-                alt="Product" 
-                style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
-          </div>
-          <div>
-            <p>
-             Quality: <%=@the_building.quality_level%>
-            </p>
-            <p>
-             Level: <%=@the_building.level%>
-            </p>
-            <p>
-             Robots <%=@the_building.robots%>
-            </p>
-
-          </div>
-        </div>
-        <div>
-          <%= render 'maps/updatebuilding', 
-          the_position_id: @the_position_id, 
-          the_map: @the_map, 
-          the_building: @the_building %>
-
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update_properties_<%= @the_position_id %>">
-            <i class="bi bi-gear"></i>
-          </button>
-
-        </div>
-      </div>
-
-    <% else %>
-
-      <%= render 'maps/choosebuildingtype', 
-      the_position_id: @the_position_id, 
-      the_map: @the_map, 
-      the_building: @the_building %>
-      <div style="display: flex; flex-direction:column; justify-content: center; width: 300px; height: 220px; border: 1px solid black;">
-        <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
-          <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
-              alt="Open Modal" 
-              style="cursor: pointer; width: auto; height: auto;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-
-</div>
-
-
-<div>
-  <% i=0 %>
-  <% positions = ["COO", "CFO", "CMO", "CTO"] %>
-  <% positions.each do |position| %>
-    <% i=i+1 %>
-    <div>
-      <% if @the_map.executives.where({:position=>i}).exists? %>
-        <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
-      <% else %>
-        <%= position %> skill: Missing
-      <% end %>
-    </div>
-    <div>
-      <% if @the_map.executives.where({:position=>i}).exists? %>
-        <%the_executive=@the_map.executives.where({:position=>i}).first%>
-        <%= render 'maps/update_executive', 
-          the_executive: the_executive,
-          position: position,
-          position_id: i, 
-          the_map: @the_map  %>
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>">
-          Update Executive
-        </button>
-      <% else %>
-      <%= render 'maps/create_executive', 
-        position: position,
-        position_id: i, 
-        the_map: @the_map  %>
-
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>">
-        Create Executive
-      </button>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-
-
-
-
-
-
-<hr>
-
-<%if @the_map.owner_id==current_user.id%>
-  <div>
-    <div>
+<div style="display: flex; flex-direction:column; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1200px; margin: 0 auto;">
+  <div class="col rounded rounded-1 bg-secondary bg-gradient text-white p-3">
+    <div style="display:flex; justify-content: space-between;">
       <h2>
-        Edit map
+        <%= @the_map.name %> - details
       </h2>
-
-      <form action="/modify_map/<%= @the_map.id %>"  method="post" >
-      <input type="hidden" name="query_owner_id" id="user_id" value="<%= current_user.id %>">
-      <div>
-          <label for="name_box">
-            Name
-          </label>
-
-          <input type="text" id="name_box" name="query_name" value="<%= @the_map.name %>">
+      <div class="container text-center" style="width:450px; font-size: 10px; display:flex; flex-direction: column; justify-content: space-between;">
+        <div class="row" style="">
+          <div class=" col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="" >
+            Production bonus: <%=@the_map.bonus%> %
+          </div>
+          <div class="ms-2 col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="">
+            Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
+          </div>
         </div>
-
-        <button>
-          Update map
-        </button>
-      </form>
+        <div class="row" style="">
+          <div class="col rounded-pill bg-success text-white" style="">
+            Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
+          </div>
+          <div class="mx-2 col rounded-pill bg-success text-white" style="">
+            Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $
+          </div>
+          <div class="col rounded-pill bg-success text-white" style="">
+            Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <hr>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <div style="padding: 5px">
+      <!-- Trigger Button -->
+      <button type="button" class="btn" 
+          style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
+          data-bs-toggle="modal" 
+          data-bs-target="#income_statement_modal">
+        Income statement
+      </button>
+
+      <%= render 'maps/income_statement', 
+        the_position_id: @the_position_id, 
+        the_map: @the_map, 
+        the_building: @the_building %>
+
+    </div>
+
+    <div style="padding: 5px">
+
+      <%= render 'maps/flow_of_goods', 
+        the_position_id: @the_position_id, 
+        the_map: @the_map, 
+        the_building: @the_building %>
+
+      <button type="button" class="btn" 
+          style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
+          data-bs-toggle="modal" 
+          data-bs-target="#production_modal">
+        Flow of goods
+      </button>
+
+    </div>
+
+  </div>
+
+  <hr>
+  
+  <div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 10px;">
+
+    <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
+    
+    <% for @the_position_id in 1..14 %>
+      <% @the_building = @map_buildings_by_position[@the_position_id] %>
+
+      <!-- Building or Placeholder -->
+      <% if @the_building %>
+
+        <%= render 'maps/changebuildingtype', 
+        the_position_id: @the_position_id, 
+        the_map: @the_map, 
+        the_building: @the_building %>
+
+        <div style="display: flex; flex-direction:column; justify-content: space-between; width: 190px; height: 150px; border: 1px solid black; padding:5px; font-size: 10px;">
+          <div style="border: 1px solid black;">
+            <%=@the_building.building_type.name%>
+          </div>
+          <div style="display:flex;">
+            <div class="image-container" style="position: relative; width: 120px; height: 120px; padding: 0px; border: 1px solid black;">
+              <!-- First Image (Background) -->
+              <img src="<%= @the_building.building_type.image_link %>" 
+                  alt="Open Modal" 
+                  style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+
+              <!-- Second Image (Foreground, Bottom Right) -->
+              <img src="<%= @the_building.product.image_link %>" 
+                  alt="Product" 
+                  style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
+            </div>
+            <div>
+              <p>
+              Quality: <%=@the_building.quality_level%>
+              </p>
+              <p>
+              Level: <%=@the_building.level%>
+              </p>
+              <p>
+              Robots <%=@the_building.robots%>
+              </p>
+
+            </div>
+          </div>
+          <div>
+            <%= render 'maps/updatebuilding', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update_properties_<%= @the_position_id %>">
+              <i class="bi bi-gear"></i>
+            </button>
+
+          </div>
+        </div>
+
+      <% else %>
+
+        <%= render 'maps/choosebuildingtype', 
+        the_position_id: @the_position_id, 
+        the_map: @the_map, 
+        the_building: @the_building %>
+        <div style="display: flex; flex-direction:column; justify-content: center; width: 190px; height: 150px; border: 1px solid black;">
+          <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
+            <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
+                alt="Open Modal" 
+                style="cursor: pointer; width: auto; height: auto;" 
+                data-bs-toggle="modal" 
+                data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+
 
   <div>
-    <div>
-      
-    </div>
+    <% i=0 %>
+    <% positions = ["COO", "CFO", "CMO", "CTO"] %>
+    <% positions.each do |position| %>
+      <% i=i+1 %>
+      <div>
+        <% if @the_map.executives.where({:position=>i}).exists? %>
+          <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
+        <% else %>
+          <%= position %> skill: Missing
+        <% end %>
+      </div>
+      <div>
+        <% if @the_map.executives.where({:position=>i}).exists? %>
+          <%the_executive=@the_map.executives.where({:position=>i}).first%>
+          <%= render 'maps/update_executive', 
+            the_executive: the_executive,
+            position: position,
+            position_id: i, 
+            the_map: @the_map  %>
+
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>">
+            Update Executive
+          </button>
+        <% else %>
+        <%= render 'maps/create_executive', 
+          position: position,
+          position_id: i, 
+          the_map: @the_map  %>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>">
+          Create Executive
+        </button>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-<%end%>
 
-<div>
-<dl>
-    <dt>
-      Owner
-    </dt>
-    <dd>
-      <%= @the_map.owner.email %>
-    </dd>
 
-    <dt>
-      Created at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_map.created_at) %> ago
-    </dd>
 
-    <dt>
-      Updated at
-    </dt>
-    <dd>
-      <%= time_ago_in_words(@the_map.updated_at) %> ago
-    </dd>
-  </dl>
+
+
+
+  <hr>
+
+  <%if @the_map.owner_id==current_user.id%>
+    <div>
+      <div>
+        <h2>
+          Edit map
+        </h2>
+
+        <form action="/modify_map/<%= @the_map.id %>"  method="post" >
+        <input type="hidden" name="query_owner_id" id="user_id" value="<%= current_user.id %>">
+        <div>
+            <label for="name_box">
+              Name
+            </label>
+
+            <input type="text" id="name_box" name="query_name" value="<%= @the_map.name %>">
+          </div>
+
+          <button>
+            Update map
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+
+    <div>
+      <div>
+        
+      </div>
+    </div>
+  <%end%>
+
+  <div>
+  <dl>
+      <dt>
+        Owner
+      </dt>
+      <dd>
+        <%= @the_map.owner.email %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_map.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_map.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
 </div>

@@ -216,6 +216,11 @@ class Map < ApplicationRecord
     # Operating Income
     @income_statement[:operating_income] = @income_statement[:gross_income] - @income_statement[:total_admin_overhead_wages] - @income_statement[:executives_salaries] - @income_statement[:total_fees_paid]- @income_statement[:freight_out]
 
+
+    #Administrative Overhead
+    @income_statement[:administrative_overhead]=@ao_percentage
+    @income_statement[:eff_administrative_overhead]=eff_ao_percentage
+    
     # Debug: Display Income Statement
     puts "Income Statement:"
     @income_statement.each do |key, value|

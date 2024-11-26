@@ -1,0 +1,74 @@
+<!-- Modal -->
+<div class="modal fade" id="executive_update_<%= position_id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update the <%= position %></h1>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+      <div class="modal-body">
+        
+      
+        <div>
+
+          <form action="/modify_executive/<%=the_executive.id%>" method="post">
+            <input type="hidden" name="query_map_id" id="selectedMap" value="<%= the_map.id %>">
+            <input type="hidden" name="query_position" id="selectedPosition" value="<%= position_id %>">
+
+            <div class="mb-3">
+              <label for="operationsLevelRange_<%= position_id %>" class="form-label">
+                Operations Level: <span id="operationsLevelValue_<%= position_id %>">25</span>
+              </label>
+              <input 
+                type="range" 
+                class="form-range" 
+                id="operationsLevelRange_<%= position_id %>" 
+                name="query_operations_level" 
+                min="0" 
+                max="50" 
+                step="1" 
+                value="25">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text">Salary</span>
+              <span class="input-group-text">$</span>
+              <input id="salary_box" name="query_salary" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <span class="input-group-text">.00</span>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">
+              Update Executive
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', () => {
+  // Select all range inputs
+  const rangeInputs = document.querySelectorAll('[id^="operationsLevelRange_"]');
+
+  rangeInputs.forEach(rangeInput => {
+    const positionId = rangeInput.id.split('_')[1]; // Extract position_id from the id
+    const valueDisplay = document.getElementById(`operationsLevelValue_${positionId}`);
+
+    if (rangeInput && valueDisplay) {
+      // Set initial value display
+      valueDisplay.textContent = rangeInput.value;
+
+      // Update the value display on input change
+      rangeInput.addEventListener('input', (event) => {
+        valueDisplay.textContent = event.target.value;
+      });
+    }
+  });
+});
+
+</script>

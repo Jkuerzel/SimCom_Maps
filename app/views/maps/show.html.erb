@@ -1,9 +1,30 @@
 
 <div>
-  <div>
+  <div style="display:flex; justify-content: space-between;">
     <h2>
       <%= @the_map.name %> - details
     </h2>
+    <div class="container text-center" style="width:450px; font-size: 10px; display:flex; flex-direction: column; justify-content: space-between;">
+      <div class="row" style="border: 1px solid black;">
+        <div class="col" style="border: 1px solid black;" >
+          Production bonus: <%=@the_map.bonus%> %
+        </div>
+        <div class="col" style="border: 1px solid black;">
+          Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
+        </div>
+      </div>
+      <div class="row" style="border: 1px solid black;">
+        <div class="col" style="border: 1px solid black;">
+          Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
+        </div>
+        <div class="col" style="border: 1px solid black;">
+          Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $
+        </div>
+        <div class="col" style="border: 1px solid black;">
+          Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -40,12 +61,7 @@
     </button>
 
   </div>
-  <p>Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $</p>
-  <p>Gross margin: <%= ((@income_statement[:gross_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
-  <p>Operating income: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $</p>
-  <p>Profit margin: <%= ((@income_statement[:operating_income] / @income_statement[:total_revenue]) * 100).round(1) %> %</p>
-  <p>Production bonus: <%= @the_map.bonus %> %</p>
-  
+
 </div>
 
 <hr>
@@ -144,6 +160,16 @@
     </div>
     <div>
       <% if @the_map.executives.where({:position=>i}).exists? %>
+        <%the_executive=@the_map.executives.where({:position=>i}).first%>
+        <%= render 'maps/update_executive', 
+          the_executive: the_executive,
+          position: position,
+          position_id: i, 
+          the_map: @the_map  %>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>">
+          Update Executive
+        </button>
       <% else %>
       <%= render 'maps/create_executive', 
         position: position,

@@ -33,9 +33,32 @@ class Map < ApplicationRecord
     production_buildings = self.map_buildings
       .joins(:building_type)
       .where.not(building_type: { description: 'Recreation' })
+      .presence || []
     recreation_buildings = self.map_buildings
-      .joins(:building_type)
-      .where(building_type: { description: 'Recreation' })
+    .joins(:building_type)
+    .where(building_type: { description: 'Recreation' })
+    .presence || []
+
+    # Ensure empty income statement and ledger for edge cases
+    if production_buildings.empty?
+      return {
+        ledger: {},
+        income_statement: {
+          total_revenue: 0,
+          total_cost_of_purchased_goods: 0,
+          total_worker_wages: 0,
+          cogs: 0,
+          freight_out: 0,
+          gross_income: 0,
+          total_admin_overhead_wages: 0,
+          executives_salaries: self.executives.all.sum(:salary),
+          total_fees_paid: 0,
+          operating_income: 0,
+          administrative_overhead: 0,
+          eff_administrative_overhead: 0
+        }
+      }
+    end
 
     ###########################################
     # Calculating Adminstrative Overhead of Map
@@ -56,8 +79,8 @@ class Map < ApplicationRecord
     ###########################################
     # Calculating Recreation Level ###########
     ###########################################
-    recreation_levels = recreation_buildings.sum(:level)
-    recreation_factor=(100.0+recreation_levels)/100
+    recreation_levels = recreation_buildings.pluck(:level).compact.sum || 0
+    recreation_factor = (100.0 + recreation_levels) / 100
 
     self.executives.where({:position=>1})
 
@@ -257,45 +280,4 @@ class Map < ApplicationRecord
     }
   end
   
- 
-  
-
-  def total_profit
-    map_buildings = self.map_buildings.includes(:product, :building_type) # Preload associations
-  
-    total_profit = 0
-  
-    map_buildings.each do |map_building|
-      # Determine minimum input quality
-      minimum_input_quality = [map_building.quality_level - 1, 0].max
-  
-      # Calculate units produced per hour
-      units_produced_per_hour = map_building.product.units_per_hour * map_building.level
-  
-      cost_per_unit = 0
-  
-      # Calculate cost per unit from inputs
-      map_building.product.inputs.each do |input|
-        amount = map_building.product.dependant_resources.find_by(input_id: input.id)&.quantity_required || 0
-        input_price = input.prices.find_by(quality_level: minimum_input_quality)&.price || 0
-  
-        cost_per_unit += amount * input_price
-      end
-  
-      # Calculate product price for quality level
-      product_price = map_building.product.price_for_quality(map_building.quality_level)
-  
-      # Daily calculations
-      units_per_day = units_produced_per_hour * 24
-      revenue_per_day = units_per_day * product_price
-      wage_cost_per_day = map_building.building_type.wage_cost_per_hour * 24
-      cost_of_input_per_day = cost_per_unit * units_per_day
-      profit_per_day = revenue_per_day - wage_cost_per_day - cost_of_input_per_day
-  
-      # Accumulate total profit
-      total_profit += profit_per_day
-    end
-  
-    total_profit
-  end
 end

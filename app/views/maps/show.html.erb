@@ -2,7 +2,7 @@
 
   <div class="col rounded rounded-1 bg-secondary bg-gradient text-white p-3" style="display:flex; justify-content: space-between; align-items: center;">
     <h2 class="m-0" style="flex-shrink: 0;">
-      <%= @the_map.name %> - details
+      <%= @the_map.name %>
     </h2>
     <div class="container text-center" style="margin-left: 350px; font-size: 10px; display: flex; flex-direction: column; justify-content: space-between;">
       <div class="row" style="">
@@ -65,124 +65,138 @@
   </div>
 
   <hr>
-  
-  <div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 10px;">
+  <div class="d-flex justify-content-evenly mx-4" style="">
+    <div class="d-flex align-content-start flex-wrap p-2 flex-grow-1" style="gap: 10px;">
 
-    <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
-    
-    <% for @the_position_id in 1..14 %>
-      <% @the_building = @map_buildings_by_position[@the_position_id] %>
+      <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
+      
+      <% for @the_position_id in 1..14 %>
+        <% @the_building = @map_buildings_by_position[@the_position_id] %>
 
-      <!-- Building or Placeholder -->
-      <% if @the_building %>
+        <!-- Building or Placeholder -->
+        <% if @the_building %>
 
-        <%= render 'maps/changebuildingtype', 
-        the_position_id: @the_position_id, 
-        the_map: @the_map, 
-        the_building: @the_building %>
+          <%= render 'maps/changebuildingtype', 
+          the_position_id: @the_position_id, 
+          the_map: @the_map, 
+          the_building: @the_building %>
 
-        <div style="display: flex; flex-direction:column; justify-content: space-between; width: 190px; height: 150px; border: 1px solid black; padding:5px; font-size: 10px;">
-          <div style="border: 1px solid black;">
-            <%=@the_building.building_type.name%>
+          <div class="px-2" style="display: flex; flex-direction:column; justify-content: space-around; width: 180px; height: 180px; border: 1px solid black; font-size: 10px;">
+            <div class="bg-primary text-white rounded-pill rounded-1 d-flex justify-content-center">
+              <%=@the_building.building_type.name%>
+            </div>
+            <div class="grid gap-3" style="display:flex;">
+              <div class="image-container" style="position: relative; width: 100px; height: 100px; padding: 0px; border: 1px solid black;">
+                <!-- First Image (Background) -->
+                <img src="<%= @the_building.building_type.image_link %>" 
+                    alt="Open Modal" 
+                    style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#buildingtypemodal<%= @the_position_id %>">
+
+                <% if @the_building.building_type.description!="Recreation" %>
+                <!-- Second Image (Foreground, Bottom Right) -->
+                <img src="<%= @the_building.product.image_link %>" 
+                    alt="Product" 
+                    style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
+                <% end %>
+              </div>
+              <div>
+                <p>
+                  Level: <%=@the_building.level%>
+                </p>
+
+                <% if @the_building.building_type.description!="Recreation" %>
+                <p>
+                  Quality: <%=@the_building.quality_level%>
+                </p>
+
+                <p>
+                  Robots <%=@the_building.robots%>
+                </p>
+                <%end%>
+
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:space-around;">
+              <div>
+                <%= render 'maps/updatebuilding', 
+                the_position_id: @the_position_id, 
+                the_map: @the_map, 
+                the_building: @the_building %>
+
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update_properties_<%= @the_position_id %>">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+              </div>
+              <div>
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update_properties_<%= @the_position_id %>">
+                  <i class="bi bi-house-gear"></i>
+                </button>
+              </div>
+            </div>
           </div>
-          <div style="display:flex;">
-            <div class="image-container" style="position: relative; width: 120px; height: 120px; padding: 0px; border: 1px solid black;">
-              <!-- First Image (Background) -->
-              <img src="<%= @the_building.building_type.image_link %>" 
+
+        <% else %>
+
+          <%= render 'maps/choosebuildingtype', 
+          the_position_id: @the_position_id, 
+          the_map: @the_map, 
+          the_building: @the_building %>
+          <div style="display: flex; flex-direction:column; justify-content: center; align-items:center; width: 180px; height: 180px; border: 1px solid black;">
+            <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
+              <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
                   alt="Open Modal" 
-                  style="cursor: pointer; width: 120%; height: 120%; object-fit: cover;" 
+                  style="cursor: pointer; width: auto; height: auto;" 
                   data-bs-toggle="modal" 
                   data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-
-              <!-- Second Image (Foreground, Bottom Right) -->
-              <img src="<%= @the_building.product.image_link %>" 
-                  alt="Product" 
-                  style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px; object-fit: contain; z-index: 1;">
-            </div>
-            <div>
-              <p>
-              Quality: <%=@the_building.quality_level%>
-              </p>
-              <p>
-              Level: <%=@the_building.level%>
-              </p>
-              <p>
-              Robots <%=@the_building.robots%>
-              </p>
-
             </div>
           </div>
-          <div>
-            <%= render 'maps/updatebuilding', 
-            the_position_id: @the_position_id, 
-            the_map: @the_map, 
-            the_building: @the_building %>
-
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update_properties_<%= @the_position_id %>">
-              <i class="bi bi-gear"></i>
-            </button>
-
-          </div>
-        </div>
-
-      <% else %>
-
-        <%= render 'maps/choosebuildingtype', 
-        the_position_id: @the_position_id, 
-        the_map: @the_map, 
-        the_building: @the_building %>
-        <div style="display: flex; flex-direction:column; justify-content: center; width: 190px; height: 150px; border: 1px solid black;">
-          <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
-            <img src="https://www.drupal.org/files/styles/grid-2-2x-square/public/user-pictures/picture-260224-1684978762.png?itok=bOyj5wuB" 
-                alt="Open Modal" 
-                style="cursor: pointer; width: auto; height: auto;" 
-                data-bs-toggle="modal" 
-                data-bs-target="#buildingtypemodal<%= @the_position_id %>">
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-
-  </div>
-
-
-  <div>
-    <% i=0 %>
-    <% positions = ["COO", "CFO", "CMO", "CTO"] %>
-    <% positions.each do |position| %>
-      <% i=i+1 %>
-      <div>
-        <% if @the_map.executives.where({:position=>i}).exists? %>
-          <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
-        <% else %>
-          <%= position %> skill: Missing
         <% end %>
-      </div>
-      <div>
-        <% if @the_map.executives.where({:position=>i}).exists? %>
-          <%the_executive=@the_map.executives.where({:position=>i}).first%>
-          <%= render 'maps/update_executive', 
-            the_executive: the_executive,
+      <% end %>
+
+    </div>
+    <div class="d-flex flex-column mb-3", style="font-size:10px; width:300px">
+      <% i=0 %>
+      <% positions = ["COO", "CFO", "CMO", "CTO"] %>
+      <% positions.each do |position| %>
+        <% i=i+1 %>
+        <div>
+          <% if @the_map.executives.where({:position=>i}).exists? %>
+            <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
+          <% else %>
+            <%= position %> skill: Missing
+          <% end %>
+        </div>
+        <div>
+          <% if @the_map.executives.where({:position=>i}).exists? %>
+            <%the_executive=@the_map.executives.where({:position=>i}).first%>
+            <%= render 'maps/update_executive', 
+              the_executive: the_executive,
+              position: position,
+              position_id: i, 
+              the_map: @the_map  %>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>" style="font-size:10px">
+              Update Executive
+            </button>
+          <% else %>
+          <%= render 'maps/create_executive', 
             position: position,
             position_id: i, 
             the_map: @the_map  %>
 
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>">
-            Update Executive
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>" style="font-size:10px">
+            Create Executive
           </button>
-        <% else %>
-        <%= render 'maps/create_executive', 
-          position: position,
-          position_id: i, 
-          the_map: @the_map  %>
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>">
-          Create Executive
-        </button>
-        <% end %>
-      </div>
-    <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
+
+
+  
 
 
 

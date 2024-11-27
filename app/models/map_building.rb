@@ -19,7 +19,7 @@
 class MapBuilding < ApplicationRecord
   #Add Direct Associations
   belongs_to :building_type, required: true, class_name: "Building", foreign_key: "building_id", counter_cache: true
-  belongs_to :product, class_name: "Resource", foreign_key: "product_id"
+  belongs_to :product, class_name: "Resource", foreign_key: "product_id", optional: true
   belongs_to :user_map, required: true, class_name: "Map", foreign_key: "map_id", counter_cache: true
 
   #Add Indirect Associations
@@ -33,12 +33,12 @@ class MapBuilding < ApplicationRecord
   validates :position_id, uniqueness: { scope: :map_id, message: "already taken for this map" }
   validates :position_id, uniqueness: { scope: :map_id, message: "Position must be unique within the same map" }
 
-  validates :quality_level, numericality: { 
-    only_integer: true, 
-    greater_than_or_equal_to: 0, 
-    less_than_or_equal_to: 12,
-    message: "must be between 0 and 12"
-  }
+  #validates :quality_level, numericality: { 
+    #only_integer: true, 
+    #greater_than_or_equal_to: 0, 
+    #less_than_or_equal_to: 12,
+    #message: "must be between 0 and 12"
+  #}
 
   def required_amount(input_id)
     # Ensure the product has dependant_resources and fetch the quantity required

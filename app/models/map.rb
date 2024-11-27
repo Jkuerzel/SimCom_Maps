@@ -28,11 +28,20 @@ class Map < ApplicationRecord
     # Fetch the transport unit price from a specific resource (e.g., ID 13)
     transport_unit_price = Price.where(resource_id: 13).first.price rescue 0.0
   
+
+    #Filter out the recreation buildings
+    production_buildings = self.map_buildings
+      .joins(:building_type)
+      .where.not(building_type: { description: 'Recreation' })
+    recreation_buildings = self.map_buildings
+      .joins(:building_type)
+      .where(building_type: { description: 'Recreation' })
+
     ###########################################
     # Calculating Adminstrative Overhead of Map
     ###########################################
     # Calculate total map level
-    total_map_levels = self.map_buildings.sum(:level)
+    total_map_levels = production_buildings.sum(:level)
     # Calculate Base Level Administrative Overhead
     @ao_percentage = ((total_map_levels - 1).to_f / 170)
     # Calculate COO impact
@@ -44,16 +53,24 @@ class Map < ApplicationRecord
     #Effective AO
     eff_ao_percentage=@ao_percentage-executive_impact
 
+    ###########################################
+    # Calculating Recreation Level ###########
+    ###########################################
+    recreation_levels = recreation_buildings.sum(:level)
+    recreation_factor=(100.0+recreation_levels)/100
+
     self.executives.where({:position=>1})
 
     # Initialize ledger for all resources
     @ledger = Hash.new { |hash, key| hash[key] = Hash.new { |h, q| h[q] = { produced: 0, consumed: 0, excess: 0, shortfall: 0, purchased: 0, price: nil, transport_per_unit: 0, fee_paid: 0, transport_needed: 0, transport_cost: 0, revenue: 0, wage_cost: 0, administration_wages: 0, cost_of_goods_purchased: 0, income_impact: 0 } } }
   
+
+
     # Step 1: Populate Produced Resources and Fetch Product Prices
-    self.map_buildings.each do |the_map_building|
+    production_buildings.each do |the_map_building|
       product_id = the_map_building.product_id
       quality = the_map_building.quality_level
-      @units_per_day = (the_map_building.product.units_per_hour * the_map_building.abundance/100 * the_map_building.level * 24).round(2)
+      @units_per_day = (the_map_building.product.units_per_hour * the_map_building.abundance/100 * the_map_building.level * 24 * recreation_factor).round(2)
       
       # Add production to ledger
       @ledger[product_id][quality][:produced] += @units_per_day
@@ -66,11 +83,15 @@ class Map < ApplicationRecord
       transport_per_unit = the_map_building.product.transport_amount
       @ledger[product_id][quality][:transport_per_unit] = transport_per_unit
   
+      #Count in Effect of Robots
       if the_map_building.robots==true
         robots_factor=0.97
       else
-        robots_factor=100
+        robots_factor=1
       end
+
+      #Count in Effect of Recreational Buildings
+      
 
       # Calculate and assign wage cost
       wage_cost_per_day = the_map_building.building_type.wage_cost_per_hour * the_map_building.level * ((100.0-self.bonus)/100) * robots_factor * 24
@@ -89,7 +110,7 @@ class Map < ApplicationRecord
     end
   
     # Step 1.1: Initialize All Inputs and Fetch Input Prices and Transport Amounts
-    self.map_buildings.each do |the_map_building|
+    production_buildings.each do |the_map_building|
       the_map_building.product.inputs.each do |input|
         input_id = input.id
         (0..12).each do |quality| # Assuming qualities range from 0 to 12
@@ -102,7 +123,7 @@ class Map < ApplicationRecord
     end
   
     # Step 2: Populate Consumed Resources and Purchases
-    self.map_buildings.each do |the_map_building|
+    production_buildings.each do |the_map_building|
       product_id = the_map_building.product_id
       quality = the_map_building.quality_level
 

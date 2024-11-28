@@ -24,6 +24,37 @@ class Map < ApplicationRecord
   validates :owner_id, presence: true
   validates :name, presence: true
 
+  def admin_overhead
+    #Filter out the recreation buildings
+    production_buildings = self.map_buildings
+      .joins(:building_type)
+      .where.not(building_type: { description: 'Recreation' })
+      .presence || []
+
+    # Calculate total map level
+    total_map_levels = production_buildings.sum(:level)
+
+    @ao_percentage = ((total_map_levels - 1).to_f / 170)
+    
+    # Calculate COO impact
+    # Calculate COO impact
+    coo_levels=self.executives.where({:position=>1}).first.operations_level rescue 0.0
+    # Calculate other C-Level staff impact
+    staff_levels = self.executives.where(position: 2..4).sum(:operations_level).to_i / 4
+    #Total exectuives impact
+    executive_impact=(@ao_percentage/100)*(coo_levels+staff_levels)
+    #Effective AO
+    eff_ao_percentage=@ao_percentage-executive_impact
+
+    {
+      productive_levels: total_map_levels
+      ao_percentage: @ao_percentage  
+      executive_impact: executive_impact,
+      eff_ao_percentage: eff_ao_percentage
+    }
+
+  end
+
   def production
     # Fetch the transport unit price from a specific resource (e.g., ID 13)
     transport_unit_price = Price.where(resource_id: 13).first.price rescue 0.0
@@ -279,5 +310,7 @@ class Map < ApplicationRecord
       income_statement: @income_statement
     }
   end
+
+
   
 end

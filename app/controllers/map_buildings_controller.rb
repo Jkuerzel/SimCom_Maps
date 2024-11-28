@@ -9,11 +9,18 @@ class MapBuildingsController < ApplicationController
 
   def show
     the_id = params.fetch("path_id")
-
     matching_map_buildings = MapBuilding.where({ :id => the_id })
-
     @the_map_building = matching_map_buildings.at(0)
+    @the_map=@the_map_building.map
 
+    administration_data=@the_map.admin_overhead
+
+    @ao_percentage=administration_data[:ao_percentage]
+    @eff_ao_percentage=administration_data[:ao_percentage]
+    @total_map_levels=administration_data[:productive_levels]
+    @executive_impact=administration_data[:executive_impact]
+
+    
 
     render({ :template => "map_buildings/show" })
     

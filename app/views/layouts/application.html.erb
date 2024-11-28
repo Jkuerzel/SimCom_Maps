@@ -88,6 +88,18 @@
     width: 100px;
     height: 100px;
   }
+
+  body {
+      background-image: url('https://d1fxy698ilbz6u.cloudfront.net/static/images/background-dark.png'); /* Path to your image */
+      background-size: cover; /* Makes the image cover the entire background */
+      background-repeat: no-repeat; /* Prevents tiling */
+      background-position: center; /* Centers the image */
+    }
+
+  .fullscreen-div {
+      width: 100vw;
+      height: 100vh;
+    }
 </style>
 
 
@@ -149,13 +161,13 @@
       </div>
     </nav>
 
-    <hr>
 
       <!--<p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>-->
 
-
-    <%= yield %>
+    <div class="fullscreen-div bg-dark text-white" style="--bs-bg-opacity: .7;">
+      <%= yield %>
+    </div>
 
 
     

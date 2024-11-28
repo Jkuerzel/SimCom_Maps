@@ -1,9 +1,37 @@
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%; max-width: 1000px; margin: 0 auto; border: 1px solid black;">
+<div style="display: flex; justify-content: space-around; width: 100%; max-width: 1000px; margin: 0 auto; border: 1px solid black;">
   
-  <div style="display: flex; flex-direction:column; justify-content: space-around; flex-wrap: wrap; width: 100%; max-width: 1000px; margin: 0 auto; border: 1px solid black;">
+  <div class="mt-3 me-5 bg-dark text-white" style="display: flex; flex-direction:column; justify-content: space-around; width: 100%; max-width: 250px; margin: 0 auto; border: 1px solid black;--bs-bg-opacity: .9">
+
+    <img src="<%=@the_map_building.building_type.image_link%>" style="height: 250px; width:250px">
+
+    <div class="ms-2">
+      <p><%=@the_map_building.building_type.name%><p>
+      <p>Level <%=@the_map_building.level%><p>
+    </div>
+
+    <div class="ms-2">
+      <p>Worker Wages:<%=@the_map_building.building_type.name%><p>
+      <p>Admin Wages: <%=@the_map_building.level%><p>
+      <p>Workers: <%=@the_map_building.level%><p>
+      <p>Admin: <%=@the_map_building.level%><p>
+    </div>
+
   </div>
   
-  <div style="display: flex; flex-direction:column; justify-content: space-around; flex-wrap: wrap; width: 100%; max-width: 1000px; margin: 0 auto; border: 1px solid black;">
+  <div class="mt-3 bg-dark text-white" style="display: flex; flex-direction:column; justify-content: space-between; width: 100%; margin: 0 auto; border: 1px solid black; --bs-bg-opacity: .9;">
+
+    <div style="border: 1px solid black;"">
+      <div>
+        <img src="<%=@the_map_building.product.image_link%>">
+      </div>
+      <div>
+
+      </div>
+      <div>
+
+      </div>
+    </div>
+
   </div>
   
 </div>

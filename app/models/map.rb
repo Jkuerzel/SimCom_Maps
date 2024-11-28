@@ -47,8 +47,8 @@ class Map < ApplicationRecord
     eff_ao_percentage=@ao_percentage-executive_impact
 
     {
-      productive_levels: total_map_levels
-      ao_percentage: @ao_percentage  
+      productive_levels: total_map_levels,
+      ao_percentage: @ao_percentage,  
       executive_impact: executive_impact,
       eff_ao_percentage: eff_ao_percentage
     }

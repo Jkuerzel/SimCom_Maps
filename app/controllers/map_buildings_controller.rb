@@ -11,7 +11,7 @@ class MapBuildingsController < ApplicationController
     the_id = params.fetch("path_id")
     matching_map_buildings = MapBuilding.where({ :id => the_id })
     @the_map_building = matching_map_buildings.at(0)
-    @the_map=@the_map_building.map
+    @the_map=@the_map_building.user_map
 
     administration_data=@the_map.admin_overhead
 

@@ -25,6 +25,6 @@ class Resource < ApplicationRecord
   validates :transport_amount, numericality: { greater_than_or_equal_to: 0 }
 
   def price_for_quality(level)
-    self.prices.where(:quality_level=> level).first.price
+    self.prices.where(:quality_level=> level).last.price
   end
 end

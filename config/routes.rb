@@ -122,6 +122,10 @@ Rails.application.routes.draw do
   # DELETE
   get("/delete_price/:path_id", { :controller => "prices", :action => "destroy" })
 
+  #Import
+
+  get("/import_prices", { :controller => "prices", :action => "import_prices"})
+
   #------------------------------
 
   # Routes for the Resourcedependency resource:

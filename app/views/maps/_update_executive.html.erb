@@ -27,13 +27,13 @@
                 min="0" 
                 max="50" 
                 step="1" 
-                value="25">
+                value="<%=the_executive.operations_level%>">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text">Salary</span>
               <span class="input-group-text">$</span>
-              <input id="salary_box" name="query_salary" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              <input id="salary_box" name="query_salary" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="<%=the_executive.salary%>">
               <span class="input-group-text">.00</span>
             </div>
 

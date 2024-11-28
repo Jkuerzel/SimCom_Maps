@@ -1,3 +1,5 @@
+
+
 class PricesController < ApplicationController
   def index
     matching_prices = Price.all
@@ -55,4 +57,5 @@ class PricesController < ApplicationController
 
     redirect_to("/prices", { :notice => "Price deleted successfully."} )
   end
+
 end

@@ -18,6 +18,9 @@ class MapsController < ApplicationController
     @the_map = matching_maps.at(0)
 
 
+    matching_buildings=MapBuilding.where({:map_id=>the_id})
+    @total_asset_value = matching_buildings.joins(:building_type).sum("buildings.construction_price")
+
     production_results = @the_map.production
     @ledger = production_results[:ledger]
     @income_statement = production_results[:income_statement]

@@ -311,6 +311,15 @@ class Map < ApplicationRecord
     }
   end
 
+  # Calculate total construction cost for all buildings in the map
+  def total_construction_cost
+    map_buildings.sum(&:construction_cost)
+  end
+
+  def total_scrap_value
+    map_buildings.sum(&:scrap_value)
+  end
+
 
   
 end

@@ -65,4 +65,16 @@ class MapBuilding < ApplicationRecord
     update(quality_level: [quality_level - 1, 0].max)
   end
 
+  def construction_cost
+    base_price = self.building_type.construction_price
+    level = self.level
+    (level * (level + 1) / 2) * base_price
+  end
+
+  def scrap_value
+    base_price = self.building_type.construction_price
+    level = self.level
+    level * base_price
+  end
+
 end

@@ -1,0 +1,52 @@
+<div class="modal" tabindex="-1" id="ratios_modal">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content" style="background-color: white; color: black;">
+      <div class="modal-header">
+        <h5 class="modal-title">Map Ratios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-family: Arial, sans-serif;">
+          <thead>
+            <tr style="background-color: #f4f4f4;">
+              <th style="padding: 8px; border-bottom: 2px solid #ddd;">Metric</th>
+              <th style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Gross Margin -->
+            <tr>
+              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Gross Margin</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+                <%= @income_statement[:total_revenue].to_f > 0 ? 
+                  (100 * @income_statement[:gross_income].to_f / @income_statement[:total_revenue].to_f).round : 
+                  0 %> %
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Operating Margin</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+                <%= @income_statement[:total_revenue].to_f > 0 ? 
+                  (100 * @income_statement[:operating_income].to_f / @income_statement[:total_revenue].to_f).round : 
+                  0 %> %
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Asset Turnover</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+                <%= @income_statement[:total_revenue].to_f > 0 ? 
+                  (100 * @income_statement[:total_revenue].to_f / @the_map.total_scrap_value.to_f).round : 
+                  0 %> %
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

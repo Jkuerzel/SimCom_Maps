@@ -1,56 +1,59 @@
-<div style="display: flex; justify-content: space-around; width: 100%; max-width: 1000px; margin: 0 auto; border: 1px solid black;">
-  
-  <div class="mt-3 me-4 bg-dark text-white" style="display: flex; flex-direction:column; justify-content: space-around; width: 100%; max-width: 250px; margin: 0 auto; border: 1px solid black;--bs-bg-opacity: .9">
+<div style="display: flex; flex-direction:column;justify-content: space-around; width: 100%; max-width: 1000px; margin: 0 auto;">
+  <div style="display: flex; justify-content: space-around; width: 100%; max-width: 1000px; margin: 0 auto;">
+    
+    <div class="mt-3 me-4 bg-dark text-white" style="display: flex; flex-direction:column; justify-content: space-around; width: 100%; max-width: 250px; margin: 0 auto; border: 1px solid black;--bs-bg-opacity: .9">
 
-    <img src="<%=@the_map_building.building_type.image_link%>" style="height: 250px; width:250px">
+      <img src="<%=@the_map_building.building_type.image_link%>" style="height: 250px; width:250px">
 
-    <div class="ms-2">
-      <div><%=@the_map_building.building_type.name%></div>
-      <div>Level <%=@the_map_building.level%></div>
+      <div class="ms-2">
+        <div><%=@the_map_building.building_type.name%></div>
+        <div>Level <%=@the_map_building.level%></div>
+      </div>
+
+      <div class="ms-2">
+        <div>Worker Wages:<%=@the_map_building.building_type.name%></div>
+        <div>Admin Wages: <%=@the_map_building.level%></div>
+        <div>Workers: <%=@the_map_building.level%></div>
+        <div>Admin: <%=@the_map_building.level%></div>
+      </div>
+
     </div>
+    
+    <div class="mt-3 bg-dark text-white" style="display: flex; flex-direction:column; justify-content: space-between; width: 100%; margin: 0 auto; border: 1px solid black; --bs-bg-opacity: .9;">
 
-    <div class="ms-2">
-      <div>Worker Wages:<%=@the_map_building.building_type.name%></div>
-      <div>Admin Wages: <%=@the_map_building.level%></div>
-      <div>Workers: <%=@the_map_building.level%></div>
-      <div>Admin: <%=@the_map_building.level%></div>
-    </div>
+    <div class="mt-5 ps-3" style="display: flex; justify-content: space-between; width: 100%;">
+        <!-- Image and Stars Section -->
+        <div class="pe-5 d-flex flex-column align-items-center">
+          <!-- Stars Section -->
+          <div class="d-flex justify-content-center" style="margin-bottom: -10px;">
+            <% (1..@the_map_building.quality_level).each do %>
+              <i class="bi bi-star-fill" style="color: gold; margin-right: 5px;"></i>
+            <% end %>
+          </div>
 
-  </div>
-  
-  <div class="mt-3 bg-dark text-white" style="display: flex; flex-direction:column; justify-content: space-between; width: 100%; margin: 0 auto; border: 1px solid black; --bs-bg-opacity: .9;">
-
-   <div class="mt-5 ps-3" style="display: flex; justify-content: space-between; width: 100%;">
-      <!-- Image and Stars Section -->
-      <div class="pe-5 d-flex flex-column align-items-center">
-        <!-- Stars Section -->
-        <div class="d-flex justify-content-center" style="margin-bottom: -10px;">
-          <% (1..@the_map_building.quality_level).each do %>
-            <i class="bi bi-star-fill" style="color: gold; margin-right: 5px;"></i>
-          <% end %>
+          <!-- Image Section -->
+          <img src="<%= @the_map_building.product.image_link %>" style="width: 130px; height: 130px;">
         </div>
 
-        <!-- Image Section -->
-        <img src="<%= @the_map_building.product.image_link %>" style="width: 130px; height: 130px;">
+        <div class="vr" style="width: 2px; background-color: black; height: 100%; opacity: 1;"></div>
+
+        <!-- First Text Section -->
+        <div class="pe-5 d-flex flex-column justify-content-center">
+          <p><%= @the_map_building.product.name %> Q <%= @the_map_building.quality_level %></p>
+          <p>Producing: <%= @the_map_building.product.units_per_hour * @the_map_building.level %></p>
+        </div>
+
+        <div class="vr" style="width: 2px; background-color: black; height: 100%; opacity: 1;"></div>
+
+        <!-- Second Text Section -->
+        <div class="pe-5 d-flex flex-column justify-content-center">
+          <p><%= @the_map_building.product.name %> Q <%= @the_map_building.quality_level %></p>
+          <p>Producing: <%= @the_map_building.product.units_per_hour * @the_map_building.level %></p>
+        </div>
       </div>
 
-      <div class="vr" style="width: 2px; background-color: black; height: 100%; opacity: 1;"></div>
-
-      <!-- First Text Section -->
-      <div class="pe-5 d-flex flex-column justify-content-center">
-        <p><%= @the_map_building.product.name %> Q <%= @the_map_building.quality_level %></p>
-        <p>Producing: <%= @the_map_building.product.units_per_hour * @the_map_building.level %></p>
-      </div>
-
-      <div class="vr" style="width: 2px; background-color: black; height: 100%; opacity: 1;"></div>
-
-      <!-- Second Text Section -->
-      <div class="pe-5 d-flex flex-column justify-content-center">
-        <p><%= @the_map_building.product.name %> Q <%= @the_map_building.quality_level %></p>
-        <p>Producing: <%= @the_map_building.product.units_per_hour * @the_map_building.level %></p>
-      </div>
-    </div>
-
+    </div> 
   </div>
-  
+  <button type="button" class="btn btn-primary mt-3" onclick="window.location.href='/maps/<%= @the_map.id %>';">Go to <%= @the_map.name %></button>
+
 </div>

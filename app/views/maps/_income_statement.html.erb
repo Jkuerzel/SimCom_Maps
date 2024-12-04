@@ -1,4 +1,3 @@
-<!-- Modal Structure -->
 <div class="modal" tabindex="-1" id="income_statement_modal">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content" style="background-color: white; color: black;">
@@ -19,14 +18,14 @@
             <!-- Revenue Section -->
             <tr style="background-color: #e8f4e8;">
               <td style="padding: 8px; border-bottom: 1px solid #ddd; font-weight: bold;">Total Revenue</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_revenue].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold;"><%= number_to_currency(@income_statement[:total_revenue]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold;">100</td>
             </tr>
 
             <!-- COGS Section -->
             <tr>
               <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Cost of Purchased Goods</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_cost_of_purchased_goods].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:total_cost_of_purchased_goods]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:total_cost_of_purchased_goods].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -35,7 +34,7 @@
             </tr>
             <tr>
               <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Worker Wages</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_worker_wages].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:total_worker_wages]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:total_worker_wages].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -44,7 +43,7 @@
             </tr>
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Cost of Goods Sold (COGS)</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:cogs].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:cogs]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:cogs].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -55,7 +54,7 @@
             <!-- Gross Income Section -->
             <tr style="background-color: #e8f4e8;">
               <td style="padding: 8px; border-bottom: 2px solid #ddd; font-weight: bold;">Gross Income</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:gross_income].round %> $</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= number_to_currency(@income_statement[:gross_income]) %></td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:gross_income].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -66,7 +65,7 @@
             <!-- Operating Expenses Section -->
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Admin Overhead Wages</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_admin_overhead_wages].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:total_admin_overhead_wages]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:total_admin_overhead_wages].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -75,7 +74,7 @@
             </tr>
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Executive Salaries</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:executives_salaries].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:executives_salaries]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:executives_salaries].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -84,7 +83,7 @@
             </tr>
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total Fees Paid</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:total_fees_paid].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:total_fees_paid]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:total_fees_paid].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -93,7 +92,7 @@
             </tr>
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Freight Out</td>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= @income_statement[:freight_out].round %> $</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;"><%= number_to_currency(@income_statement[:freight_out]) %></td>
               <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:freight_out].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -104,7 +103,7 @@
             <!-- Operating Income Section -->
             <tr style="background-color: #e8f4e8;">
               <td style="padding: 8px; border-bottom: 2px solid #ddd; font-weight: bold;">Operating Income</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= @income_statement[:operating_income].round %> $</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;"><%= number_to_currency(@income_statement[:operating_income]) %></td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:operating_income].to_f / @income_statement[:total_revenue].to_f).round : 
@@ -114,9 +113,7 @@
           </tbody>
         </table>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+
     </div>
   </div>
 </div>

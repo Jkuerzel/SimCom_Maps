@@ -90,11 +90,26 @@
   }
 
   body {
-      background-image: url('https://d1fxy698ilbz6u.cloudfront.net/static/images/background-dark.png'); /* Path to your image */
-      background-size: cover; /* Makes the image cover the entire background */
-      background-repeat: no-repeat; /* Prevents tiling */
-      background-position: center; /* Centers the image */
-    }
+    background-image: url('https://d1fxy698ilbz6u.cloudfront.net/static/images/background-dark.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative; /* Required for pseudo-element positioning */
+    min-height: 100vh; /* Ensure body spans the entire viewport */
+    margin: 0; /* Remove default body margin to avoid gaps */
+  }
+
+  body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with 70% opacity */
+      z-index: -1; /* Ensure the overlay stays behind content */
+  }
 
   .fullscreen-div {
       width: 100vw;
@@ -165,9 +180,10 @@
       <!--<p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>-->
 
-    <div class="fullscreen-div bg-dark text-white" style="--bs-bg-opacity: .7;">
+    <div class="text-light">
       <%= yield %>
     </div>
+
 
 
     

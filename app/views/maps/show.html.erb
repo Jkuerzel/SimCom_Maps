@@ -1,6 +1,6 @@
 <div style="display: flex; flex-direction:column; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1200px; margin: 0 auto;">
 
-  <div class="col rounded rounded-1 bg-secondary bg-gradient text-white p-3" style="display:flex; justify-content: space-between; align-items: center;">
+  <div class="col rounded rounded-1 bg-dark bg-gradient text-white p-3" style="display:flex; justify-content: space-between; align-items: center;">
     <h2 class="m-0" style="flex-shrink: 0;">
       <%= @the_map.name %>
     </h2>
@@ -28,7 +28,8 @@
   </div>
 
 
-  <hr>
+  <hr style="border-color: black;">
+
   <div style="display: flex; align-items: center; gap: 10px;">
     <div style="padding: 5px">
       <!-- Trigger Button -->
@@ -64,12 +65,27 @@
 
     </div>
 
+    <div style="padding: 5px">
 
+      <%= render 'maps/ratios', 
+        the_position_id: @the_position_id, 
+        the_map: @the_map, 
+        the_building: @the_building %>
+
+      <button type="button" class="btn" 
+          style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
+          data-bs-toggle="modal" 
+          data-bs-target="#ratios_modal">
+        Ratios
+      </button>
+
+    </div>
   </div>
 
-  <hr>
+  <hr style="border-color: black;">
+
   <div class="d-flex justify-content-evenly mx-4" style="">
-    <div class="d-flex align-content-start flex-wrap p-2 flex-grow-1" style="gap: 10px;">
+    <div class="d-flex align-content-start flex-wrap p-2 flex-grow-1 " style="gap: 10px;">
 
       <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
       
@@ -79,7 +95,7 @@
         <!-- Building or Placeholder -->
         <% if @the_building %>
 
-          <div class="px-2" style="display: flex; flex-direction:column; justify-content: space-around; width: 190px; height: 180px; border: 1px solid black; font-size: 10px;">
+          <div class="px-2 bg-dark" style="display: flex; flex-direction:column; justify-content: space-around; width: 190px; height: 180px; border: 1px solid black; font-size: 10px; --bs-bg-opacity: .8;">
             <div class="bg-primary text-white rounded-pill rounded-1 d-flex justify-content-center">
               <%=@the_building.building_type.name%>
             </div>
@@ -157,7 +173,7 @@
             the_position_id: @the_position_id, 
             the_map: @the_map, 
             the_building: @the_building %>
-            <div style="display: flex; flex-direction:column; justify-content: center; align-items:center; width: 190px; height: 180px; border: 1px solid black;">
+            <div class="bg-dark"style="display: flex; flex-direction:column; justify-content: center; align-items:center; width: 190px; height: 180px; border: 1px solid black;--bs-bg-opacity: .8">
               <div style="display: flex; align-content: space-between; height: 120px; width:120px;">
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#buildingtypemodal<%= @the_position_id %>" style="height: 120px; width:120px;">
                   <i class="bi bi-house-add-fill"></i>
@@ -208,71 +224,11 @@
     </div>
   </div>
 
-
-  
-
-
-
-
-
-
-  <hr>
-
-  <%if @the_map.owner_id==current_user.id%>
-    <div>
-      <div>
-        <h2>
-          Edit map
-        </h2>
-
-        <form action="/modify_map/<%= @the_map.id %>"  method="post" >
-        <input type="hidden" name="query_owner_id" id="user_id" value="<%= current_user.id %>">
-        <div>
-            <label for="name_box">
-              Name
-            </label>
-
-            <input type="text" id="name_box" name="query_name" value="<%= @the_map.name %>">
-          </div>
-
-          <button>
-            Update map
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <hr>
-
-    <div>
-      <div>
-        
-      </div>
-    </div>
-  <%end%>
-
-  <div>
-  <dl>
-      <dt>
-        Owner
-      </dt>
-      <dd>
-        <%= @the_map.owner.email %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_map.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_map.updated_at) %> ago
-      </dd>
-    </dl>
+  <div class="text-warning">
+  <%=@the_map.total_construction_cost%>
   </div>
+    <div class="text-warning">
+  <%=@the_map.total_scrap_value%>
+  </div>
+
 </div>

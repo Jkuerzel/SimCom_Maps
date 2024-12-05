@@ -44,7 +44,7 @@
         Production time per unit
       </dt>
       <dd>
-        <%= @the_resource.production_time_per_unit %>
+        <%= @the_resource.units_per_hour %>
       </dd>
 
       <dt>
@@ -103,7 +103,7 @@
           Production time per unit
         </label>
 
-        <input type="time" id="production_time_per_unit_box" name="query_production_time_per_unit" value="<%= @the_resource.production_time_per_unit %>">
+        <input type="time" id="production_time_per_unit_box" name="query_production_time_per_unit" value="<%= @the_resource.units_per_hour %>">
       </div>
 
       <button>

@@ -2,7 +2,7 @@ class ResourcesController < ApplicationController
   def index
     matching_resources = Resource.all
 
-    @list_of_resources = matching_resources.order({ :created_at => :desc })
+    @list_of_resources = matching_resources.order(:id)
 
     render({ :template => "resources/index" })
   end

@@ -25,6 +25,9 @@ class MapsController < ApplicationController
     @ledger = production_results[:ledger]
     @income_statement = production_results[:income_statement]
 
+    @the_map.operating_profit=@income_statement[:operating_income]
+    @the_map.total_revenue=@income_statement[:total_revenue]
+    @the_map.save
     render({ :template => "maps/show" })
   end
 

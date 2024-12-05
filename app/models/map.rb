@@ -7,6 +7,8 @@
 #  executives_count    :integer
 #  map_buildings_count :integer
 #  name                :string
+#  operating_profit    :decimal(15, 2)   default(0.0)
+#  total_revenue       :decimal(15, 2)   default(0.0)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  owner_id            :integer

@@ -1,149 +1,20 @@
-
 <div class="d-flex justify-content-center">
   <div class="d-flex align-content-between flex-wrap mt-5" style="max-width: 1000px;">
     <% @list_of_resources.each do |a_resource| %>
-      <div style="position: relative; max-width: 100px; max-height: 100px; margin: 10px;">
-        <figure class="figure mx-5">
-          <!-- Image -->
-          <img 
-            class="figure-img img-fluid rounded" 
-            src="<%= a_resource.image_link %>" 
-            alt="<%= a_resource.name %>" 
-            style="max-width: 100%; max-height: 100%; z-index: 0;">
-          <!-- Caption -->
-          <figcaption 
-            class="figure-caption text-white text-center" 
-            style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1; font-size: 14px;">
-            <%= a_resource.name %>
-          </figcaption>
-        </figure>
+      <div class="rounded m-1" style="position: relative; max-width: 100px; max-height: 100px; background: rgba(0, 0, 0, 0.5)">
+        <!-- Image -->
+        <img 
+          class="figure-img img-fluid rounded" 
+          src="<%= a_resource.image_link %>" 
+          alt="<%= a_resource.name %>" 
+          style="max-width: 100%; max-height: 100%;">
+        <!-- Caption -->
+        <div 
+          style="position: absolute; bottom: 0; left: 0; width: 100%;; color: white; text-align: center; padding: 5px; font-size: 14px; font-weight: bold;">
+          <%= a_resource.name %>
+        </div>
       </div>
     <% end %>
   </div>
 </div>
-
-
-<div>
-  <div>
-    <h2>
-      Add a new resource
-    </h2>
-
-    <form action="/insert_resource" method="post">
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name">
-      </div>
-
-      <div>
-        <label for="transport_amount_box">
-          Transport amount
-        </label>
-
-        <input type="text" id="transport_amount_box" name="query_transport_amount">
-      </div>
-
-      <div>
-        <label for="building_id_box">
-          Building
-        </label>
-
-        <input type="text" id="building_id_box" name="query_building_id">
-      </div>
-
-      <div>
-        <label for="production_time_per_unit_box">
-          Production time per unit
-        </label>
-
-        <input type="time" id="production_time_per_unit_box" name="query_production_time_per_unit">
-      </div>
-
-      <button>
-        Create resource
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Transport amount
-        </th>
-
-        <th>
-          Building
-        </th>
-
-        <th>
-          Production time per unit
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_resources.each do |a_resource| %>
-      <tr>
-        <td>
-          <%= a_resource.id %>
-        </td>
-
-        <td>
-          <%= a_resource.name %>
-        </td>
-
-        <td>
-          <%= a_resource.transport_amount %>
-        </td>
-
-        <td>
-          <%= a_resource.building_id %>
-        </td>
-
-        <td>
-          
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_resource.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_resource.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/resources/<%= a_resource.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
-
 <hr>

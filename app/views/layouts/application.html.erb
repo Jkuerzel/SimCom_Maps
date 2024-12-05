@@ -96,19 +96,19 @@
     background-position: center;
     background-attachment: fixed;
     position: relative; /* Required for pseudo-element positioning */
-    min-height: 100vh; /* Ensure body spans the entire viewport */
+    height: auto; /* Allow the body to grow with content */
     margin: 0; /* Remove default body margin to avoid gaps */
   }
 
   body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with 70% opacity */
-      z-index: -1; /* Ensure the overlay stays behind content */
+    content: '';
+    position: fixed; /* Make the overlay fixed for full-page coverage */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Ensure the overlay always covers the viewport */
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with 70% opacity */
+    z-index: -1; /* Ensure the overlay stays behind content */
   }
 
   .fullscreen-div {

@@ -2,7 +2,7 @@ class BuildingsController < ApplicationController
   def index
     matching_buildings = Building.all
 
-    @list_of_buildings = matching_buildings.order({ :created_at => :desc })
+    @list_of_buildings = matching_buildings.order(:id)
 
     render({ :template => "buildings/index" })
   end

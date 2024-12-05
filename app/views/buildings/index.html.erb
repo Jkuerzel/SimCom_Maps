@@ -1,150 +1,20 @@
-<div>
-  <div>
-    <h1>
-      List of all buildings
-    </h1>
-  </div>
-</div>
-
-<hr>
-
-<div>
-  <div>
-    <h2>
-      Add a new building
-    </h2>
-
-    <form action="/insert_building" method="post">
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name">
-      </div>
-
-      <div>
-        <label for="wage_cost_per_hour_box">
-          Wage cost per hour
-        </label>
-
-        <input type="text" id="wage_cost_per_hour_box" name="query_wage_cost_per_hour">
-      </div>
-
-      <div>
-        <label for="construction_price_box">
-          Construction price
-        </label>
-
-        <input type="text" id="construction_price_box" name="query_construction_price">
-      </div>
-
-      <div>
-        <label for="description_box">
-          Description
-        </label>
-
-        <input type="text" id="description_box" name="query_description">
-      </div>
-
-      <div>
-        <label for="map_buildings_count_box">
-          Map buildings count
-        </label>
-
-        <input type="text" id="map_buildings_count_box" name="query_map_buildings_count">
-      </div>
-
-      <button>
-        Create building
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Wage cost per hour
-        </th>
-
-        <th>
-          Construction price
-        </th>
-
-        <th>
-          Description
-        </th>
-
-        <th>
-          Map buildings count
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_buildings.each do |a_building| %>
-      <tr>
-        <td>
-          <%= a_building.id %>
-        </td>
-
-        <td>
+<div class="d-flex justify-content-center">
+  <div class="d-flex align-content-between flex-wrap mt-5" style="max-width: 1000px;">
+    <% @list_of_buildings.each do |a_building| %>
+      <div class="rounded m-1" style="position: relative; max-width: 100px; max-height: 100px; background: rgba(0, 0, 0, 0.5)">
+        <!-- Image -->
+        <img 
+          class="figure-img img-fluid rounded" 
+          src="<%= a_building.image_link %>" 
+          alt="<%= a_building.name %>" 
+          style="max-width: 100%; max-height: 100%;">
+        <!-- Caption -->
+        <div 
+          style="position: absolute; bottom: 0; left: 0; width: 100%;; color: white; text-align: center; padding: 5px; font-size: 14px;font-weight: bold;">
           <%= a_building.name %>
-        </td>
-
-        <td>
-          <%= a_building.wage_cost_per_hour %>
-        </td>
-
-        <td>
-          <%= a_building.construction_price %>
-        </td>
-
-        <td>
-          <%= a_building.description %>
-        </td>
-
-        <td>
-          <%= a_building.map_buildings_count %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_building.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_building.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/buildings/<%= a_building.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
 <hr>

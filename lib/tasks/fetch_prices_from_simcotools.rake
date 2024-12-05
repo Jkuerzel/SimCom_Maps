@@ -9,7 +9,7 @@ namespace :prices do
     url = "https://api.simcotools.app/v1/realms/#{realm_id}/market/prices"
 
     # Fetch data from the API
-    response = HTTParty.get(url)
+    response = HTTParty.get(url, verify: false)
 
     if response.code == 200
       prices = response.parsed_response["prices"]
@@ -30,4 +30,3 @@ namespace :prices do
     end
   end
 end
-

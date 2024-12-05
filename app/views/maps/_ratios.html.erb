@@ -42,6 +42,14 @@
                   0 %> %
               </td>
             </tr>
+            <tr>
+              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">PPHL</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+                <%= @income_statement[:total_revenue].to_f > 0 ? 
+                  (@income_statement[:operating_profit].to_f / total_map_levels).round : 
+                  0 %> %
+              </td>
+            </tr>
             
           </tbody>
         </table>

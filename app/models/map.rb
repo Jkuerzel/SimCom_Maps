@@ -34,9 +34,9 @@ class Map < ApplicationRecord
       .presence || []
 
     # Calculate total map level
-    total_map_levels = production_buildings.sum(:level)
+    @total_map_levels = production_buildings.sum(:level)
 
-    @ao_percentage = ((total_map_levels - 1).to_f / 170)
+    @ao_percentage = ((@total_map_levels - 1).to_f / 170)
     
     # Calculate COO impact
     # Calculate COO impact
@@ -49,7 +49,7 @@ class Map < ApplicationRecord
     eff_ao_percentage=@ao_percentage-executive_impact
 
     {
-      productive_levels: total_map_levels,
+      productive_levels: @total_map_levels,
       ao_percentage: @ao_percentage,  
       executive_impact: executive_impact,
       eff_ao_percentage: eff_ao_percentage

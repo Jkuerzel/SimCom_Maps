@@ -28,65 +28,8 @@
   </div>
 
 
-  <hr style="border-color: black;">
-
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <div style="padding: 5px">
-      <!-- Trigger Button -->
-      
-      <button type="button" class="btn" 
-          style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-          data-bs-toggle="modal" 
-          data-bs-target="#income_statement_modal">
-        Income statement
-      </button>
-
-      <%= render 'maps/income_statement', 
-        the_position_id: @the_position_id, 
-        the_map: @the_map, 
-        the_building: @the_building %>
-
-
-    </div>
-
-    <div style="padding: 5px">
-
-      <%= render 'maps/flow_of_goods', 
-        the_position_id: @the_position_id, 
-        the_map: @the_map, 
-        the_building: @the_building %>
-
-      <button type="button" class="btn" 
-          style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-          data-bs-toggle="modal" 
-          data-bs-target="#production_modal">
-        Flow of goods
-      </button>
-
-    </div>
-
-    <div style="padding: 5px">
-
-      <%= render 'maps/ratios', 
-        the_position_id: @the_position_id, 
-        the_map: @the_map, 
-        the_building: @the_building,
-        total_map_levels:@total_map_levels %>
-
-      <button type="button" class="btn" 
-          style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-          data-bs-toggle="modal" 
-          data-bs-target="#ratios_modal">
-        Ratios
-      </button>
-
-    </div>
-  </div>
-
-  <hr style="border-color: black;">
-
-  <div class="d-flex justify-content-evenly mx-4" style="">
-    <div class="d-flex align-content-start flex-wrap p-2 flex-grow-1 " style="gap: 10px;">
+  <div class="d-flex justify-content-evenly mx-4 border" style="">
+    <div class="d-flex align-content-start flex-wrap p-2 flex-grow-1 border" style="gap: 10px;">
 
       <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
       
@@ -186,50 +129,98 @@
       <% end %>
 
     </div>
-    <div class="d-flex flex-column mb-3", style="font-size:10px; width:300px">
-      <% i=0 %>
-      <% positions = ["COO", "CFO", "CMO", "CTO"] %>
-      <% positions.each do |position| %>
-        <% i=i+1 %>
-        <div>
-          <% if @the_map.executives.where({:position=>i}).exists? %>
-            <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
-          <% else %>
-            <%= position %> skill: Missing
-          <% end %>
+
+    <div class="d-flex flex-column border">
+
+      <div class="d-flex flex-column m-2 border">
+        <div style="padding: 0px">
+          <!-- Trigger Button -->
+          
+          <button type="button" class="btn" 
+              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#income_statement_modal">
+            Income statement
+          </button>
+
+          <%= render 'maps/income_statement', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
         </div>
-        <div>
-          <% if @the_map.executives.where({:position=>i}).exists? %>
-            <%the_executive=@the_map.executives.where({:position=>i}).first%>
-            <%= render 'maps/update_executive', 
-              the_executive: the_executive,
+
+        <div style="padding: 0px">
+
+          <%= render 'maps/flow_of_goods', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
+          <button type="button" class="btn" 
+              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#production_modal">
+            Flow of goods
+          </button>
+
+        </div>
+
+        <div style="padding: 0px">
+
+          <%= render 'maps/ratios', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
+          <button type="button" class="btn" 
+              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
+              data-bs-toggle="modal" 
+              data-bs-target="#ratios_modal">
+            Ratios
+          </button>
+
+        </div>
+      </div>
+
+      <div class="d-flex flex-column m-2 border", style="font-size:10px">
+        <% i=0 %>
+        <% positions = ["COO", "CFO", "CMO", "CTO"] %>
+        <% positions.each do |position| %>
+          <% i=i+1 %>
+          <div>
+            <% if @the_map.executives.where({:position=>i}).exists? %>
+              <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
+            <% else %>
+              <%= position %> skill: Missing
+            <% end %>
+          </div>
+          <div>
+            <% if @the_map.executives.where({:position=>i}).exists? %>
+              <%the_executive=@the_map.executives.where({:position=>i}).first%>
+              <%= render 'maps/update_executive', 
+                the_executive: the_executive,
+                position: position,
+                position_id: i, 
+                the_map: @the_map  %>
+
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>" style="font-size:10px">
+                Update Executive
+              </button>
+            <% else %>
+            <%= render 'maps/create_executive', 
               position: position,
               position_id: i, 
               the_map: @the_map  %>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>" style="font-size:10px">
-              Update Executive
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>" style="font-size:10px">
+              Create Executive
             </button>
-          <% else %>
-          <%= render 'maps/create_executive', 
-            position: position,
-            position_id: i, 
-            the_map: @the_map  %>
-
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>" style="font-size:10px">
-            Create Executive
-          </button>
-          <% end %>
-        </div>
-      <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
-
-  <div class="text-warning">
-  <%=@the_map.total_construction_cost%>
-  </div>
-    <div class="text-warning">
-  <%=@the_map.total_scrap_value%>
   </div>
 
 </div>

@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content" style="background-color: white; color: black;">
       <div class="modal-header">
-        <h5 class="modal-title">Map Ratios</h5>
+        <h5 class="modal-title">Map Evaluation</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -17,8 +17,8 @@
 
             <!-- Gross Margin -->
             <tr>
-              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Gross Margin</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Gross Margin</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:gross_income].to_f / @income_statement[:total_revenue].to_f).round : 
                   0 %> %
@@ -26,8 +26,8 @@
             </tr>
 
             <tr>
-              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Operating Margin</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Operating Margin</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:operating_income].to_f / @income_statement[:total_revenue].to_f).round : 
                   0 %> %
@@ -35,22 +35,43 @@
             </tr>
 
             <tr>
-              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">Asset Turnover</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Asset Turnover</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (100 * @income_statement[:total_revenue].to_f / @the_map.total_scrap_value.to_f).round : 
                   0 %> %
               </td>
             </tr>
             <tr>
-              <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #ddd;">PPHL</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right; font-weight: bold;">
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">PPHL</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
-                  (@income_statement[:operating_profit].to_f / total_map_levels).round : 
-                  0 %> %
+                  (@income_statement[:operating_income].to_f/(24*@income_statement[:total_map_levels])).round : 
+                  0 %> $/(hr x lvl)
               </td>
             </tr>
-            
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Construction price</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map.total_construction_cost) %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Accumulated Depreciation</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map.total_construction_cost-@the_map.total_scrap_value) %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Scrap value</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map.total_scrap_value) %>
+              </td>
+            </tr>
+
           </tbody>
         </table>
       </div>

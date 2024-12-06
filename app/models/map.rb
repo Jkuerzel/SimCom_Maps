@@ -297,7 +297,8 @@ class Map < ApplicationRecord
     #Administrative Overhead
     @income_statement[:administrative_overhead]=@ao_percentage
     @income_statement[:eff_administrative_overhead]=eff_ao_percentage
-    
+    @income_statement[:total_map_levels]=total_map_levels
+
     # Debug: Display Income Statement
     puts "Income Statement:"
     @income_statement.each do |key, value|

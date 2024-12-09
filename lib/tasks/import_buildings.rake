@@ -24,7 +24,8 @@ namespace :import do
         wage_cost_per_hour: row["wage_cost_per_hour"],
         construction_price: row["construction_price"],
         description: row["description"],
-        image_link: row["image_link"]
+        image_link: row["image_link"],
+        robot_demand: row["robot_demand"]
       }
 
       # Directly create Building record without validations

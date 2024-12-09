@@ -299,6 +299,11 @@ class Map < ApplicationRecord
     @income_statement[:eff_administrative_overhead]=eff_ao_percentage
     @income_statement[:total_map_levels]=total_map_levels
 
+
+    #Executives savings
+    @income_statement[:executive_savings]=@income_statement[:total_worker_wages]*executive_impact
+
+
     # Debug: Display Income Statement
     puts "Income Statement:"
     @income_statement.each do |key, value|
@@ -319,10 +324,17 @@ class Map < ApplicationRecord
     map_buildings.sum(&:construction_cost)
   end
 
+
   def total_scrap_value
     map_buildings.sum(&:scrap_value)
   end
 
+  def total_robot_cost
+    map_buildings.sum(&:robot_cost)
+  end
 
-  
+  def total_robot_scrap_value
+    map_buildings.sum(&:robot_scrap_value)
+  end
+
 end

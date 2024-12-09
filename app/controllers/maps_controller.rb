@@ -28,6 +28,12 @@ class MapsController < ApplicationController
     @the_map.operating_profit=@income_statement[:operating_income]
     @the_map.total_revenue=@income_statement[:total_revenue]
     @the_map.save
+
+    @the_map_construction_cost=@the_map.total_construction_cost
+    @the_map_scrap_value=@the_map.total_scrap_value
+    @the_map_robots_cost=@the_map.total_robot_cost
+    @the_map_robots_scrap_value=@the_map.total_robot_scrap_value
+
     render({ :template => "maps/show" })
   end
 

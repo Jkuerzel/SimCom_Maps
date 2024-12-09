@@ -77,4 +77,37 @@ class MapBuilding < ApplicationRecord
     level * base_price
   end
 
+  def robot_cost
+
+    # Total demand is construction price times the building's level
+    total_demand = self.building_type.robot_demand * self.level
+
+    # Determine the robot quality based on the level (1-3 => 1, 4-6 => 2, etc.)
+    robot_quality = (self.level - 1) / 3 + 1
+
+    # Robot price for the determined quality
+    robot_price = Resource.where(name: "Robots").first.price_for_quality(robot_quality)
+
+    # Calculate the total cost
+    cost = total_demand * robot_price
+
+    # Return the cost
+    cost
+  end
+
+  def robot_scrap_value
+
+    # Total demand is construction price times the building's level
+    total_demand = self.building_type.robot_demand * self.level
+
+    # Robot price for the determined quality
+    robot_price = Resource.where(name: "Robots").first.price_for_quality(0)
+
+    # Calculate the total cost
+    cost = total_demand * robot_price
+
+    # Return the cost
+    cost
+  end
+
 end

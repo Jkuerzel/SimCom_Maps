@@ -1,0 +1,92 @@
+
+<button type="button" class="btn m-1 rounded-pill" 
+    style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9; width: 170px;"
+    data-bs-toggle="modal" 
+    data-bs-target="#ppe_modal">
+  PPE
+</button>
+
+
+<div class="modal" tabindex="-1" id="ppe_modal">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content" style="background-color: white; color: black;">
+      <div class="modal-header">
+        <h5 class="modal-title">Property, plant and equipment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table style="border-collapse: collapse; width: 100%; text-align: left; font-family: Arial, sans-serif;">
+          <thead>
+            <tr style="background-color: #f4f4f4;">
+              <th style="padding: 8px; border-bottom: 2px solid #ddd;">Metric</th>
+              <th style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total map cost</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(
+              @the_map_construction_cost+@the_map_robots_cost) %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-indent: 20px;">Building construction cost</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map_construction_cost) %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-indent: 20px;">Robots installation cost</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map_robots_cost) %>
+              </td>
+            </tr>
+
+
+
+            <tr class="">
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total scrap value</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(
+              @the_map_scrap_value+@the_map_robots_scrap_value) %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-indent: 20px;">Robots scrap value</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map_robots_scrap_value) %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd; text-indent: 20px;">Building scrap value</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(@the_map_scrap_value) %>
+              </td>
+            </tr>
+
+            <tr class="bg-warning-subtle">
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Accumulated Depreciation</td>
+              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+                <%= number_to_currency(
+              @the_map_construction_cost+@the_map_robots_cost-@the_map_scrap_value-@the_map_robots_scrap_value) %>
+              </td>
+            </tr>
+
+
+
+
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

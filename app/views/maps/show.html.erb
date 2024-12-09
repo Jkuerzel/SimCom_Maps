@@ -20,11 +20,11 @@
         </div>
 
         <% if @income_statement[:operating_income]>0%>
-          <div class="col rounded-pill bg-success text-white" style="">
+          <div class="col rounded-pill bg-primary text-white" style="">
             Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
           </div>
         <% else %>
-          <div class="col rounded-pill .bg-danger text-white" style="">
+          <div class="col rounded-pill bg-danger text-white" style="">
             Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
           </div>
         <%end%>
@@ -68,28 +68,35 @@
 
         </div>
 
-        <div style="padding: 0px">
-
+        <div>
+          <%= render 'maps/ppe', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+        </div>
+        
+        <div>
           <%= render 'maps/ratios', 
             the_position_id: @the_position_id, 
             the_map: @the_map, 
             the_building: @the_building %>
+        </div>
 
-          <button type="button" class="btn m-1 rounded-pill" 
-              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9; width: 170px;"
-              data-bs-toggle="modal" 
-              data-bs-target="#ratios_modal">
-            Ratios
-          </button>
-
-          <div class="mt-5">
-            <%= render 'maps/delete_map',  
-                        the_map: @the_map  %>
-          </div>
+        <div style="padding: 0px">
+            
+          <hr>
+          
           <div class="mt-1">
             <%= render 'maps/update_map',  
                         the_map: @the_map  %>
           </div>
+
+
+          <div class="mt-3">
+            <%= render 'maps/delete_map',  
+                        the_map: @the_map  %>
+          </div>
+
 
         </div>
       </div>
@@ -199,21 +206,28 @@
     <div class="d-flex flex-column mt-2 ms-2 mb-2 bg-dark" style="width: 170px; max-width: 170px; min-width: 170px; overflow: hidden; --bs-bg-opacity: .5">
       
 
-      <p style="font-size:10px">Production bonus: <span class="badge text-bg-secondary"><%=@the_map.bonus%> %</span></p>
-      <p style="font-size:10px">Administration Overhead: <span class="badge text-bg-secondary"><%=(@income_statement[:administrative_overhead]*100).round(1)%> %</span></p>
+      <div class="m-1" style="font-size:10px">
+        Production bonus:<br>
+        <span class="badge text-bg-secondary"><%= @the_map.bonus %> %</span>
+      </div>
+      <div class="m-1" style="font-size:10px">
+        Administration Overhead:<br>
+        <span class="badge text-bg-secondary"><%= (@income_statement[:administrative_overhead] * 100).round(1) %> %</span>
+      </div>
 
+      
       <hr>
 
-      <div class="m-1" style="font-size:10px">
+      <div class="mb-1 ms-1" style="font-size:10px">
         <% i=0 %>
         <% positions = ["COO", "CFO", "CMO", "CTO"] %>
         <% positions.each do |position| %>
           <% i=i+1 %>
-          <div>
+          <div class="mt-1">
             <% if @the_map.executives.where({:position=>i}).exists? %>
-              <%= position %> skill: <%=@the_map.executives.where({:position=>i}).first.operations_level%>
+              <%= position %>
             <% else %>
-              <%= position %> skill: Missing
+              <%= position %>: Missing
             <% end %>
           </div>
           <div>
@@ -232,6 +246,11 @@
               <a type="button" class="btn btn-secondary" href="/delete_executive/<%=the_executive.id%>" style="font-size:10px">
                 <i class="bi bi-x-circle"></i>
               </a>
+
+              <span class="btn btn-secondary bg-dark text-white" 
+                    style="font-size:10px; display: inline-flex; align-items: center; justify-content: center; pointer-events: none; width:60px;">
+                Skill: <%= the_executive.operations_level %>
+              </span>
               
             <% else %>
             <%= render 'maps/create_executive', 
@@ -246,6 +265,16 @@
           </div>
         <% end %>
       </div>
+
+      <hr>
+      <div style="font-size:10px">Total salaries:<br> <span class="badge text-bg-secondary"><%= number_with_delimiter(@the_map.executives.sum(:salary).round) %> $</span></div>
+      <div style="font-size:10px">Effect on Wages:<br> <span class="badge text-bg-secondary"><%= -number_with_delimiter(@income_statement[:executive_savings].round) %> $</span></div>
+
+      <%if @income_statement[:executive_savings]-@the_map.executives.sum(:salary)>0%>
+        <div style="font-size:10px">Executives Savings:<br> <span class="badge text-bg-secondary"><%= number_with_delimiter((@income_statement[:executive_savings]-@the_map.executives.sum(:salary)).round) %> $</span></div>
+      <%else%>
+        <div style="font-size:10px">Executives Savings:<br> <span class="badge text-bg-warning"><%= number_with_delimiter((@income_statement[:executive_savings]-@the_map.executives.sum(:salary)).round) %> $</span></div>
+      <%end%>
     </div>
     
   </div>

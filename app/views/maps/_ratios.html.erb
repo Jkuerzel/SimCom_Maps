@@ -1,3 +1,10 @@
+<button type="button" class="btn m-1 rounded-pill" 
+    style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9; width: 170px;"
+    data-bs-toggle="modal" 
+    data-bs-target="#ratios_modal">
+  Ratios
+</button>
+
 <div class="modal" tabindex="-1" id="ratios_modal">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content" style="background-color: white; color: black;">
@@ -35,42 +42,37 @@
             </tr>
 
             <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Asset Turnover</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
-                <%= @income_statement[:total_revenue].to_f > 0 ? 
-                  (100 * @income_statement[:total_revenue].to_f / @the_map.total_scrap_value.to_f).round : 
-                  0 %> %
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">PPHL</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Profit per hour per building level (PPHL)</td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= @income_statement[:total_revenue].to_f > 0 ? 
                   (@income_statement[:operating_income].to_f/(24*@income_statement[:total_map_levels])).round : 
-                  0 %> $/(hr x lvl)
+                  0 %> $
               </td>
             </tr>
 
             <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Construction price</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Profit per day per building level (PPDL)</td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
-                <%= number_to_currency(@the_map.total_construction_cost) %>
+                <%= @income_statement[:total_revenue].to_f > 0 ? 
+                  (@income_statement[:operating_income].to_f/(@income_statement[:total_map_levels])).round : 
+                  0 %> $
               </td>
             </tr>
 
             <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Accumulated Depreciation</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Scrap value percentage</td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
-                <%= number_to_currency(@the_map.total_construction_cost-@the_map.total_scrap_value) %>
+                <%=(100.0*((@the_map_scrap_value-@the_map_robots_scrap_value)/(@the_map_construction_cost+@the_map_robots_cost))).round(1)%> %
               </td>
             </tr>
 
             <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Scrap value</td>
+              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Lost value faktor (construction)</td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
-                <%= number_to_currency(@the_map.total_scrap_value) %>
+                <%=(((@the_map_construction_cost+@the_map_robots_cost)/(@the_map_scrap_value-@the_map_robots_scrap_value))).round(1)%>
               </td>
             </tr>
+
 
           </tbody>
         </table>

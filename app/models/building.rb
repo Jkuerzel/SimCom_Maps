@@ -8,6 +8,7 @@
 #  image_link          :string
 #  map_buildings_count :integer
 #  name                :string
+#  robot_demand        :integer          default(1)
 #  wage_cost_per_hour  :float
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

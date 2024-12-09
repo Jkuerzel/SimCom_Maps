@@ -7,8 +7,8 @@
     <div class="container text-center" style="margin-left: 350px; font-size: 10px; display: flex; flex-direction: column; justify-content: space-between;">
       <div class="row" style="">
         
-        <div class="mb-2 col rounded-pill rounded-1 bg-secondary text-success-emphasis" style="">
-          Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
+        <div class="mb-2 col rounded-pill rounded-1 bg-secondary text-white" style="">
+          Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
         </div>
       </div>
       <div class="row" style="">
@@ -198,14 +198,9 @@
 
     <div class="d-flex flex-column mt-2 ms-2 mb-2 bg-dark" style="width: 170px; max-width: 170px; min-width: 170px; overflow: hidden; --bs-bg-opacity: .5">
       
-      
-      <div class="m-1" style="font-size:10px" style="" >
-          Production bonus: <%=@the_map.bonus%> %
-      </div>
 
-      <div class="m-1" style="font-size:10px" style="" >
-          Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
-      </div>
+      <p style="font-size:10px">Production bonus: <span class="badge text-bg-secondary"><%=@the_map.bonus%> %</span></p>
+      <p style="font-size:10px">Administration Overhead: <span class="badge text-bg-secondary"><%=(@income_statement[:administrative_overhead]*100).round(1)%> %</span></p>
 
       <hr>
 

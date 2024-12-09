@@ -2,7 +2,7 @@
 
   <div class="col rounded rounded-1 bg-dark bg-gradient text-white p-3" style="display:flex; justify-content: space-between; align-items: center;">
     <h2 class="m-0" style="flex-shrink: 0;">
-      <%= @the_map.name %>
+      <i class="bi bi-map"></i> <%= @the_map.name %>
     </h2>
     <div class="container text-center" style="margin-left: 350px; font-size: 10px; display: flex; flex-direction: column; justify-content: space-between;">
       <div class="row" style="">
@@ -82,8 +82,10 @@
             the_building: @the_building %>
         </div>
 
+        <% if @the_map.owner_id==current_user.id%>
         <div style="padding: 0px">
             
+
           <hr>
           
           <div class="mt-1">
@@ -99,6 +101,7 @@
 
 
         </div>
+        <%end%>
       </div>
 
     <div class="d-flex justify-content-center align-content-center flex-wrap p-2 flex-grow-1" style="gap: 10px;--bs-bg-opacity: .5">

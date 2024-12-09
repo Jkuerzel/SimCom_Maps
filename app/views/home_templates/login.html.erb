@@ -37,11 +37,11 @@
             </td>
 
             <td>
-              $<%= a_map.total_revenue %>
+            <%= number_to_currency(a_map.total_revenue, precision: 0) %>
             </td>
 
             <td>
-              $<%= a_map.operating_profit %>
+            <%= number_to_currency(a_map.operating_profit, precision: 0) %>
             </td>
 
             <td>
@@ -105,11 +105,11 @@
             </td>
 
             <td>
-              $<%= a_map.total_revenue %>
+              <%= number_to_currency(a_map.total_revenue, precision: 0) %>
             </td>
 
             <td>
-              $<%= a_map.operating_profit %>
+              <%= number_to_currency(a_map.operating_profit, precision: 0) %>
             </td>
             
             <td>

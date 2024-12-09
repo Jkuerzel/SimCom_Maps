@@ -1,0 +1,74 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-sm m-1 rounded-pill" data-bs-toggle="modal" data-bs-target="#staticBackdrop" 
+  style="width: 170px;">
+
+    <i class="bi bi-gear"></i>
+    &nbsp;Update map
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Map</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Begin Form -->
+        <form action="/modify_map/<%=the_map.id%>" method="post">
+          <div class="input-group">
+            <span class="input-group-text">Change Map name</span>
+            <input type="text" aria-label="query_name" class="form-control" name="query_name" value="<%=the_map.name%>" required>
+          </div>
+          <hr>
+          <div class="mb-3">
+            <label class="form-label" style="color: black;">
+              Production bonus: <span class="range-value" style="color: black;">0</span> %
+            </label>
+            <input 
+              type="range" 
+              class="form-range slider-input" 
+              min="-15" 
+              max="15" 
+              step="1" 
+              value="<%=the_map.bonus%>" 
+              name="query_bonus" 
+              style="width: 100%; margin-top: 10px;">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+        <!-- End Form -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Select all sliders on the page
+  const sliders = document.querySelectorAll('.slider-input');
+
+  sliders.forEach(slider => {
+    // Find the associated range-value span
+    const valueDisplay = slider.closest('.mb-3').querySelector('.range-value');
+
+    if (valueDisplay) {
+      // Set the initial value
+      valueDisplay.textContent = slider.value;
+
+      // Update the value dynamically when the slider moves
+      slider.addEventListener('input', () => {
+        valueDisplay.textContent = slider.value;
+      });
+    }
+  });
+});
+</script>

@@ -49,9 +49,9 @@
             </td>
 
             <td>
-              <a href="/maps/<%= a_map.id %>">
-                Show details
-              </a>
+                <a href="/maps/<%= a_map.id %>" class="btn btn-primary btn-sm">
+                  <i class="bi bi-map-fill"></i>
+                </a>
             </td>
           </tr>
           <% end %>
@@ -117,8 +117,8 @@
             </td>
 
             <td>
-              <a href="/maps/<%= a_map.id %>">
-                Show details
+              <a href="/maps/<%= a_map.id %>" class="btn btn-secondary btn-sm">
+                <i class="bi bi-map-fill"></i>
               </a>
             </td>
           </tr>
@@ -127,29 +127,6 @@
       </div>
     </div>
 
-    <% if list_of_my_maps.empty? %>
-      <h2>Create your first map</h2>
-    <% else %>
-      <h2>Create a new map</h2>
-    <% end %>
 
-    <div>
-        <form action="/insert_map" method="post">
-
-          <div>
-            <label for="name_box">
-              Name
-            </label>
-
-            <input type="text" id="name_box" name="query_name">
-          </div>
-
-          <button>
-            Create map
-          </button>
-        </form>
-    </div>
   <div>
 </div>
-
-

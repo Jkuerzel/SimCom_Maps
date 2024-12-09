@@ -51,8 +51,9 @@ class MapsController < ApplicationController
     the_id = params.fetch("path_id")
     the_map = Map.where({ :id => the_id }).at(0)
 
-    the_map.owner_id = params.fetch("query_owner_id")
+    
     the_map.name = params.fetch("query_name")
+    the_map.bonus = params.fetch("query_bonus")
 
     if the_map.valid?
       the_map.save

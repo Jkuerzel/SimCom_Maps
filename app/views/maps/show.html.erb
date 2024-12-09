@@ -6,30 +6,95 @@
     </h2>
     <div class="container text-center" style="margin-left: 350px; font-size: 10px; display: flex; flex-direction: column; justify-content: space-between;">
       <div class="row" style="">
-        <div class="mb-2 me-2 col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="" >
-          Production bonus: <%=@the_map.bonus%> %
-        </div>
-        <div class="mb-2 col rounded-pill rounded-1 bg-success-subtle text-success-emphasis" style="">
+        
+        <div class="mb-2 col rounded-pill rounded-1 bg-secondary text-success-emphasis" style="">
           Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
         </div>
       </div>
       <div class="row" style="">
-        <div class="col rounded-pill bg-success text-white" style="">
+        <div class="col rounded-pill bg-secondary text-white" style="">
           Revenue: <%= number_with_delimiter(@income_statement[:total_revenue].round) %> $
         </div>
-        <div class="mx-2 col rounded-pill bg-success text-white" style="">
+        <div class="mx-2 col rounded-pill bg-secondary text-white" style="">
           Gross profit: <%= number_with_delimiter(@income_statement[:gross_income].round) %> $
         </div>
-        <div class="col rounded-pill bg-success text-white" style="">
-          Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
-        </div>
+
+        <% if @income_statement[:operating_income]>0%>
+          <div class="col rounded-pill bg-success text-white" style="">
+            Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
+          </div>
+        <% else %>
+          <div class="col rounded-pill .bg-danger text-white" style="">
+            Net profit: <%= number_with_delimiter(@income_statement[:operating_income].round) %> $
+          </div>
+        <%end%>
       </div>
     </div>
   </div>
 
 
-  <div class="d-flex justify-content-evenly mx-4 border" style="">
-    <div class="d-flex align-content-start flex-wrap p-2 flex-grow-1 border" style="gap: 10px;">
+  <div class="d-flex justify-content-evenly" style="">
+    <div class="d-flex flex-column mt-2 me-2 mb-2 bg-dark" style="--bs-bg-opacity: .5">
+        <div class="mt-2" style="padding: 0px">
+          <!-- Trigger Button -->
+          
+          <button type="button" class="btn m-1 rounded-pill" 
+              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9; width: 170px;"
+              data-bs-toggle="modal" 
+              data-bs-target="#income_statement_modal">
+            Income statement
+          </button>
+
+          <%= render 'maps/income_statement', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
+        </div>
+
+        <div style="padding: 0px">
+
+          <%= render 'maps/flow_of_goods', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
+          <button type="button" class="btn m-1 rounded-pill" 
+              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9; width: 170px;"
+              data-bs-toggle="modal" 
+              data-bs-target="#production_modal">
+            Flow of goods
+          </button>
+
+        </div>
+
+        <div style="padding: 0px">
+
+          <%= render 'maps/ratios', 
+            the_position_id: @the_position_id, 
+            the_map: @the_map, 
+            the_building: @the_building %>
+
+          <button type="button" class="btn m-1 rounded-pill" 
+              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9; width: 170px;"
+              data-bs-toggle="modal" 
+              data-bs-target="#ratios_modal">
+            Ratios
+          </button>
+
+          <div class="mt-5">
+            <%= render 'maps/delete_map',  
+                        the_map: @the_map  %>
+          </div>
+          <div class="mt-1">
+            <%= render 'maps/update_map',  
+                        the_map: @the_map  %>
+          </div>
+
+        </div>
+      </div>
+
+    <div class="d-flex justify-content-center align-content-center flex-wrap p-2 flex-grow-1" style="gap: 10px;--bs-bg-opacity: .5">
 
       <% @map_buildings_by_position = @the_map.map_buildings.index_by(&:position_id) %>
       
@@ -69,10 +134,11 @@
                 <p>
                   Quality: <%=@the_building.quality_level%>
                 </p>
+                
+                <% if @the_building.robots==true%>
+                  <img src="<%=Resource.where({:name=>"Robots"}).first.image_link%>" style="width: 30px; height: 30px;">
+                <%end%>
 
-                <p>
-                  Robots <%=@the_building.robots%>
-                </p>
                 <%end%>
 
               </div>
@@ -130,60 +196,20 @@
 
     </div>
 
-    <div class="d-flex flex-column border">
-
-      <div class="d-flex flex-column m-2 border">
-        <div style="padding: 0px">
-          <!-- Trigger Button -->
-          
-          <button type="button" class="btn" 
-              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#income_statement_modal">
-            Income statement
-          </button>
-
-          <%= render 'maps/income_statement', 
-            the_position_id: @the_position_id, 
-            the_map: @the_map, 
-            the_building: @the_building %>
-
-        </div>
-
-        <div style="padding: 0px">
-
-          <%= render 'maps/flow_of_goods', 
-            the_position_id: @the_position_id, 
-            the_map: @the_map, 
-            the_building: @the_building %>
-
-          <button type="button" class="btn" 
-              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#production_modal">
-            Flow of goods
-          </button>
-
-        </div>
-
-        <div style="padding: 0px">
-
-          <%= render 'maps/ratios', 
-            the_position_id: @the_position_id, 
-            the_map: @the_map, 
-            the_building: @the_building %>
-
-          <button type="button" class="btn" 
-              style="border: 1px solid #0d1432; color: #0d1432; background-color: #e0e2e9;" 
-              data-bs-toggle="modal" 
-              data-bs-target="#ratios_modal">
-            Ratios
-          </button>
-
-        </div>
+    <div class="d-flex flex-column mt-2 ms-2 mb-2 bg-dark" style="width: 170px; max-width: 170px; min-width: 170px; overflow: hidden; --bs-bg-opacity: .5">
+      
+      
+      <div class="m-1" style="font-size:10px" style="" >
+          Production bonus: <%=@the_map.bonus%> %
       </div>
 
-      <div class="d-flex flex-column m-2 border", style="font-size:10px">
+      <div class="m-1" style="font-size:10px" style="" >
+          Administration Overhead: <%=(@income_statement[:administrative_overhead]*100).round(1)%> %
+      </div>
+
+      <hr>
+
+      <div class="m-1" style="font-size:10px">
         <% i=0 %>
         <% positions = ["COO", "CFO", "CMO", "CTO"] %>
         <% positions.each do |position| %>
@@ -204,22 +230,28 @@
                 position_id: i, 
                 the_map: @the_map  %>
 
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>" style="font-size:10px">
-                Update Executive
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#executive_update_<%= i %>" style="font-size:10px">
+                <i class="bi bi-person-gear"></i>
               </button>
+
+              <a type="button" class="btn btn-secondary" href="/delete_executive/<%=the_executive.id%>" style="font-size:10px">
+                <i class="bi bi-x-circle"></i>
+              </a>
+              
             <% else %>
             <%= render 'maps/create_executive', 
               position: position,
               position_id: i, 
               the_map: @the_map  %>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>" style="font-size:10px">
-              Create Executive
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#executive_create_<%= i %>" style="font-size:10px">
+              <i class="bi bi-person-fill-add"></i>
             </button>
             <% end %>
           </div>
         <% end %>
       </div>
     </div>
+    
   </div>
 </div>

@@ -1,0 +1,22 @@
+<!-- Button -->
+<button type="button" class="btn btn-secondary btn-sm m-1 rounded-pill" data-bs-toggle="modal" data-bs-target="#delete_map_modal-<%= the_map.id %>" style="width: 170px;">
+  <i class="bi bi-x-octagon-fill"></i>
+  &nbsp;Delete map
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="delete_map_modal-<%= the_map.id %>" tabindex="-1" aria-labelledby="delete_map_modal_label-<%= the_map.id %>" aria-hidden="true" style="z-index: 1055;">
+  <div class="modal-dialog" style="z-index: 1056; position: relative;">
+    <div class="modal-content" style="z-index: 1057;">
+      <div class="modal-body" style="color: black;">
+        Do you really want to delete <strong><%= the_map.name %></strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</button>
+        <form action="/delete_map/<%=the_map.id%>" method="get">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

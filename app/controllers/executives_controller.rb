@@ -60,9 +60,9 @@ class ExecutivesController < ApplicationController
   def destroy
     the_id = params.fetch("path_id")
     the_executive = Executive.where({ :id => the_id }).at(0)
-
+    map_id=the_executive.map.id
     the_executive.destroy
 
-    redirect_to("/executives", { :notice => "Executive deleted successfully."} )
+    redirect_to("/maps/#{map_id}", { :notice => "Executive deleted successfully."} )
   end
 end

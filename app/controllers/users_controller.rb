@@ -19,17 +19,18 @@ class UsersController < ApplicationController
 
   def create
     the_user = User.new
+    the_user.username = params.fetch("query_username")
     the_user.password = params.fetch("query_password")
     the_user.email = params.fetch("query_email")
-    the_user.comments_count = params.fetch("query_comments_count")
-    the_user.maps_count = params.fetch("query_maps_count")
-    the_user.likes_count = params.fetch("query_likes_count")
-
+    the_user.comments_count = params.fetch("query_comments_count", 0) # Default to 0 if not provided
+    the_user.maps_count = params.fetch("query_maps_count", 0)        # Default to 0 if not provided
+    the_user.likes_count = params.fetch("query_likes_count", 0)      # Default to 0 if not provided
+  
     if the_user.valid?
       the_user.save
-      redirect_to("/users", { :notice => "User created successfully." })
+      redirect_to("/users", { notice: "User created successfully." })
     else
-      redirect_to("/users", { :alert => the_user.errors.full_messages.to_sentence })
+      redirect_to("/users", { alert: the_user.errors.full_messages.to_sentence })
     end
   end
 
@@ -37,6 +38,7 @@ class UsersController < ApplicationController
     the_id = params.fetch("path_id")
     the_user = User.where({ :id => the_id }).at(0)
 
+    the_user.username = params.fetch("query_username")
     the_user.password = params.fetch("query_password")
     the_user.email = params.fetch("query_email")
     the_user.comments_count = params.fetch("query_comments_count")

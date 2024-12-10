@@ -86,6 +86,10 @@ gem "table_print"
 gem "simple_form"
 gem "carrierwave"
 
+
+gem "rails_db"
+
+
 group :development do
   gem "annotate"
   gem "better_errors"
@@ -94,7 +98,7 @@ group :development do
   gem "draft_generators"
   gem "grade_runner"
   gem "pry-rails"
-  gem "rails_db"
+  
   gem "rails-erd"
   gem "rufo"
   gem "specs_to_readme"

@@ -302,7 +302,11 @@ class Map < ApplicationRecord
 
     #Executives savings
     @income_statement[:executive_savings]=@income_statement[:total_worker_wages]*executive_impact
+    @income_statement[:executive_impact]=executive_impact
 
+    #Production bonus
+    @income_statement[:recreation_impact]=recreation_factor
+    
 
     # Debug: Display Income Statement
     puts "Income Statement:"

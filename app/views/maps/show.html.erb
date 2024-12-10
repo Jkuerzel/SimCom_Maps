@@ -210,12 +210,25 @@
       
 
       <div class="m-1" style="font-size:10px">
-        Production bonus:<br>
-        <span class="badge text-bg-secondary"><%= @the_map.bonus %> %</span>
+        General production bonus:<br>
+        <div class="d-flex justify-content-start">
+          <span class="badge text-bg-secondary"><%= @the_map.bonus %> %</span>
+          <span class="badge bg-transparent text-white">+</span>
+          <span class="badge text-white bg-success"><%= ((@income_statement[:recreation_impact]-1)*100).round(0) %> %</span>
+          <span class="badge bg-transparent text-white">=</span>
+          <span class="badge text-bg-secondary"><%= @the_map.bonus+((@income_statement[:recreation_impact]-1)*100).round(0) %> %</span>
+        </div>
+
       </div>
       <div class="m-1" style="font-size:10px">
         Administration Overhead:<br>
-        <span class="badge text-bg-secondary"><%= (@income_statement[:administrative_overhead] * 100).round(1) %> %</span>
+        <div class="d-flex justify-content-start">
+          <span class="badge text-bg-secondary"><%= (@income_statement[:administrative_overhead] * 100).round(1) %> %</span>
+          <span class="badge bg-transparent text-white">-</span>
+          <span class="badge text-white bg-success"><%= (@income_statement[:executive_impact]*100).round(1) %> %</span>
+          <span class="badge bg-transparent text-white">=</span>
+          <span class="badge text-bg-secondary"><%= (@income_statement[:eff_administrative_overhead] * 100).round(1) %> %</span>
+        </div>
       </div>
 
       

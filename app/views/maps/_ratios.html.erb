@@ -62,14 +62,23 @@
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Scrap value percentage</td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
-                <%=(100.0*((@the_map_scrap_value-@the_map_robots_scrap_value)/(@the_map_construction_cost+@the_map_robots_cost))).round(1)%> %
+                <% begin %>
+                  <%= (100.0 * ((@the_map_scrap_value - @the_map_robots_scrap_value) / 
+                      (@the_map_construction_cost + @the_map_robots_cost))).round(1) %> %
+                <% rescue ZeroDivisionError, NoMethodError %>
+                  N/A
+                <% end %>
               </td>
             </tr>
 
             <tr>
               <td style="padding: 8px; border-bottom: 1px solid #ddd;">Lost value faktor (construction)</td>
               <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+              <% begin %>
                 <%=(((@the_map_construction_cost+@the_map_robots_cost)/(@the_map_scrap_value-@the_map_robots_scrap_value))).round(1)%>
+              <% rescue ZeroDivisionError, NoMethodError %>
+                N/A
+              <%end%>
               </td>
             </tr>
 

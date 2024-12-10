@@ -214,9 +214,12 @@
         <div class="d-flex justify-content-start">
           <span class="badge text-bg-secondary"><%= @the_map.bonus %> %</span>
           <span class="badge bg-transparent text-white">+</span>
-          <span class="badge text-white bg-success"><%= ((@income_statement[:recreation_impact]-1)*100).round(0) %> %</span>
+          <span class="badge text-white bg-success">
+              <%= ((@income_statement[:recreation_impact]-1)*100).round(0) rescue 0%> %</span>
           <span class="badge bg-transparent text-white">=</span>
-          <span class="badge text-bg-secondary"><%= @the_map.bonus+((@income_statement[:recreation_impact]-1)*100).round(0) %> %</span>
+          <span class="badge text-bg-secondary">
+              <%= (@the_map.bonus + ((@income_statement[:recreation_impact] - 1) * 100).round(0)) rescue 0 %> %
+          </span>
         </div>
 
       </div>
@@ -225,7 +228,7 @@
         <div class="d-flex justify-content-start">
           <span class="badge text-bg-secondary"><%= (@income_statement[:administrative_overhead] * 100).round(1) %> %</span>
           <span class="badge bg-transparent text-white">-</span>
-          <span class="badge text-white bg-success"><%= (@income_statement[:executive_impact]*100).round(1) %> %</span>
+          <span class="badge text-white bg-success"><%= (@income_statement[:executive_impact]*100).round(1)  rescue 0 %> %</span>
           <span class="badge bg-transparent text-white">=</span>
           <span class="badge text-bg-secondary"><%= (@income_statement[:eff_administrative_overhead] * 100).round(1) %> %</span>
         </div>
@@ -283,14 +286,41 @@
       </div>
 
       <hr>
-      <div style="font-size:10px">Total salaries:<br> <span class="badge text-bg-secondary"><%= number_with_delimiter(@the_map.executives.sum(:salary).round) %> $</span></div>
-      <div style="font-size:10px">Effect on Wages:<br> <span class="badge text-bg-secondary"><%= -number_with_delimiter(@income_statement[:executive_savings].round) %> $</span></div>
 
-      <%if @income_statement[:executive_savings]-@the_map.executives.sum(:salary)>0%>
-        <div style="font-size:10px">Executives Savings:<br> <span class="badge text-bg-secondary"><%= number_with_delimiter((@income_statement[:executive_savings]-@the_map.executives.sum(:salary)).round) %> $</span></div>
-      <%else%>
-        <div style="font-size:10px">Executives Savings:<br> <span class="badge text-bg-warning"><%= number_with_delimiter((@income_statement[:executive_savings]-@the_map.executives.sum(:salary)).round) %> $</span></div>
-      <%end%>
+
+
+
+
+
+      <div style="font-size:10px">Total salaries:<br>
+        <span class="badge text-bg-secondary">
+          <%= number_with_delimiter((@the_map&.executives&.sum(:salary) || 0).round) %> $
+        </span>
+      </div>
+
+      <div style="font-size:10px">Effect on Wages:<br>
+        <span class="badge text-bg-secondary">
+          <%= -number_with_delimiter((@income_statement&.dig(:executive_savings) || 0).round) rescue 0 %> $
+        </span>
+      </div>
+
+      <% 
+        executive_savings = @income_statement&.dig(:executive_savings) || 0
+        total_salaries = @the_map&.executives&.sum(:salary) || 0
+        savings_difference = executive_savings - total_salaries
+      %>
+
+      <div style="font-size:10px">Executives Savings:<br>
+        <% if savings_difference > 0 %>
+          <span class="badge text-bg-secondary">
+            <%= number_with_delimiter(savings_difference.round) %> $
+          </span>
+        <% else %>
+          <span class="badge text-bg-warning">
+            <%= number_with_delimiter(savings_difference.round) %> $
+          </span>
+        <% end %>
+      </div>
     </div>
     
   </div>

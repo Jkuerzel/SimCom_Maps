@@ -13,7 +13,7 @@
       </div>
 
       <div class="modal-body" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-        <% Building.all.each do |building_type| %>
+        <% Building.order(:name).each do |building_type| %>
           <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 120px;">
             <p><%= building_type.name %></p>
             <%= form_with url: "/modify_map_building/#{@the_building.id}/type", method: :post, local: true do |f| %>

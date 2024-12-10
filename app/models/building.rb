@@ -12,7 +12,7 @@
 #  wage_cost_per_hour  :float
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null#
-#
+##
 class Building < ApplicationRecord
   #Add Direct Associations
   has_many  :map_buildings, class_name: "MapBuilding", foreign_key: "building_id", dependent: :destroy

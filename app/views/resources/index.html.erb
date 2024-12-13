@@ -1,10 +1,20 @@
 <div class="d-flex justify-content-center">
   <div class="d-flex align-content-between flex-wrap mt-5 mb-5" style="max-width: 1000px;">
     <% @list_of_resources.each do |a_resource| %>
-      
-      <%= render 'resources/resource_details', 
-            a_resource: a_resource %>
-
+      <a href="/resources/<%= a_resource.id %>" class="text-decoration-none">
+        <div class="d-flex flex-column justify-content-center align-items-center rounded bg-dark m-2 opacity-75" 
+             style="height:100px; width:80px;">
+          <img 
+            class="figure-img img-fluid rounded" 
+            src="<%= a_resource.image_link %>" 
+            alt="<%= a_resource.name %>" 
+            style="max-width: 70%; max-height: 70%;">
+          <div 
+            style="width: 100%; color: white; text-align: center; font-size: 12px; font-weight: bold;">
+            <%= a_resource.name %>
+          </div>
+        </div>
+      </a>
     <% end %>
   </div>
 </div>

@@ -65,123 +65,30 @@ Rails.application.routes.draw do
   # DELETE
   get("/delete_map/:path_id", { :controller => "maps", :action => "destroy" })
 
-  #------------------------------
+  
 
-  # Routes for the Like resource:
-
-  # CREATE
-  post("/insert_like", { :controller => "likes", :action => "create" })
-          
-  # READ
-  get("/likes", { :controller => "likes", :action => "index" })
-  
-  get("/likes/:path_id", { :controller => "likes", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_like/:path_id", { :controller => "likes", :action => "update" })
-  
-  # DELETE
-  get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
-
-  #------------------------------
-
-  # Routes for the Comment resource:
-
-  # CREATE
-  post("/insert_comment", { :controller => "comments", :action => "create" })
-          
-  # READ
-  get("/comments", { :controller => "comments", :action => "index" })
-  
-  get("/comments/:path_id", { :controller => "comments", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_comment/:path_id", { :controller => "comments", :action => "update" })
-  
-  # DELETE
-  get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
-
-  #------------------------------
-
-  # Routes for the Price resource:
-
-  # CREATE
-  post("/insert_price", { :controller => "prices", :action => "create" })
-          
-  # READ
-  get("/prices", { :controller => "prices", :action => "index" })
-  
-  get("/prices/:path_id", { :controller => "prices", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_price/:path_id", { :controller => "prices", :action => "update" })
-  
-  # DELETE
-  get("/delete_price/:path_id", { :controller => "prices", :action => "destroy" })
-
-  #Import
-
-  get("/import_prices", { :controller => "prices", :action => "import_prices"})
-
-  #------------------------------
-
-  # Routes for the Resourcedependency resource:
-
-  # CREATE
-  post("/insert_resourcedependency", { :controller => "resourcedependencies", :action => "create" })
-          
-  # READ
-  get("/resourcedependencies", { :controller => "resourcedependencies", :action => "index" })
-  
-  get("/resourcedependencies/:path_id", { :controller => "resourcedependencies", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_resourcedependency/:path_id", { :controller => "resourcedependencies", :action => "update" })
-  
-  # DELETE
-  get("/delete_resourcedependency/:path_id", { :controller => "resourcedependencies", :action => "destroy" })
-
-  #------------------------------
 
   # Routes for the Resource resource:
 
-  # CREATE
-  post("/insert_resource", { :controller => "resources", :action => "create" })
           
   # READ
   get("/resources", { :controller => "resources", :action => "index" })
   
   get("/resources/:path_id", { :controller => "resources", :action => "show" })
   
-  # UPDATE
-  
-  post("/modify_resource/:path_id", { :controller => "resources", :action => "update" })
-  
-  # DELETE
-  get("/delete_resource/:path_id", { :controller => "resources", :action => "destroy" })
 
   #------------------------------
 
   # Routes for the Building resource:
 
-  # CREATE
-  post("/insert_building", { :controller => "buildings", :action => "create" })
+
           
   # READ
   get("/buildings", { :controller => "buildings", :action => "index" })
   
   get("/buildings/:path_id", { :controller => "buildings", :action => "show" })
   
-  # UPDATE
-  
-  post("/modify_building/:path_id", { :controller => "buildings", :action => "update" })
-  
-  # DELETE
-  get("/delete_building/:path_id", { :controller => "buildings", :action => "destroy" })
+
 
   #------------------------------
 
@@ -190,4 +97,45 @@ Rails.application.routes.draw do
 
 
   
+
+  #Maybe for future development: Comments and Likes
+  #------------------------------
+
+  # Routes for the Like resource:
+
+  # CREATE
+  #post("/insert_like", { :controller => "likes", :action => "create" })
+          
+  # READ
+  #get("/likes", { :controller => "likes", :action => "index" })
+  
+  #get("/likes/:path_id", { :controller => "likes", :action => "show" })
+  
+  # UPDATE
+  
+  #post("/modify_like/:path_id", { :controller => "likes", :action => "update" })
+  
+  # DELETE
+  #get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Comment resource:
+
+  # CREATE
+  #post("/insert_comment", { :controller => "comments", :action => "create" })
+          
+  # READ
+  #get("/comments", { :controller => "comments", :action => "index" })
+  
+  #get("/comments/:path_id", { :controller => "comments", :action => "show" })
+  
+  # UPDATE
+  
+  #post("/modify_comment/:path_id", { :controller => "comments", :action => "update" })
+  
+  # DELETE
+  #get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
+
+    
 end

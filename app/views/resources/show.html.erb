@@ -1,116 +1,41 @@
-<div>
-  <div>
-    <h1>
-      Resource #<%= @the_resource.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/resources">
-          Go back
+<div class="d-flex justify-content-center">
+  <div class="d-flex flex-column align-items-center bg-dark mt-4 opacity-75" style="width:50%; height:100%">
+    <% if @the_resource.inputs.present? %>
+    <div class="my-3 fst-italic" style="font-size: 12px;"> requires:</div>
+    <div class="d-flex flex-wrap justify-content-center">
+      <%@the_resource.dependant_resources.each do |dependant_relation|%>
+        <%an_input=Resource.where({:id=>dependant_relation.input_id}).first%>
+        <a href="/resources/<%= an_input.id %>" class="text-decoration-none" style="color: white;">
+          <div class="my-2 mx-2 d-flex flex-column align-items-center">
+            <img style="height:70px; width:70px;" src="<%=an_input.image_link%>">
+            <div class="fw-semibold" style="font-size: 12px;"><%=smart_round(dependant_relation.quantity_required)%> &times; <%=an_input.name%></div>
+            <div class="fw-semibold" style="font-size: 12px;">$<%=an_input.price_for_quality(0)%></div>
+          </div>
         </a>
-      </div>
 
-      <div>
-        <a href="/delete_resource/<%= @the_resource.id %>">
-          Delete resource
-        </a>
-      </div>
+      <%end%>
     </div>
+    <i class="mt-3 bi bi-arrow-down"></i>
+    <% end %>
+    
+    <div class="my-3 d-flex flex-column align-items-center">
+      <img style="height:120px; width:120px;"src="<%=@the_resource.image_link%>">
+      <div class="fs-6 fw-semibold"><%=@the_resource.name%></div>
+    </div>
+    <% if @the_resource.products.present? %>
+    <i class="mt-3 bi bi-arrow-down"></i>
 
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_resource.name %>
-      </dd>
-
-      <dt>
-        Transport amount
-      </dt>
-      <dd>
-        <%= @the_resource.transport_amount %>
-      </dd>
-
-      <dt>
-        Building
-      </dt>
-      <dd>
-        <%= @the_resource.building_id %>
-      </dd>
-
-      <dt>
-        Production time per unit
-      </dt>
-      <dd>
-        <%= @the_resource.units_per_hour %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_resource.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_resource.updated_at) %> ago
-      </dd>
-    </dl>
+    <div class="mt-3 d-flex flex-wrap justify-content-center">
+      <%@the_resource.input_relationships.each do |an_input_relation|%>
+        <%a_product=Resource.where({:id=>an_input_relation.product_id}).first%>
+        <a href="/resources/<%= a_product.id %>" class="text-decoration-none" style="color: white;">
+          <div class="my-2 mx-2 d-flex flex-column align-items-center">
+            <img style="height:70px; width:70px;" src="<%=a_product.image_link%>">
+            <div class="fw-semibold" style="font-size: 12px;"><%=a_product.name%></div>
+          </div>
+        </a>
+      <%end%>
+    </div>
+    <%end%>
   </div>
 </div>
-
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit resource
-    </h2>
-
-    <form action="/modify_resource/<%= @the_resource.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name" value="<%= @the_resource.name %>">
-      </div>
-
-      <div>
-        <label for="transport_amount_box">
-          Transport amount
-        </label>
-
-        <input type="text" id="transport_amount_box" name="query_transport_amount" value="<%= @the_resource.transport_amount %>">
-      </div>
-
-      <div>
-        <label for="building_id_box">
-          Building
-        </label>
-
-        <input type="text" id="building_id_box" name="query_building_id" value="<%= @the_resource.building_id %>">
-      </div>
-
-      <div>
-        <label for="production_time_per_unit_box">
-          Production time per unit
-        </label>
-
-        <input type="time" id="production_time_per_unit_box" name="query_production_time_per_unit" value="<%= @the_resource.units_per_hour %>">
-      </div>
-
-      <button>
-        Update resource
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>

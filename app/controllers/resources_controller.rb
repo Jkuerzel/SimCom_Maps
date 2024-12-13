@@ -57,4 +57,5 @@ class ResourcesController < ApplicationController
 
     redirect_to("/resources", { :notice => "Resource deleted successfully."} )
   end
+
 end

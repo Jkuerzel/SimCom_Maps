@@ -7,14 +7,11 @@ class UsersController < ApplicationController
     render({ :template => "users/index" })
   end
 
-  def show
-    the_id = params.fetch("path_id")
+  def my_profile
 
-    matching_users = User.where({ :id => the_id })
+    @the_user = current_user # Use current_user provided by Devise
 
-    @the_user = matching_users.at(0)
-
-    render({ :template => "users/show" })
+    render({ :template => "devise/user/my_profile" })
   end
 
   def create
@@ -61,4 +58,38 @@ class UsersController < ApplicationController
 
     redirect_to("/users", { :notice => "User deleted successfully."} )
   end
+
+  def update_name_email
+    the_user = current_user
+    the_user.username = params.fetch("query_username")
+    the_user.email = params.fetch("query_email")
+
+    if the_user.valid?
+      the_user.save
+      redirect_to("/users/my_profile", { :notice => "User updated successfully."} )
+    else
+      redirect_to("/users/my_profile", { :alert => the_user.errors.full_messages.to_sentence })
+    end
+  end
+
+  def update_password
+    the_user = current_user
+  
+    # Verify the current password
+    if the_user.valid_password?(params[:current_password])
+      # Update the password
+      the_user.password = params[:password]
+      the_user.password_confirmation = params[:password_confirmation]
+  
+      if the_user.save
+        bypass_sign_in(the_user) # Keep the user signed in
+        redirect_to("/users/my_profile", notice: "Password updated successfully.")
+      else
+        redirect_to("/users/my_profile", alert: the_user.errors.full_messages.to_sentence)
+      end
+    else
+      redirect_to("/users/my_profile", alert: "Current password is incorrect.")
+    end
+  end
+
 end

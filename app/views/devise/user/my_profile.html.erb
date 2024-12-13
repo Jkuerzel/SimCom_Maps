@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-center">
+  <div class="mt-3 bg-dark opacity-75 rounded" style="width:40%; height:100%">
+
+    <h1 class="mx-3 mt-3">My Profile</h1>
+
+    <form class="mx-3 mt-3" action="/users/edit/name_email" method="post">
+      <%= csrf_meta_tags %>
+
+      <!-- Username Field -->
+      <div class="input-group flex-nowrap mb-3">
+        <span style="width:100px" class="input-group-text" id="addon-wrapping">Username</span>
+        <input type="text" name="query_username" class="form-control" value="<%= current_user.username %>" placeholder="Enter new username" aria-label="Username" aria-describedby="addon-wrapping">
+      </div>
+
+      <!-- Email Field -->
+      <div class="input-group flex-nowrap mb-3">
+        <span style="width:100px" class="input-group-text" id="addon-wrapping">E-Mail</span>
+        <input type="text" name="query_email" class="form-control" value="<%= current_user.email %>" placeholder="Enter new email" aria-label="E-Mail" aria-describedby="addon-wrapping">
+      </div>
+
+      <button class="btn btn-primary" type="submit">Change</button>
+    </form>
+    <!-- Button to Trigger Modal -->
+    <button type="button" class="m-3 btn btn-warning" data-bs-toggle="modal" data-bs-target="#passwordChangeModal">
+      Change Password
+    </button>
+      <% if flash[:notice] %>
+    <div class=" m-3 alert alert-success" role="alert">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="m-3 alert alert-danger" role="alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+  </div>
+
+</div>
+
+<!-- Include the modal outside of wrapping divs -->
+<%= render 'devise/user/password_change' %>

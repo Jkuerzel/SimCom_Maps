@@ -1,3 +1,32 @@
+<h1>My Profile</h1>
+
+<div class="profile-attribute">
+  <strong>Username:</strong> <%= @the_user.username %>
+  <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editUsernameModal">
+    <i class="bi bi-pencil"></i>
+  </button>
+</div>
+
+<div class="profile-attribute">
+  <strong>Email:</strong> <%= @the_user.email %>
+  <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editEmailModal">
+    <i class="bi bi-pencil"></i>
+  </button>
+</div>
+
+<div class="profile-attribute">
+  <strong>Password:</strong> ********
+  <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editPasswordModal">
+    <i class="bi bi-pencil"></i>
+  </button>
+</div>
+
+<%= link_to "Back", users_path, class: "btn btn-secondary mt-3" %>
+
+
+
+
+
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>

@@ -1,0 +1,49 @@
+<%= line_chart @prices_by_quality, 
+               xtitle: "Quality Level", 
+               ytitle: "Price in $", 
+               height: "120px", 
+               width: "200px", 
+               library: {
+                 scales: {
+                   x: {
+                     min: 0, # Set the minimum value for x-axis
+                     max: 12, # Set the maximum value for x-axis
+                     ticks: {
+                       stepSize: 2, # Major ticks every 2 units
+                       font: { size: 8, color: "white" } # Font size and color for major ticks
+                     },
+                     grid: {
+                       drawBorder: true, # Ensures the border (axis line) is drawn
+                       color: "transparent", # Makes the gridlines transparent
+                       borderColor: "white" # Ensures the x-axis line is white
+                     },
+                     title: {
+                       display: true,
+                       text: "Quality Level",
+                       color: "white", # Makes x-axis title white
+                       font: { size: 10 } # Font size for x-axis title
+                     }
+                   },
+                   y: {
+                     ticks: {
+                       font: { size: 8, color: "white" } # Font size and color for y-axis labels
+                     },
+                     grid: {
+                       drawBorder: true, # Ensures the border (axis line) is drawn
+                       color: "transparent", # Makes the gridlines transparent
+                       borderColor: "white" # Ensures the y-axis line is white
+                     },
+                     title: {
+                       display: true,
+                       text: "Price",
+                       color: "white", # Makes y-axis title white
+                       font: { size: 10 } # Font size for y-axis title
+                     }
+                   }
+                 },
+                 elements: {
+                   point: {
+                     radius: 1 # Reduces marker size
+                   }
+                 }
+               } %>

@@ -1,5 +1,7 @@
-<div class="d-flex justify-content-center">
-  <div class="d-flex flex-column align-items-center bg-dark mt-4 opacity-75" style="width:50%; height:100%">
+
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <h2 class="m1"><%=@the_resource.name%></h2>
+  <div class="d-flex flex-column align-items-center bg-dark mt-1 opacity-75" style="width:50%; height:100%">
     <% if @the_resource.inputs.present? %>
     <div class="my-3 fst-italic" style="font-size: 12px;"> requires:</div>
     <div class="d-flex flex-wrap justify-content-center">
@@ -15,17 +17,21 @@
 
       <%end%>
     </div>
-    <i class="mt-3 bi bi-arrow-down"></i>
+    <i class="mt-1 bi bi-arrow-down"></i>
     <% end %>
-    
-    <div class="my-3 d-flex flex-column align-items-center">
-      <img style="height:120px; width:120px;"src="<%=@the_resource.image_link%>">
-      <div class="fs-6 fw-semibold"><%=@the_resource.name%></div>
+    <div class="my-1 d-flex justify-content-between align-items-end">
+      <div class="me-5 d-flex flex-column align-items-center">
+        <img style="height:120px; width:120px;" src="<%=@the_resource.image_link%>">
+        <div class="fs-6 fw-semibold"><%=@the_resource.name%></div>
+      </div>
+      <div class="ms-5 bg-dark">
+        <%= render 'resources/price_chart'%>
+      </div>
     </div>
     <% if @the_resource.products.present? %>
-    <i class="mt-3 bi bi-arrow-down"></i>
+    <i class="mt-1 bi bi-arrow-down"></i>
 
-    <div class="mt-3 d-flex flex-wrap justify-content-center">
+    <div class="mt-2 d-flex flex-wrap justify-content-center">
       <%@the_resource.input_relationships.each do |an_input_relation|%>
         <%a_product=Resource.where({:id=>an_input_relation.product_id}).first%>
         <a href="/resources/<%= a_product.id %>" class="text-decoration-none" style="color: white;">

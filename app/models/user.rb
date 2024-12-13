@@ -28,4 +28,5 @@ class User < ApplicationRecord
   has_many  :comments, class_name: "Comment", foreign_key: "user_id", dependent: :nullify
   has_many  :maps, class_name: "Map", foreign_key: "owner_id", dependent: :destroy
   has_many  :likes, class_name: "Like", foreign_key: "user_id", dependent: :nullify
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
 end

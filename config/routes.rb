@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
-
+  #Routes for Users
   #------------------------------
-
+  get("/users/my_profile", { :controller => "users", :action => "my_profile" })
+  post("/users/edit/name_email", { :controller => "users", :action => "update_name_email" })
+  post("/users/edit/password", { :controller => "users", :action => "update_password" })
   # Routes for the Executive resource:
 
   # CREATE
@@ -53,7 +55,7 @@ Rails.application.routes.draw do
   #------------------------------
 
   # Routes for the Map resource:
-
+ 
   # CREATE
   post("/insert_map", { :controller => "maps", :action => "create" })     
   # READ

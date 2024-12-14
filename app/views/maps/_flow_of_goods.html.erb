@@ -23,7 +23,12 @@
             <% @ledger.each do |resource_id, qualities| %>
               <% qualities.each do |quality, flow| %>
                 <tr>
-                  <td style="padding: 8px; border-bottom: 1px solid #ddd;"><img class="img-fluid" src="<%= Resource.where({:id=>resource_id}).first.image_link %>"</td>
+                  <td style="padding: 8px; border-bottom: 1px solid #ddd; position: relative;">
+                    <img class="img-fluid" src="<%= Resource.where({:id=>resource_id}).first.image_link %>" style="width: 100%; height: auto;">
+                    <div style="font-size: 10px; position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; background-color: rgba(255, 255, 255, 0.7); z-index: 1;">
+                      <%= Resource.where({:id=>resource_id}).first.name %>
+                    </div>
+                  </td>
                   <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= quality %></td>
                   <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:produced].round(0) %></td>
                   <td style="padding: 8px; border-bottom: 1px solid #ddd;"><%= flow[:consumed].round(0) %></td>

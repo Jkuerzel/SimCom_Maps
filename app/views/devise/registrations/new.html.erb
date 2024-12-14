@@ -1,3 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="mt-3 bg-dark opacity-75 rounded" style="width:40%; height:100%">
+
+    <h2 class="mx-3 mt-3">Sign Up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "mx-3 mt-3" }) do |f| %>
+      <!-- Error Messages -->
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <!-- Username Field -->
+      <div class="input-group flex-nowrap mb-3">
+        <span style="width:100px" class="input-group-text">Username</span>
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "form-control", placeholder: "Enter your username" %>
+      </div>
+
+      <!-- Email Field -->
+      <div class="input-group flex-nowrap mb-3">
+        <span style="width:100px" class="input-group-text">Email</span>
+        <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-group flex-nowrap mb-3">
+        <span style="width:100px" class="input-group-text">Password</span>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Enter your password" %>
+      </div>
+
+      <!-- Password Confirmation Field -->
+      <div class="input-group flex-nowrap mb-3">
+        <span style="width:100px" class="input-group-text">Confirm</span>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your password" %>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-flex justify-content-end">
+        <%= f.submit "Sign Up", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <!-- Links -->
+    <div class="m-3">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
+
+
+
+
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>

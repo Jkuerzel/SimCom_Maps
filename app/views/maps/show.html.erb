@@ -249,6 +249,7 @@
               <%= position %>: Missing
             <% end %>
           </div>
+          <% if current_user.id == @the_map.owner_id %>
           <div>
             <% if @the_map.executives.where({:position=>i}).exists? %>
               <%the_executive=@the_map.executives.where({:position=>i}).first%>
@@ -272,6 +273,7 @@
               </span>
               
             <% else %>
+
             <%= render 'maps/create_executive', 
               position: position,
               position_id: i, 
@@ -282,6 +284,7 @@
             </button>
             <% end %>
           </div>
+          <%end%>
         <% end %>
       </div>
 

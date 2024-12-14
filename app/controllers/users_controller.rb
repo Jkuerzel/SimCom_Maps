@@ -52,12 +52,32 @@ class UsersController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    the_user = User.where({ :id => the_id }).at(0)
-
-    the_user.destroy
-
-    redirect_to("/users", { :notice => "User deleted successfully."} )
+    the_user = User.find_by(id: the_id)
+  
+    # Ensure user exists
+    if the_user.nil?
+      redirect_to("/users", { alert: "User not found." })
+      return
+    end
+  
+    # Check if the current user is authorized to delete the account
+    if the_user == current_user || current_user.admin?
+      if the_user.destroy
+        if the_user == current_user
+          # Log out the user after their account is deleted and redirect to home
+          reset_session
+          redirect_to("/", { notice: "Your account has been successfully deleted." })
+        else
+          redirect_to("/", { notice: "User deleted successfully." })
+        end
+      else
+        redirect_to("/users", { alert: "There was an error deleting the user." })
+      end
+    else
+      redirect_to("/users", { alert: "You are not authorized to perform this action." })
+    end
   end
+  
 
   def update_name_email
     the_user = current_user

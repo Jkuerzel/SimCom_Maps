@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
-  <div class="mt-3 bg-dark opacity-75 rounded" style="width:40%; height:100%">
+  <div class="mt-3 bg-dark opacity-75 rounded" style="max-width:500px; height:100%">
 
-    <h1 class="mx-3 mt-3">My Profile</h1>
+    <h2 class="mx-3 mt-3">My Profile</h2>
 
     <form class="mx-3 mt-3" action="/users/edit/name_email" method="post">
       <%= csrf_meta_tags %>
@@ -20,10 +20,20 @@
 
       <button class="btn btn-primary" type="submit">Change</button>
     </form>
-    <!-- Button to Trigger Modal -->
+    <!-- Button to Trigger Password Modal -->
     <button type="button" class="m-3 btn btn-warning" data-bs-toggle="modal" data-bs-target="#passwordChangeModal">
       Change Password
     </button>
+
+    <!-- Delete Account Button -->
+    <button type="button" class="m-3 btn btn-danger" onclick="if(confirm('Are you sure you want to delete your account? This action cannot be undone.')) { document.getElementById('deleteAccountForm').submit(); }">
+      Delete Account
+    </button>
+
+    <!-- Hidden Form for Account Deletion -->
+    <%= form_with url: user_registration_path, method: :delete, id: 'deleteAccountForm', style: 'display: none;' do %>
+<% end %>
+
       <% if flash[:notice] %>
     <div class=" m-3 alert alert-success" role="alert">
       <%= flash[:notice] %>
@@ -41,3 +51,4 @@
 
 <!-- Include the modal outside of wrapping divs -->
 <%= render 'devise/user/password_change' %>
+

@@ -26,8 +26,8 @@
 
 
             <tr>
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total map cost</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+              <td class="fw-bold" style="padding: 8px; border-bottom: 1px solid #ddd;">Total map cost</td>
+              <td class="fw-bold" style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= number_to_currency(
               @the_map_construction_cost+@the_map_robots_cost) %>
               </td>
@@ -50,8 +50,8 @@
 
 
             <tr class="">
-              <td style="padding: 8px; border-bottom: 1px solid #ddd;">Total scrap value</td>
-              <td style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
+              <td class="fw-bold" style="padding: 8px; border-bottom: 1px solid #ddd;">Total scrap value</td>
+              <td class="fw-bold" style="padding: 8px; border-bottom: 2px solid #ddd; text-align: right;">
                 <%= number_to_currency(
               @the_map_scrap_value+@the_map_robots_scrap_value) %>
               </td>
